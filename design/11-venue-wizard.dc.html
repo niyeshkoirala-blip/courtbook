@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  @keyframes cb-spin { to { transform: rotate(360deg); } }
+  input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+    outline: 3px solid #FF6A2B; outline-offset: 2px;
+  }
+  ::placeholder { color: #9fb3aa; }
+  .cb-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
+  .cb-scroll::-webkit-scrollbar-thumb { background: #BFD8CE; border-radius: 8px; }
+</style>
+</helmet>
+<div style="min-height:100vh; background:#F7F6F2; font-family:Inter,system-ui,sans-serif; color:#12222B;">
+
+  <!-- App bar -->
+  <header style="background:#0E3B2E; color:#F7F6F2; padding:0 20px; height:64px; display:flex; align-items:center; justify-content:space-between; position:relative; overflow:hidden;">
+    <div style="display:flex; align-items:center; gap:12px; z-index:1;">
+      <div style="width:34px; height:34px; border-radius:9px; background:#FF6A2B; display:flex; align-items:center; justify-content:center; font-family:Anton; font-size:20px; color:#092A21;">C</div>
+      <span style="font-family:Anton; font-size:20px; letter-spacing:1.5px; text-transform:uppercase;">CourtBook</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:16px; z-index:1;">
+      <span style="font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:#BFD8CE; font-weight:600;">List your venue</span>
+      <button onClick="{{ requestExit }}" style="background:transparent; border:1.5px solid rgba(247,246,242,0.3); color:#F7F6F2; font-family:Inter; font-size:13px; font-weight:600; padding:8px 14px; border-radius:999px; cursor:pointer;">Save &amp; exit</button>
+    </div>
+    <!-- court line corner mark, top right of bar -->
+    <div style="position:absolute; top:0; right:0; width:120px; height:64px; pointer-events:none; opacity:0.5;">
+      <div style="position:absolute; top:14px; right:52px; width:2px; height:36px; background:#F7F6F2;"></div>
+      <div style="position:absolute; top:48px; right:52px; width:68px; height:2px; background:#F7F6F2;"></div>
+      <div style="position:absolute; top:14px; right:14px; width:38px; height:38px; border-top:2px solid #F7F6F2; border-right:2px solid #F7F6F2; border-radius:0 40px 0 0;"></div>
+    </div>
+  </header>
+
+  <div style="max-width:1200px; margin:0 auto; padding:24px 20px 120px; display:grid; grid-template-columns:minmax(0,1fr) 360px; gap:32px; align-items:start;">
+
+    <!-- MAIN COLUMN -->
+    <main>
+      <!-- Stepper as court sideline -->
+      <div style="position:relative; margin:4px 0 28px; padding:0 8px;">
+        <div style="position:absolute; left:20px; right:20px; top:11px; height:2px; background:#BFD8CE;"></div>
+        <sc-if value="{{ hasProgress }}" hint-placeholder-val="{{ true }}">
+          <div style="{{ progressLineStyle }}"></div>
+        </sc-if>
+        <div style="position:relative; display:flex; justify-content:space-between;">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="5">
+            <div onClick="{{ s.onClick }}" style="{{ s.wrapStyle }}">
+              <div style="{{ s.dotStyle }}">
+                <sc-if value="{{ s.done }}" hint-placeholder-val="{{ false }}"><span style="color:#092A21; font-size:12px; font-weight:700;">✓</span></sc-if>
+              </div>
+              <span style="{{ s.labelStyle }}">{{ s.label }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- STEP 0 · DETAILS -->
+      <sc-if value="{{ isStep0 }}" hint-placeholder-val="{{ true }}">
+        <section style="background:#fff; border:1px solid #e4e9e6; border-radius:12px; padding:28px;">
+          <p style="margin:0 0 4px; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#0E3B2E; font-weight:700;">Step 1 / 5</p>
+          <h1 style="margin:0 0 22px; font-family:Anton; font-size:34px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B;">Venue details</h1>
+
+          <label style="display:block; font-size:13px; font-weight:600; margin-bottom:7px; color:#12222B;">Venue name</label>
+          <input value="{{ name }}" onInput="{{ onName }}" placeholder="e.g. Baneshwor Futsal Arena" style="width:100%; height:46px; border:1.5px solid #cdd8d2; border-radius:10px; padding:0 14px; font-family:Inter; font-size:15px; color:#12222B; background:#fff;" />
+
+          <label style="display:block; font-size:13px; font-weight:600; margin:20px 0 7px; color:#12222B;">Area</label>
+          <select value="{{ area }}" onChange="{{ onArea }}" style="width:100%; height:46px; border:1.5px solid #cdd8d2; border-radius:10px; padding:0 12px; font-family:Inter; font-size:15px; color:#12222B; background:#fff;">
+            <option value="">Select area…</option>
+            <sc-for list="{{ areas }}" as="a" hint-placeholder-count="5"><option value="{{ a }}">{{ a }}</option></sc-for>
+          </select>
+
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin:20px 0 7px;">
+            <label style="font-size:13px; font-weight:600; color:#12222B;">Description</label>
+            <span style="{{ counterStyle }}">{{ descCount }}/500</span>
+          </div>
+          <textarea value="{{ desc }}" onInput="{{ onDesc }}" maxlength="500" rows="4" placeholder="Tell players about your turf, lighting, parking…" class="cb-scroll" style="width:100%; border:1.5px solid #cdd8d2; border-radius:10px; padding:12px 14px; font-family:Inter; font-size:15px; color:#12222B; resize:vertical; line-height:1.5;"></textarea>
+
+          <label style="display:block; font-size:13px; font-weight:600; margin:22px 0 10px; color:#12222B;">Amenities</label>
+          <div style="display:flex; flex-wrap:wrap; gap:9px;">
+            <sc-for list="{{ amenityChips }}" as="c" hint-placeholder-count="8">
+              <button onClick="{{ c.onClick }}" aria-pressed="{{ c.selected }}" style="{{ c.style }}">{{ c.label }}</button>
+            </sc-for>
+          </div>
+
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-top:24px; padding:16px; border:1px solid #e4e9e6; border-radius:12px; background:#F7F6F2;">
+            <div>
+              <p style="margin:0 0 2px; font-size:14px; font-weight:600; color:#12222B;">Accept pay-at-venue</p>
+              <p style="margin:0; font-size:12.5px; color:#5f7169;">Let players reserve now and pay cash on arrival.</p>
+            </div>
+            <button onClick="{{ togglePay }}" role="switch" aria-checked="{{ payAtVenue }}" style="{{ payToggleStyle }}"><span style="{{ payKnobStyle }}"></span></button>
+          </div>
+        </section>
+      </sc-if>
+
+      <!-- STEP 1 · PHOTOS -->
+      <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ false }}">
+        <section style="background:#fff; border:1px solid #e4e9e6; border-radius:12px; padding:28px;">
+          <p style="margin:0 0 4px; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#0E3B2E; font-weight:700;">Step 2 / 5</p>
+          <h1 style="margin:0 0 6px; font-family:Anton; font-size:34px; letter-spacing:0.5px; text-transform:uppercase;">Photos</h1>
+          <p style="margin:0 0 20px; font-size:14px; color:#5f7169;">Add up to 5 photos. First photo becomes your cover.</p>
+
+          <div style="border:2px dashed #BFD8CE; border-radius:12px; padding:32px; text-align:center; background:#F7F6F2;">
+            <div style="width:46px; height:46px; margin:0 auto 12px; border-radius:12px; background:#0E3B2E; display:flex; align-items:center; justify-content:center; color:#F7F6F2; font-size:22px;">↑</div>
+            <p style="margin:0 0 4px; font-size:15px; font-weight:600; color:#12222B;">Drag photos here</p>
+            <p style="margin:0 0 14px; font-size:13px; color:#5f7169;">JPG or PNG · max 5 MB each</p>
+            <button style="background:#0E3B2E; color:#F7F6F2; border:none; border-radius:999px; padding:10px 20px; font-family:Inter; font-size:13.5px; font-weight:600; cursor:pointer;">Browse files</button>
+          </div>
+
+          <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(120px,1fr)); gap:12px; margin-top:18px;">
+            <!-- done thumb -->
+            <div style="position:relative; aspect-ratio:4/3; border-radius:12px; overflow:hidden; background:#0E3B2E;">
+              <svg width="100%" height="100%" style="position:absolute; inset:0; opacity:0.5;"><defs><pattern id="wz1" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="10" stroke="#BFD8CE" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#wz1)"/></svg>
+              <span style="position:absolute; top:8px; left:8px; background:#FF6A2B; color:#092A21; font-size:10px; font-weight:700; letter-spacing:0.5px; text-transform:uppercase; padding:3px 8px; border-radius:999px;">Cover</span>
+            </div>
+            <!-- uploading -->
+            <div style="position:relative; aspect-ratio:4/3; border-radius:12px; overflow:hidden; background:#e9efec; display:flex; align-items:center; justify-content:center;">
+              <div style="width:40px; height:40px; border-radius:50%; border:4px solid #cdd8d2; border-top-color:#FF6A2B; animation:cb-spin 0.9s linear infinite;"></div>
+              <span style="position:absolute; bottom:8px; left:0; right:0; text-align:center; font-size:11px; font-weight:600; color:#5f7169;">Uploading 68%</span>
+            </div>
+            <!-- failed -->
+            <div style="position:relative; aspect-ratio:4/3; border-radius:12px; overflow:hidden; background:#fdeee8; border:1.5px solid #FF6A2B; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:8px; text-align:center;">
+              <span style="font-size:20px; margin-bottom:2px;">⚠️</span>
+              <span style="font-size:11.5px; font-weight:600; color:#12222B; line-height:1.35;">Too large — max 5 MB.</span>
+              <button style="margin-top:6px; background:transparent; border:none; color:#c8481a; font-size:12px; font-weight:700; cursor:pointer; text-decoration:underline;">Try again</button>
+            </div>
+            <!-- empty add slot -->
+            <div style="aspect-ratio:4/3; border-radius:12px; border:2px dashed #cdd8d2; display:flex; align-items:center; justify-content:center; color:#9fb3aa; font-size:28px; cursor:pointer;">+</div>
+          </div>
+        </section>
+      </sc-if>
+
+      <!-- STEP 2 · COURTS -->
+      <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+        <section style="background:#fff; border:1px solid #e4e9e6; border-radius:12px; padding:28px;">
+          <p style="margin:0 0 4px; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#0E3B2E; font-weight:700;">Step 3 / 5</p>
+          <h1 style="margin:0 0 6px; font-family:Anton; font-size:34px; letter-spacing:0.5px; text-transform:uppercase;">Courts</h1>
+          <p style="margin:0 0 20px; font-size:14px; color:#5f7169;">Add every playable court. Players book these directly.</p>
+
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <sc-for list="{{ courts }}" as="ct" hint-placeholder-count="1">
+              <div style="border:1px solid #e4e9e6; border-radius:12px; padding:18px; position:relative;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+                  <span style="font-family:Anton; font-size:15px; letter-spacing:1px; text-transform:uppercase; color:#0E3B2E;">Court {{ ct.n }}</span>
+                  <sc-if value="{{ ct.removable }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ ct.onRemove }}" style="background:transparent; border:none; color:#8a9a92; font-size:13px; font-weight:600; cursor:pointer;">Remove</button>
+                  </sc-if>
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                  <div style="grid-column:1 / -1;">
+                    <label style="display:block; font-size:12px; font-weight:600; margin-bottom:5px; color:#5f7169;">Court name</label>
+                    <input value="{{ ct.name }}" onInput="{{ ct.onName }}" placeholder="Court A" style="width:100%; height:42px; border:1.5px solid #cdd8d2; border-radius:9px; padding:0 12px; font-size:14px; font-family:Inter;" />
+                  </div>
+                  <div>
+                    <label style="display:block; font-size:12px; font-weight:600; margin-bottom:5px; color:#5f7169;">Size</label>
+                    <select value="{{ ct.size }}" onChange="{{ ct.onSize }}" style="width:100%; height:42px; border:1.5px solid #cdd8d2; border-radius:9px; padding:0 10px; font-size:14px; font-family:Inter; background:#fff;">
+                      <option value="5v5">5v5</option><option value="6v6">6v6</option><option value="7v7">7v7</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display:block; font-size:12px; font-weight:600; margin-bottom:5px; color:#5f7169;">Surface</label>
+                    <select value="{{ ct.surface }}" onChange="{{ ct.onSurface }}" style="width:100%; height:42px; border:1.5px solid #cdd8d2; border-radius:9px; padding:0 10px; font-size:14px; font-family:Inter; background:#fff;">
+                      <option>Artificial turf</option><option>Natural grass</option><option>Indoor hardcourt</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style="display:block; font-size:12px; font-weight:600; margin-bottom:5px; color:#5f7169;">Base price (Rs / hr)</label>
+                    <div style="display:flex; align-items:center; height:42px; border:1.5px solid #cdd8d2; border-radius:9px; padding:0 12px; background:#fff;">
+                      <span style="font-size:14px; color:#5f7169; font-weight:600; margin-right:4px;">Rs</span>
+                      <input value="{{ ct.price }}" onInput="{{ ct.onPrice }}" inputmode="numeric" style="border:none; outline:none; width:100%; font-size:14px; font-family:Inter; background:transparent;" />
+                    </div>
+                  </div>
+                  <div>
+                    <label style="display:block; font-size:12px; font-weight:600; margin-bottom:5px; color:#5f7169;">Slot length</label>
+                    <select value="{{ ct.slot }}" onChange="{{ ct.onSlot }}" style="width:100%; height:42px; border:1.5px solid #cdd8d2; border-radius:9px; padding:0 10px; font-size:14px; font-family:Inter; background:#fff;">
+                      <option value="60">60 min</option><option value="90">90 min</option><option value="30">30 min</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+
+          <button onClick="{{ addCourt }}" style="margin-top:16px; width:100%; border:1.5px dashed #BFD8CE; background:transparent; color:#0E3B2E; border-radius:12px; padding:14px; font-family:Inter; font-size:14px; font-weight:600; cursor:pointer;">+ Add another court</button>
+        </section>
+      </sc-if>
+
+      <!-- STEP 3 · SCHEDULE -->
+      <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+        <section style="background:#fff; border:1px solid #e4e9e6; border-radius:12px; padding:28px;">
+          <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;">
+            <div>
+              <p style="margin:0 0 4px; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#0E3B2E; font-weight:700;">Step 4 / 5</p>
+              <h1 style="margin:0 0 6px; font-family:Anton; font-size:34px; letter-spacing:0.5px; text-transform:uppercase;">Schedule</h1>
+            </div>
+            <button onClick="{{ copyMonday }}" style="background:transparent; border:1.5px solid #cdd8d2; color:#0E3B2E; border-radius:999px; padding:9px 16px; font-family:Inter; font-size:13px; font-weight:600; cursor:pointer;">Copy Monday to all</button>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:8px; margin-top:16px;">
+            <sc-for list="{{ scheduleRows }}" as="d" hint-placeholder-count="7">
+              <div style="{{ d.rowStyle }}">
+                <span style="width:44px; font-size:13px; font-weight:700; color:#12222B; text-transform:uppercase; letter-spacing:0.5px;">{{ d.label }}</span>
+                <div style="{{ d.timesStyle }}">
+                  <select value="{{ d.open }}" onChange="{{ d.onOpen }}" style="height:38px; border:1.5px solid #cdd8d2; border-radius:8px; padding:0 8px; font-size:13.5px; font-family:Inter; background:#fff; font-variant-numeric:tabular-nums;">
+                    <sc-for list="{{ timeOptions }}" as="t" hint-placeholder-count="4"><option value="{{ t }}">{{ t }}</option></sc-for>
+                  </select>
+                  <span style="color:#8a9a92; font-size:13px;">to</span>
+                  <select value="{{ d.close }}" onChange="{{ d.onClose }}" style="height:38px; border:1.5px solid #cdd8d2; border-radius:8px; padding:0 8px; font-size:13.5px; font-family:Inter; background:#fff; font-variant-numeric:tabular-nums;">
+                    <sc-for list="{{ timeOptions }}" as="t" hint-placeholder-count="4"><option value="{{ t }}">{{ t }}</option></sc-for>
+                  </select>
+                </div>
+                <sc-if value="{{ d.closed }}" hint-placeholder-val="{{ false }}">
+                  <span style="font-size:13px; color:#8a9a92; font-weight:600; flex:1;">Closed</span>
+                </sc-if>
+                <label style="display:flex; align-items:center; gap:7px; margin-left:auto; cursor:pointer; user-select:none;">
+                  <span style="font-size:12px; color:#5f7169; font-weight:600;">Closed</span>
+                  <button onClick="{{ d.onToggle }}" role="switch" aria-checked="{{ d.closed }}" style="{{ d.toggleStyle }}"><span style="{{ d.knobStyle }}"></span></button>
+                </label>
+              </div>
+            </sc-for>
+          </div>
+
+          <!-- Peak pricing expandable -->
+          <div style="margin-top:18px; border:1px solid #e4e9e6; border-radius:12px; overflow:hidden;">
+            <button onClick="{{ togglePeak }}" style="width:100%; display:flex; align-items:center; justify-content:space-between; background:#F7F6F2; border:none; padding:15px 16px; cursor:pointer; font-family:Inter;">
+              <span style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:14px; font-weight:600; color:#12222B;">Peak pricing overrides</span>
+                <span style="font-size:11px; color:#5f7169; background:#e4e9e6; padding:2px 8px; border-radius:999px;">Optional</span>
+              </span>
+              <span style="{{ peakCaretStyle }}">⌄</span>
+            </button>
+            <sc-if value="{{ peakOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="padding:16px; border-top:1px solid #e4e9e6;">
+                <div style="display:flex; align-items:center; justify-content:space-between; background:#fff; border:1px solid #e4e9e6; border-radius:10px; padding:12px 14px;">
+                  <div>
+                    <p style="margin:0 0 2px; font-size:14px; font-weight:600;">Fri–Sun · 5–9 PM</p>
+                    <p style="margin:0; font-size:12.5px; color:#5f7169;">Weekend prime-time surcharge</p>
+                  </div>
+                  <span style="font-family:Anton; font-size:18px; color:#FF6A2B; letter-spacing:0.5px;">Rs 1,800</span>
+                </div>
+                <button style="margin-top:10px; background:transparent; border:1.5px dashed #BFD8CE; color:#0E3B2E; border-radius:10px; padding:11px; width:100%; font-size:13.5px; font-weight:600; cursor:pointer; font-family:Inter;">+ Add override</button>
+              </div>
+            </sc-if>
+          </div>
+
+          <!-- Live mini availability grid -->
+          <div style="margin-top:22px;">
+            <p style="margin:0 0 10px; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#5f7169; font-weight:700;">Availability preview</p>
+            <div style="border:1px solid #e4e9e6; border-radius:12px; padding:14px; overflow-x:auto;" class="cb-scroll">
+              <div style="display:flex; gap:5px; margin-bottom:6px; padding-left:44px; min-width:520px;">
+                <sc-for list="{{ gridHours }}" as="h" hint-placeholder-count="8"><span style="flex:1; text-align:center; font-size:9px; color:#8a9a92; font-variant-numeric:tabular-nums;">{{ h }}</span></sc-for>
+              </div>
+              <sc-for list="{{ gridRows }}" as="g" hint-placeholder-count="7">
+                <div style="display:flex; align-items:center; gap:5px; margin-bottom:4px; min-width:520px;">
+                  <span style="width:40px; font-size:11px; font-weight:600; color:#5f7169;">{{ g.label }}</span>
+                  <sc-for list="{{ g.cells }}" as="c" hint-placeholder-count="8"><span style="{{ c.style }}"></span></sc-for>
+                </div>
+              </sc-for>
+              <div style="display:flex; gap:14px; margin-top:12px; padding-left:44px;">
+                <span style="display:flex; align-items:center; gap:6px; font-size:11px; color:#5f7169;"><span style="width:12px; height:12px; border-radius:3px; background:#0E3B2E;"></span>Open</span>
+                <span style="display:flex; align-items:center; gap:6px; font-size:11px; color:#5f7169;"><span style="width:12px; height:12px; border-radius:3px; background:#FF6A2B;"></span>Peak</span>
+                <span style="display:flex; align-items:center; gap:6px; font-size:11px; color:#5f7169;"><span style="width:12px; height:12px; border-radius:3px; background:#eef2f0;"></span>Closed</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </sc-if>
+
+      <!-- STEP 4 · REVIEW -->
+      <sc-if value="{{ isStep4 }}" hint-placeholder-val="{{ false }}">
+        <div>
+          <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#0E3B2E; color:#F7F6F2; border-radius:12px; padding:20px 22px; margin-bottom:18px; display:flex; align-items:center; gap:14px;">
+              <div style="width:40px; height:40px; border-radius:50%; background:#FF6A2B; display:flex; align-items:center; justify-content:center; color:#092A21; font-size:20px; flex-shrink:0;">✓</div>
+              <div>
+                <p style="margin:0 0 2px; font-family:Anton; font-size:18px; letter-spacing:0.5px; text-transform:uppercase;">Pending review</p>
+                <p style="margin:0; font-size:13.5px; color:#BFD8CE;">We usually approve within 24 hours. We'll email you.</p>
+              </div>
+            </div>
+          </sc-if>
+
+          <section style="background:#fff; border:1px solid #e4e9e6; border-radius:12px; padding:28px;">
+            <p style="margin:0 0 4px; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#0E3B2E; font-weight:700;">Step 5 / 5</p>
+            <h1 style="margin:0 0 20px; font-family:Anton; font-size:34px; letter-spacing:0.5px; text-transform:uppercase;">Review &amp; submit</h1>
+
+            <sc-for list="{{ reviewSections }}" as="r" hint-placeholder-count="4">
+              <div style="padding:16px 0; border-top:1px solid #eef2f0;">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+                  <span style="font-size:11px; letter-spacing:1.5px; text-transform:uppercase; color:#5f7169; font-weight:700;">{{ r.title }}</span>
+                  <button onClick="{{ r.onEdit }}" style="background:transparent; border:none; color:#c8481a; font-size:13px; font-weight:700; cursor:pointer;">Edit</button>
+                </div>
+                <div style="font-size:14.5px; color:#12222B; line-height:1.6;">{{ r.body }}</div>
+              </div>
+            </sc-for>
+          </section>
+        </div>
+      </sc-if>
+
+      <!-- Footer nav -->
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:22px;">
+        <sc-if value="{{ canBack }}" hint-placeholder-val="{{ false }}">
+          <button onClick="{{ back }}" style="background:transparent; border:1.5px solid #cdd8d2; color:#0E3B2E; border-radius:12px; padding:14px 24px; font-family:Inter; font-size:15px; font-weight:600; cursor:pointer;">← Back</button>
+        </sc-if>
+        <div style="margin-left:auto;">
+          <button onClick="{{ primaryAction }}" disabled="{{ primaryDisabled }}" style="{{ primaryStyle }}">{{ primaryLabel }}</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT RAIL · LIVE PREVIEW -->
+    <aside style="position:sticky; top:24px;">
+      <p style="margin:0 0 10px; font-size:11px; letter-spacing:2px; text-transform:uppercase; color:#5f7169; font-weight:700;">Live preview</p>
+      <div style="background:#fff; border:1px solid #e4e9e6; border-radius:12px; overflow:hidden; position:relative;">
+        <div style="position:relative; height:150px; background:#0E3B2E;">
+          <svg width="100%" height="100%" style="position:absolute; inset:0; opacity:0.5;"><defs><pattern id="wzp" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="12" stroke="#BFD8CE" stroke-width="1.5"/></pattern></defs><rect width="100%" height="100%" fill="url(#wzp)"/></svg>
+          <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#BFD8CE; font-family:monospace; font-size:11px; letter-spacing:1px;">COVER PHOTO</div>
+          <!-- court line corner mark -->
+          <div style="position:absolute; bottom:10px; left:10px; width:40px; height:40px; border-bottom:2px solid #F7F6F2; border-left:2px solid #F7F6F2; border-radius:0 0 0 40px; opacity:0.7;"></div>
+          <span style="position:absolute; top:10px; right:10px; background:#FF6A2B; color:#092A21; font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; padding:4px 9px; border-radius:999px;">New</span>
+        </div>
+        <div style="padding:16px;">
+          <h3 style="margin:0 0 3px; font-family:Anton; font-size:22px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; line-height:1.05;">{{ previewName }}</h3>
+          <p style="margin:0 0 12px; font-size:13px; color:#5f7169; display:flex; align-items:center; gap:5px;">📍 {{ previewArea }}</p>
+          <div style="height:1px; background:#eef2f0; margin:12px 0;"></div>
+          <div style="display:flex; align-items:baseline; justify-content:space-between;">
+            <span style="font-size:12px; color:#5f7169;">From</span>
+            <span style="font-family:Anton; font-size:24px; color:#0E3B2E; letter-spacing:0.5px;">{{ previewPrice }}<span style="font-size:12px; color:#8a9a92; font-family:Inter; font-weight:500;"> /hr</span></span>
+          </div>
+          <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:12px;">
+            <sc-for list="{{ previewAmenities }}" as="p" hint-placeholder-count="3"><span style="font-size:11px; color:#0E3B2E; background:#eef4f1; border:1px solid #dbe6e0; padding:4px 10px; border-radius:999px;">{{ p }}</span></sc-for>
+          </div>
+        </div>
+      </div>
+      <p style="margin:12px 2px 0; font-size:12px; color:#8a9a92; line-height:1.5;">This is how players will see your venue in search results.</p>
+    </aside>
+  </div>
+
+  <!-- LEAVE GUARD MODAL -->
+  <sc-if value="{{ exitOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ cancelExit }}" style="position:fixed; inset:0; background:rgba(9,42,33,0.55); display:flex; align-items:center; justify-content:center; padding:20px; z-index:50;">
+      <div style="background:#fff; border-radius:16px; max-width:400px; width:100%; padding:26px; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:0; left:0; width:60px; height:60px; border-top:2px solid #FF6A2B; border-left:2px solid #FF6A2B; border-radius:14px 0 0 0;"></div>
+        <h2 style="margin:0 0 8px; font-family:Anton; font-size:24px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B;">Leave without saving?</h2>
+        <p style="margin:0 0 22px; font-size:14.5px; color:#5f7169; line-height:1.5;">You have unsaved changes to your venue setup. They'll be lost if you leave now.</p>
+        <div style="display:flex; gap:10px;">
+          <button onClick="{{ cancelExit }}" style="flex:1; background:#0E3B2E; color:#F7F6F2; border:none; border-radius:12px; padding:13px; font-family:Inter; font-size:14.5px; font-weight:600; cursor:pointer;">Keep editing</button>
+          <button onClick="{{ confirmExit }}" style="flex:1; background:transparent; color:#c8481a; border:1.5px solid #f0c4b2; border-radius:12px; padding:13px; font-family:Inter; font-size:14.5px; font-weight:600; cursor:pointer;">Leave</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = {
+    step: 0,
+    name: '', area: '', desc: '',
+    amenities: { floodlights: true, parking: false, changing: false, water: false, cafe: false, seating: false, showers: false, firstaid: false },
+    payAtVenue: true,
+    courts: [{ name: 'Court A', size: '5v5', surface: 'Artificial turf', price: '1500', slot: '60' }],
+    schedule: {
+      mon: { open: '06:00', close: '22:00', closed: false },
+      tue: { open: '06:00', close: '22:00', closed: false },
+      wed: { open: '06:00', close: '22:00', closed: false },
+      thu: { open: '06:00', close: '22:00', closed: false },
+      fri: { open: '06:00', close: '23:00', closed: false },
+      sat: { open: '06:00', close: '23:00', closed: false },
+      sun: { open: '07:00', close: '21:00', closed: false },
+    },
+    peakOpen: false,
+    submitted: false,
+    exitOpen: false,
+    dirty: false,
+  };
+
+  STEP_LABELS = ['Details', 'Photos', 'Courts', 'Schedule', 'Review'];
+  AREAS = ['Baneshwor', 'Kupondole', 'Sanepa', 'Chabahil', 'Satdobato'];
+  AMENITIES = [
+    { key: 'floodlights', label: 'Floodlights' },
+    { key: 'parking', label: 'Parking' },
+    { key: 'changing', label: 'Changing room' },
+    { key: 'showers', label: 'Showers' },
+    { key: 'water', label: 'Drinking water' },
+    { key: 'cafe', label: 'Café' },
+    { key: 'seating', label: 'Spectator seating' },
+    { key: 'firstaid', label: 'First aid' },
+  ];
+  DAYS = [['mon','Mon'],['tue','Tue'],['wed','Wed'],['thu','Thu'],['fri','Fri'],['sat','Sat'],['sun','Sun']];
+  TIMES = ['06:00','07:00','08:00','09:00','10:00','11:00','12:00','13:00','14:00','15:00','16:00','17:00','18:00','19:00','20:00','21:00','22:00','23:00'];
+  GRID_HOURS = [8,10,12,14,16,18,20,22];
+
+  set(k, v) { this.setState({ [k]: v, dirty: true }); }
+
+  stepValid(i) {
+    const s = this.state;
+    if (i === 0) return !!(s.name.trim() && s.area);
+    if (i === 2) return s.courts.length > 0 && s.courts.every(c => c.name.trim() && String(c.price).trim());
+    return true;
+  }
+  canGoTo(i) {
+    for (let j = 0; j < i; j++) if (!this.stepValid(j)) return false;
+    return true;
+  }
+  goStep(i) { if (this.canGoTo(i)) this.setState({ step: i }); }
+
+  fmtPrice(n) {
+    const v = parseInt(String(n).replace(/[^0-9]/g, ''), 10);
+    if (!v) return 'Rs —';
+    return 'Rs ' + v.toLocaleString('en-IN');
+  }
+
+  renderVals() {
+    const s = this.state;
+    const turf = '#0E3B2E', flare = '#FF6A2B', flood = '#BFD8CE', white = '#F7F6F2';
+
+    // Stepper
+    const steps = this.STEP_LABELS.map((label, i) => {
+      const done = i < s.step;
+      const current = i === s.step;
+      const clickable = this.canGoTo(i);
+      let dotStyle = 'width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:2px solid; transition:all .15s;';
+      if (current) dotStyle += `background:${flare}; border-color:${flare}; box-shadow:0 0 0 5px rgba(255,106,43,0.18);`;
+      else if (done) dotStyle += `background:${turf}; border-color:${turf};`;
+      else dotStyle += `background:#fff; border-color:${flood};`;
+      return {
+        label, done,
+        onClick: () => this.goStep(i),
+        wrapStyle: `display:flex; flex-direction:column; align-items:center; gap:8px; flex:1; ${clickable ? 'cursor:pointer;' : 'cursor:default;'}`,
+        dotStyle,
+        labelStyle: `font-size:11px; font-weight:${current ? 700 : 600}; letter-spacing:0.5px; text-transform:uppercase; color:${current ? turf : (done ? '#5f7169' : '#9fb3aa')};`,
+      };
+    });
+    const hasProgress = s.step > 0;
+    const pct = s.step === 0 ? 0 : (s.step / (this.STEP_LABELS.length - 1)) * 100;
+    const progressLineStyle = `position:absolute; left:20px; top:11px; height:2px; background:${turf}; width:calc((100% - 40px) * ${pct / 100});`;
+
+    // Amenities
+    const amenityChips = this.AMENITIES.map(a => {
+      const sel = !!s.amenities[a.key];
+      return {
+        label: a.label, selected: sel,
+        onClick: () => this.setState(st => ({ amenities: { ...st.amenities, [a.key]: !st.amenities[a.key] }, dirty: true })),
+        style: `font-family:Inter; font-size:13px; font-weight:600; padding:8px 15px; border-radius:999px; cursor:pointer; transition:all .12s; ${sel ? `background:${turf}; color:${white}; border:1.5px solid ${turf};` : `background:#fff; color:#12222B; border:1.5px solid #cdd8d2;`}`,
+      };
+    });
+
+    // Pay toggle
+    const payToggleStyle = `position:relative; width:46px; height:26px; border-radius:999px; border:none; cursor:pointer; flex-shrink:0; transition:background .15s; background:${s.payAtVenue ? flare : '#cdd8d2'};`;
+    const payKnobStyle = `position:absolute; top:3px; left:${s.payAtVenue ? '23px' : '3px'}; width:20px; height:20px; border-radius:50%; background:#fff; transition:left .15s;`;
+
+    // Courts
+    const courts = s.courts.map((c, i) => ({
+      n: String.fromCharCode(65 + i),
+      name: c.name, size: c.size, surface: c.surface, price: c.price, slot: c.slot,
+      removable: s.courts.length > 1,
+      onName: (e) => this.updCourt(i, 'name', e.target.value),
+      onSize: (e) => this.updCourt(i, 'size', e.target.value),
+      onSurface: (e) => this.updCourt(i, 'surface', e.target.value),
+      onPrice: (e) => this.updCourt(i, 'price', e.target.value.replace(/[^0-9]/g, '')),
+      onSlot: (e) => this.updCourt(i, 'slot', e.target.value),
+      onRemove: () => this.setState(st => ({ courts: st.courts.filter((_, j) => j !== i), dirty: true })),
+    }));
+
+    // Schedule rows
+    const scheduleRows = this.DAYS.map(([key, label]) => {
+      const d = s.schedule[key];
+      const closed = d.closed;
+      const toggleStyle = `position:relative; width:40px; height:23px; border-radius:999px; border:none; cursor:pointer; transition:background .15s; background:${closed ? '#8a9a92' : '#cdd8d2'};`;
+      const knobStyle = `position:absolute; top:3px; left:${closed ? '20px' : '3px'}; width:17px; height:17px; border-radius:50%; background:#fff; transition:left .15s;`;
+      return {
+        label, open: d.open, close: d.close, closed,
+        rowStyle: `display:flex; align-items:center; gap:10px; padding:8px 12px; border:1px solid #eef2f0; border-radius:10px; background:${closed ? '#F7F6F2' : '#fff'};`,
+        timesStyle: `display:${closed ? 'none' : 'flex'}; align-items:center; gap:8px;`,
+        onOpen: (e) => this.updDay(key, 'open', e.target.value),
+        onClose: (e) => this.updDay(key, 'close', e.target.value),
+        onToggle: () => this.setState(st => ({ schedule: { ...st.schedule, [key]: { ...st.schedule[key], closed: !st.schedule[key].closed } }, dirty: true })),
+        toggleStyle, knobStyle,
+      };
+    });
+
+    // Availability grid
+    const gridRows = this.DAYS.map(([key, label]) => {
+      const d = s.schedule[key];
+      const oh = parseInt(d.open, 10), ch = parseInt(d.close, 10);
+      const isWknd = key === 'fri' || key === 'sat' || key === 'sun';
+      const cells = this.GRID_HOURS.map(h => {
+        let bg = '#eef2f0';
+        if (!d.closed && h >= oh && h < ch) {
+          bg = (s.peakOpen && isWknd && h >= 17 && h <= 20) ? flare : turf;
+        }
+        return { style: `flex:1; height:16px; border-radius:3px; background:${bg};` };
+      });
+      return { label, cells };
+    });
+    const gridHours = this.GRID_HOURS.map(h => (h > 12 ? (h - 12) + 'p' : (h === 12 ? '12p' : h + 'a')));
+
+    const peakCaretStyle = `font-size:16px; color:#5f7169; display:inline-block; transition:transform .15s; transform:rotate(${s.peakOpen ? '180deg' : '0deg'});`;
+
+    // Preview
+    const minPrice = Math.min(...s.courts.map(c => parseInt(String(c.price).replace(/[^0-9]/g, ''), 10) || Infinity));
+    const previewAmenities = this.AMENITIES.filter(a => s.amenities[a.key]).slice(0, 4).map(a => a.label);
+
+    // Review
+    const amenNames = this.AMENITIES.filter(a => s.amenities[a.key]).map(a => a.label).join(', ') || 'None selected';
+    const openDays = this.DAYS.filter(([k]) => !s.schedule[k].closed).length;
+    const reviewSections = [
+      { title: 'Details', onEdit: () => this.setState({ step: 0 }),
+        body: `${s.name || 'Unnamed venue'} · ${s.area || 'No area'}<br>Amenities: ${amenNames}<br>Pay-at-venue: ${s.payAtVenue ? 'Accepted' : 'Off'}` },
+      { title: 'Photos', onEdit: () => this.setState({ step: 1 }), body: '1 photo uploaded · 1 pending · 1 failed' },
+      { title: `Courts (${s.courts.length})`, onEdit: () => this.setState({ step: 2 }),
+        body: s.courts.map(c => `${c.name || 'Court'} — ${c.size}, ${c.surface}, ${this.fmtPrice(c.price)}/hr, ${c.slot} min slots`).join('<br>') },
+      { title: 'Schedule', onEdit: () => this.setState({ step: 3 }),
+        body: `Open ${openDays} of 7 days${s.peakOpen ? ' · Peak pricing active (Fri–Sun 5–9 PM · Rs 1,800)' : ''}` },
+    ];
+
+    // Footer primary
+    const onLast = s.step === 4;
+    const primaryDisabled = !onLast && !this.stepValid(s.step);
+    const primaryLabel = onLast ? (s.submitted ? 'Submitted ✓' : 'Submit for review') : 'Continue →';
+    let primaryStyle = 'font-family:Inter; font-size:15px; font-weight:700; padding:14px 28px; border-radius:12px; border:none; cursor:pointer; transition:opacity .15s;';
+    if (primaryDisabled || (onLast && s.submitted)) primaryStyle += `background:#cdd8d2; color:#7c8a83; cursor:not-allowed;`;
+    else primaryStyle += `background:${flare}; color:#092A21;`;
+
+    return {
+      steps, hasProgress, progressLineStyle,
+      isStep0: s.step === 0, isStep1: s.step === 1, isStep2: s.step === 2, isStep3: s.step === 3, isStep4: s.step === 4,
+      name: s.name, area: s.area, desc: s.desc, descCount: s.desc.length,
+      counterStyle: `font-size:12px; font-variant-numeric:tabular-nums; color:${s.desc.length > 480 ? flare : '#8a9a92'};`,
+      areas: this.AREAS,
+      onName: (e) => this.set('name', e.target.value),
+      onArea: (e) => this.set('area', e.target.value),
+      onDesc: (e) => this.set('desc', e.target.value.slice(0, 500)),
+      amenityChips,
+      payAtVenue: s.payAtVenue, togglePay: () => this.set('payAtVenue', !s.payAtVenue), payToggleStyle, payKnobStyle,
+      courts, addCourt: () => this.setState(st => ({ courts: [...st.courts, { name: 'Court ' + String.fromCharCode(65 + st.courts.length), size: '5v5', surface: 'Artificial turf', price: '1500', slot: '60' }], dirty: true })),
+      scheduleRows, timeOptions: this.TIMES, copyMonday: () => this.copyMon(),
+      peakOpen: s.peakOpen, togglePeak: () => this.set('peakOpen', !s.peakOpen), peakCaretStyle,
+      gridRows, gridHours,
+      reviewSections, submitted: s.submitted,
+      previewName: s.name.trim() || 'Your venue name',
+      previewArea: s.area || 'Area, Kathmandu',
+      previewPrice: isFinite(minPrice) ? this.fmtPrice(minPrice) : 'Rs —',
+      previewAmenities,
+      canBack: s.step > 0, back: () => this.setState({ step: s.step - 1 }),
+      primaryAction: () => this.primary(), primaryLabel, primaryDisabled, primaryStyle,
+      requestExit: () => this.setState({ exitOpen: true }),
+      exitOpen: s.exitOpen,
+      cancelExit: () => this.setState({ exitOpen: false }),
+      confirmExit: () => this.setState({ exitOpen: false, step: 0 }),
+    };
+  }
+
+  updCourt(i, k, v) { this.setState(st => { const courts = st.courts.slice(); courts[i] = { ...courts[i], [k]: v }; return { courts, dirty: true }; }); }
+  updDay(key, k, v) { this.setState(st => ({ schedule: { ...st.schedule, [key]: { ...st.schedule[key], [k]: v } }, dirty: true })); }
+  copyMon() { this.setState(st => { const mon = st.schedule.mon; const schedule = {}; this.DAYS.forEach(([k]) => { schedule[k] = { ...mon }; }); return { schedule, dirty: true }; }); }
+  primary() {
+    const s = this.state;
+    if (s.step === 4) { this.setState({ submitted: true, dirty: false }); return; }
+    if (this.stepValid(s.step)) this.setState({ step: s.step + 1 });
+  }
+}
+</script>
+</body>
+</html>

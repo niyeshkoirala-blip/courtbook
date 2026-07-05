@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;background:#092A21;}
+::selection{background:#FF6A2B;color:#fff;}
+input,textarea,button,select{font-family:inherit;}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid #FF6A2B;outline-offset:2px;}
+::-webkit-scrollbar{width:10px;height:10px;}
+::-webkit-scrollbar-thumb{background:#D2DBD5;border-radius:8px;border:2px solid transparent;background-clip:content-box;}
+textarea{resize:vertical;}
+</style>
+</helmet>
+
+<div style="display:flex;height:100vh;overflow:hidden;font-family:'Figtree',system-ui,sans-serif;color:#12222B;background:#F7F6F2;">
+
+  <!-- ===================== SIDEBAR ===================== -->
+  <aside style="width:236px;flex-shrink:0;background:#12222B;display:flex;flex-direction:column;color:#F7F6F2;">
+    <div style="padding:22px 18px 18px;position:relative;border-bottom:1px solid #21343D;">
+      <div style="font-family:'Anton',sans-serif;font-size:23px;letter-spacing:1px;line-height:1;color:#F7F6F2;">COURTBOOK</div>
+      <div style="display:flex;align-items:center;gap:8px;margin-top:9px;">
+        <span style="width:20px;height:2px;background:#F7F6F2;display:block;"></span>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:3px;color:#8AA298;">ADMIN CONSOLE</span>
+      </div>
+      <div style="position:absolute;top:18px;right:16px;width:24px;height:24px;border-top:2px solid #F7F6F2;border-right:2px solid #F7F6F2;border-top-right-radius:24px;opacity:.9;"></div>
+    </div>
+
+    <nav style="padding:12px 12px;display:flex;flex-direction:column;gap:2px;flex:1;overflow:auto;">
+      <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="7">
+        <button onClick="{{ n.onSelect }}" style="{{ n.style }}">
+          <span style="flex:1;text-align:left;">{{ n.label }}</span>
+          <sc-if value="{{ n.badge }}">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;background:#F7F6F2;color:#0E3B2E;border-radius:999px;padding:1px 8px;min-width:22px;text-align:center;">{{ n.badge }}</span>
+          </sc-if>
+        </button>
+      </sc-for>
+    </nav>
+
+    <div style="padding:14px 18px;border-top:1px solid #21343D;display:flex;align-items:center;gap:11px;">
+      <div style="width:34px;height:34px;border-radius:999px;background:#0E3B2E;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:14px;color:#F7F6F2;">PT</div>
+      <div style="line-height:1.25;min-width:0;">
+        <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Prakash Thapa</div>
+        <div style="font-size:11px;color:#8AA298;">Super admin</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ===================== MAIN ===================== -->
+  <main style="flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden;">
+    <header style="height:64px;flex-shrink:0;border-bottom:1px solid #E2E7E3;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 26px;">
+      <div>
+        <div style="font-family:'Anton',sans-serif;font-size:20px;letter-spacing:.5px;text-transform:uppercase;line-height:1;">{{ screenTitle }}</div>
+        <div style="font-size:12px;color:#5A6F66;margin-top:4px;">{{ screenSub }}</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5A6F66;letter-spacing:1px;">
+        <span style="width:7px;height:7px;border-radius:999px;background:#0E3B2E;display:block;"></span>PRODUCTION
+      </div>
+    </header>
+
+    <div style="flex:1;overflow:hidden;position:relative;">
+
+      <!-- ============ SCREEN: VENUE APPROVALS ============ -->
+      <sc-if value="{{ isVenues }}">
+      <div style="display:flex;height:100%;">
+        <!-- queue -->
+        <div style="width:308px;flex-shrink:0;border-right:1px solid #E2E7E3;display:flex;flex-direction:column;background:#fff;">
+          <div style="padding:15px 18px;border-bottom:1px solid #E2E7E3;display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:2px;color:#5A6F66;">PENDING QUEUE</span>
+            <span style="font-family:'Anton',sans-serif;font-size:13px;background:#12222B;color:#F7F6F2;border-radius:999px;padding:2px 11px;letter-spacing:.5px;">{{ pendingCount }}</span>
+          </div>
+          <div style="overflow:auto;flex:1;">
+            <sc-for list="{{ queue }}" as="v" hint-placeholder-count="5">
+              <button onClick="{{ v.onSelect }}" style="{{ v.itemStyle }}">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                  <span style="font-size:14px;font-weight:600;color:#12222B;">{{ v.name }}</span>
+                  <span style="{{ v.typeChip }}">{{ v.typeLabel }}</span>
+                </div>
+                <div style="font-size:12px;color:#5A6F66;">{{ v.area }} · {{ v.owner }}</div>
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#8B9C93;letter-spacing:.5px;">SUBMITTED {{ v.submitted }}</div>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+
+        <!-- detail -->
+        <div style="flex:1;overflow:auto;min-width:0;">
+          <sc-if value="{{ hasSelection }}">
+          <div style="padding:24px 26px 40px;">
+            <!-- header + actions -->
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:20px;">
+              <div>
+                <div style="font-family:'Anton',sans-serif;font-size:28px;letter-spacing:.5px;text-transform:uppercase;line-height:1.02;">{{ selectedVenue.name }}</div>
+                <div style="font-size:13px;color:#5A6F66;margin-top:5px;">{{ selectedVenue.area }} · submitted {{ selectedVenue.submitted }}</div>
+              </div>
+              <div style="display:flex;gap:10px;flex-shrink:0;">
+                <button onClick="{{ openReject }}" style="padding:10px 16px;border-radius:10px;border:1px solid #D9E1DC;background:#fff;color:#12222B;font-size:13.5px;font-weight:600;cursor:pointer;">Reject…</button>
+                <button onClick="{{ approveVenue }}" style="padding:10px 18px;border-radius:10px;border:none;background:#0E3B2E;color:#F7F6F2;font-size:13.5px;font-weight:600;cursor:pointer;">Approve venue</button>
+              </div>
+            </div>
+
+            <div style="display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start;">
+              <!-- PLAYER PREVIEW -->
+              <div style="flex:1 1 320px;min-width:300px;">
+                <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2px;color:#5A6F66;margin-bottom:9px;display:flex;align-items:center;gap:8px;">
+                  <span style="width:14px;height:2px;background:#0E3B2E;display:block;"></span>EXACTLY AS PLAYERS SEE IT
+                </div>
+                <div style="border:1px solid #E2E7E3;border-radius:12px;overflow:hidden;background:#fff;">
+                  <div style="height:180px;background-image:repeating-linear-gradient(135deg,#EAF0EC 0 12px,#F2F6F3 12px 24px);display:flex;align-items:center;justify-content:center;border-bottom:1px solid #E2E7E3;">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#7C9089;letter-spacing:1px;">[ VENUE PHOTO — owner upload ]</span>
+                  </div>
+                  <div style="padding:18px 18px 20px;">
+                    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;">
+                      <div>
+                        <div style="font-size:19px;font-weight:700;color:#12222B;">{{ selectedVenue.name }}</div>
+                        <div style="font-size:13px;color:#5A6F66;margin-top:3px;">{{ selectedVenue.area }}, Kathmandu</div>
+                      </div>
+                      <div style="text-align:right;flex-shrink:0;">
+                        <div style="font-family:'Anton',sans-serif;font-size:22px;color:#0E3B2E;line-height:1;">{{ selectedVenue.pricePerHr }}</div>
+                        <div style="font-size:11px;color:#5A6F66;">per hour</div>
+                      </div>
+                    </div>
+                    <div style="display:flex;gap:14px;margin-top:14px;font-size:12.5px;color:#3A4A43;">
+                      <span>★ {{ selectedVenue.rating }}</span>
+                      <span style="color:#C7D2CC;">|</span>
+                      <span>{{ selectedVenue.openHours }}</span>
+                    </div>
+                    <div style="display:flex;flex-wrap:wrap;gap:7px;margin-top:15px;">
+                      <sc-for list="{{ selectedVenue.amenities }}" as="a" hint-placeholder-count="4">
+                        <span style="font-size:12px;color:#3A4A43;background:#EEF3F0;border-radius:999px;padding:5px 12px;">{{ a }}</span>
+                      </sc-for>
+                    </div>
+                    <button style="margin-top:18px;width:100%;padding:12px;border-radius:999px;border:none;background:#FF6A2B;color:#fff;font-size:14px;font-weight:700;cursor:default;">Book a slot</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- METADATA RAIL -->
+              <div style="flex:1 1 280px;min-width:260px;display:flex;flex-direction:column;gap:16px;">
+                <div style="border:1px solid #E2E7E3;border-radius:12px;background:#fff;padding:16px 16px 6px;">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2px;color:#5A6F66;margin-bottom:12px;">SUBMISSION</div>
+                  <div style="display:flex;flex-direction:column;gap:12px;padding-bottom:12px;">
+                    <div>
+                      <div style="font-size:11px;color:#5A6F66;margin-bottom:2px;">Owner</div>
+                      <div style="font-size:13.5px;font-weight:600;">{{ selectedVenue.owner }}</div>
+                      <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#5A6F66;margin-top:2px;">{{ selectedVenue.ownerEmail }}</div>
+                    </div>
+                    <div style="height:1px;background:#EEF1EF;"></div>
+                    <div style="display:flex;justify-content:space-between;font-size:13px;">
+                      <span style="color:#5A6F66;">Submitted</span><span style="font-weight:600;">{{ selectedVenue.submitted }}</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:13px;">
+                      <span style="color:#5A6F66;">Type</span><span style="font-weight:600;">{{ selectedVenue.typeFull }}</span>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;">
+                      <span style="color:#5A6F66;">Status</span>
+                      <span style="display:inline-flex;align-items:center;gap:6px;font-weight:600;"><span style="width:7px;height:7px;border-radius:999px;background:#C8892B;display:block;"></span>Pending review</span>
+                    </div>
+                  </div>
+                </div>
+
+                <sc-if value="{{ hasDiff }}">
+                <div style="border:1px solid #E2E7E3;border-radius:12px;background:#fff;padding:16px;">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2px;color:#5A6F66;margin-bottom:12px;">CHANGES SINCE APPROVED</div>
+                  <div style="display:flex;flex-direction:column;gap:10px;">
+                    <sc-for list="{{ selectedVenue.diff }}" as="d" hint-placeholder-count="3">
+                      <div style="border-left:2px solid #0E3B2E;background:#F3F7F4;border-radius:0 8px 8px 0;padding:9px 12px;">
+                        <div style="font-size:11px;color:#5A6F66;margin-bottom:4px;">{{ d.field }}</div>
+                        <div style="display:flex;align-items:center;gap:8px;font-size:13px;">
+                          <span style="color:#8B9C93;text-decoration:line-through;">{{ d.before }}</span>
+                          <span style="color:#8B9C93;">→</span>
+                          <span style="color:#0E3B2E;font-weight:700;">{{ d.after }}</span>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+          </sc-if>
+
+          <sc-if value="{{ queueEmpty }}">
+          <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;color:#5A6F66;">
+            <div style="width:60px;height:60px;border:2px solid #0E3B2E;border-radius:0 0 0 60px;border-top:none;border-right:none;"></div>
+            <div style="font-family:'Anton',sans-serif;font-size:22px;text-transform:uppercase;color:#12222B;letter-spacing:.5px;">Queue clear</div>
+            <div style="font-size:13px;">No venues waiting for review.</div>
+          </div>
+          </sc-if>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ SCREEN: USERS ============ -->
+      <sc-if value="{{ isUsers }}">
+      <div style="height:100%;overflow:auto;padding:22px 26px 40px;">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:18px;flex-wrap:wrap;">
+          <div style="position:relative;flex:1;min-width:240px;max-width:420px;">
+            <input value="{{ userQuery }}" onChange="{{ setUserQuery }}" placeholder="Search by name or email…" style="width:100%;padding:11px 14px 11px 14px;border:1px solid #D9E1DC;border-radius:10px;font-size:14px;background:#fff;color:#12222B;" />
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5A6F66;letter-spacing:1px;">{{ userCount }} USERS</div>
+        </div>
+
+        <div style="border:1px solid #E2E7E3;border-radius:12px;overflow:hidden;background:#fff;">
+          <div style="display:grid;grid-template-columns:1.4fr 1.6fr .9fr 1fr .9fr 130px;padding:12px 18px;background:#F3F7F4;border-bottom:1px solid #E2E7E3;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.5px;color:#5A6F66;">
+            <span>NAME</span><span>EMAIL</span><span>ROLE</span><span>JOINED</span><span>STATUS</span><span></span>
+          </div>
+          <sc-for list="{{ userRows }}" as="u" hint-placeholder-count="8">
+            <div style="display:grid;grid-template-columns:1.4fr 1.6fr .9fr 1fr .9fr 130px;padding:13px 18px;border-bottom:1px solid #EEF1EF;align-items:center;font-size:13.5px;">
+              <span style="font-weight:600;">{{ u.name }}</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:12.5px;color:#5A6F66;">{{ u.maskedEmail }}</span>
+              <span><span style="{{ u.roleStyle }}">{{ u.role }}</span></span>
+              <span style="color:#5A6F66;">{{ u.joined }}</span>
+              <span style="display:inline-flex;align-items:center;gap:7px;"><span style="{{ u.dotStyle }}"></span><span style="{{ u.statusTextStyle }}">{{ u.status }}</span></span>
+              <span style="text-align:right;"><button onClick="{{ u.onChangeRole }}" style="padding:6px 12px;border-radius:8px;border:1px solid #D9E1DC;background:#fff;color:#12222B;font-size:12.5px;font-weight:600;cursor:pointer;">Change role</button></span>
+            </div>
+          </sc-for>
+          <sc-if value="{{ noUsers }}">
+            <div style="padding:36px;text-align:center;color:#5A6F66;font-size:13px;">No users match “{{ userQuery }}”.</div>
+          </sc-if>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ SCREEN: AUDIT LOG ============ -->
+      <sc-if value="{{ isAudit }}">
+      <div style="height:100%;overflow:auto;padding:22px 26px 40px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+          <select value="{{ auditActor }}" onChange="{{ setAuditActor }}" style="padding:9px 12px;border:1px solid #D9E1DC;border-radius:9px;font-size:13px;background:#fff;color:#12222B;">
+            <option value="all">All actors</option>
+            <option value="Prakash Thapa">Prakash Thapa</option>
+            <option value="Manisha Shakya">Manisha Shakya</option>
+            <option value="System">System</option>
+          </select>
+          <select value="{{ auditAction }}" onChange="{{ setAuditAction }}" style="padding:9px 12px;border:1px solid #D9E1DC;border-radius:9px;font-size:13px;background:#fff;color:#12222B;">
+            <option value="all">All action types</option>
+            <option value="venue">venue.*</option>
+            <option value="user">user.*</option>
+            <option value="flag">flag.*</option>
+            <option value="booking">booking.*</option>
+          </select>
+          <select style="padding:9px 12px;border:1px solid #D9E1DC;border-radius:9px;font-size:13px;background:#fff;color:#12222B;">
+            <option>Last 7 days</option>
+            <option>Last 30 days</option>
+            <option>Last 90 days</option>
+            <option>All time</option>
+          </select>
+          <div style="flex:1;"></div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5A6F66;letter-spacing:1px;display:flex;align-items:center;gap:8px;"><span style="width:7px;height:7px;border-radius:999px;background:#0E3B2E;display:block;"></span>APPEND-ONLY · {{ auditCount }} ENTRIES</div>
+        </div>
+
+        <div style="border:1px solid #E2E7E3;border-radius:12px;overflow:hidden;background:#fff;">
+          <div style="display:grid;grid-template-columns:170px 1.1fr 1fr 1.3fr 40px;padding:12px 18px;background:#F3F7F4;border-bottom:1px solid #E2E7E3;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.5px;color:#5A6F66;">
+            <span>TIMESTAMP</span><span>ACTOR</span><span>ACTION</span><span>TARGET</span><span></span>
+          </div>
+          <sc-for list="{{ auditRows }}" as="a" hint-placeholder-count="6">
+            <div>
+              <button onClick="{{ a.onToggle }}" style="width:100%;display:grid;grid-template-columns:170px 1.1fr 1fr 1.3fr 40px;padding:13px 18px;border:none;border-bottom:1px solid #EEF1EF;background:#fff;text-align:left;align-items:center;font-size:13px;cursor:pointer;">
+                <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5A6F66;">{{ a.ts }}</span>
+                <span style="font-weight:600;">{{ a.actor }}</span>
+                <span><span style="font-family:'JetBrains Mono',monospace;font-size:12px;background:#EEF3F0;color:#0E3B2E;border-radius:6px;padding:3px 8px;">{{ a.code }}</span></span>
+                <span style="color:#3A4A43;">{{ a.target }}</span>
+                <span style="{{ a.chevStyle }}">›</span>
+              </button>
+              <sc-if value="{{ a.expanded }}">
+                <div style="padding:14px 18px 16px 18px;background:#F7FAF8;border-bottom:1px solid #EEF1EF;">
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:1.5px;color:#5A6F66;margin-bottom:10px;">BEFORE → AFTER</div>
+                  <div style="display:flex;flex-direction:column;gap:8px;max-width:520px;">
+                    <sc-for list="{{ a.diffRows }}" as="r" hint-placeholder-count="1">
+                      <div style="display:grid;grid-template-columns:120px 1fr 20px 1fr;gap:10px;align-items:center;font-family:'JetBrains Mono',monospace;font-size:12px;">
+                        <span style="color:#5A6F66;">{{ r.k }}</span>
+                        <span style="background:#fff;border:1px solid #E2E7E3;border-radius:6px;padding:4px 9px;color:#8B9C93;text-decoration:line-through;">{{ r.before }}</span>
+                        <span style="color:#8B9C93;text-align:center;">→</span>
+                        <span style="background:#fff;border:1px solid #C9DBCF;border-radius:6px;padding:4px 9px;color:#0E3B2E;font-weight:600;">{{ r.after }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ SCREEN: FEATURE FLAGS ============ -->
+      <sc-if value="{{ isFlags }}">
+      <div style="height:100%;overflow:auto;padding:22px 26px 40px;">
+        <div style="border:1px solid #E2E7E3;border-radius:12px;overflow:hidden;background:#fff;">
+          <div style="display:grid;grid-template-columns:230px 1fr 200px 64px;padding:12px 18px;background:#F3F7F4;border-bottom:1px solid #E2E7E3;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:1.5px;color:#5A6F66;">
+            <span>FLAG</span><span>DESCRIPTION</span><span>LAST CHANGED BY</span><span style="text-align:right;">STATE</span>
+          </div>
+          <sc-for list="{{ flagRows }}" as="f" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:230px 1fr 200px 64px;padding:15px 18px;border-bottom:1px solid #EEF1EF;align-items:center;">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:#12222B;">{{ f.name }}</span>
+              <span style="font-size:13px;color:#3A4A43;padding-right:16px;">{{ f.desc }}</span>
+              <span style="font-size:12.5px;color:#5A6F66;">{{ f.by }} · {{ f.when }}</span>
+              <span style="text-align:right;">
+                <button onClick="{{ f.onToggle }}" aria-label="Toggle flag" style="{{ f.trackStyle }}"><span style="{{ f.knobStyle }}"></span></button>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin-top:14px;font-size:12px;color:#5A6F66;display:flex;align-items:center;gap:8px;">
+          <span style="width:7px;height:7px;border-radius:999px;background:#0E3B2E;display:block;"></span>Toggling a flag is recorded in the audit log as <span style="font-family:'JetBrains Mono',monospace;">flag.toggle</span>.
+        </div>
+      </div>
+      </sc-if>
+
+      <!-- ============ SCREEN: OTHER (undesigned) ============ -->
+      <sc-if value="{{ isOther }}">
+      <div style="height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#5A6F66;">
+        <div style="width:52px;height:52px;border:2px solid #C7D2CC;border-radius:0 0 0 52px;border-top:none;border-right:none;"></div>
+        <div style="font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;color:#12222B;letter-spacing:.5px;">{{ screenTitle }}</div>
+        <div style="font-size:13px;">Not part of this design pass.</div>
+      </div>
+      </sc-if>
+
+    </div>
+  </main>
+
+  <!-- ===================== REJECT MODAL ===================== -->
+  <sc-if value="{{ rejectOpen }}">
+  <div style="position:fixed;inset:0;background:rgba(9,42,33,.55);display:flex;align-items:center;justify-content:center;padding:24px;z-index:50;" onClick="{{ closeReject }}">
+    <div onClick="{{ stop }}" style="width:660px;max-width:100%;max-height:90vh;overflow:auto;background:#fff;border-radius:12px;box-shadow:0 24px 60px rgba(9,42,33,.35);">
+      <div style="padding:20px 24px;border-bottom:1px solid #E2E7E3;">
+        <div style="font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;letter-spacing:.5px;">Reject {{ selectedVenue.name }}?</div>
+        <div style="font-size:12.5px;color:#5A6F66;margin-top:4px;">The owner will be emailed and can resubmit after making changes.</div>
+      </div>
+      <div style="padding:22px 24px;">
+        <label style="font-size:12px;font-weight:600;color:#3A4A43;display:block;margin-bottom:7px;">Reason for rejection <span style="color:#B4483F;">*</span></label>
+        <textarea value="{{ rejectReason }}" onChange="{{ setRejectReason }}" placeholder="e.g. Venue photos don't match the listed court. Please upload current photos of the turf." style="width:100%;min-height:84px;padding:12px 14px;border:1px solid #D9E1DC;border-radius:10px;font-size:13.5px;line-height:1.5;color:#12222B;"></textarea>
+
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:2px;color:#5A6F66;margin:20px 0 9px;">EMAIL PREVIEW — OWNER RECEIVES</div>
+        <div style="border:1px solid #E2E7E3;border-radius:10px;overflow:hidden;">
+          <div style="padding:12px 16px;background:#F3F7F4;border-bottom:1px solid #E2E7E3;font-size:12.5px;line-height:1.7;">
+            <div><span style="color:#5A6F66;">To:</span> <span style="font-family:'JetBrains Mono',monospace;">{{ selectedVenue.ownerEmail }}</span></div>
+            <div><span style="color:#5A6F66;">Subject:</span> <span style="font-weight:600;">Your CourtBook venue submission needs changes</span></div>
+          </div>
+          <div style="padding:16px;font-size:13px;line-height:1.65;color:#3A4A43;">
+            <p style="margin:0 0 10px;">Hi {{ ownerFirst }},</p>
+            <p style="margin:0 0 10px;">Thanks for submitting {{ selectedVenue.name }} to CourtBook. After review, we're unable to approve it right now for the following reason:</p>
+            <div style="border-left:3px solid #0E3B2E;background:#F3F7F4;padding:10px 14px;border-radius:0 8px 8px 0;margin:0 0 12px;color:#12222B;">{{ rejectReasonDisplay }}</div>
+            <p style="margin:0 0 10px;">Once you've updated your listing, resubmit and we'll take another look.</p>
+            <p style="margin:0;color:#5A6F66;">— The CourtBook Venue Team</p>
+          </div>
+        </div>
+
+        <div style="font-size:12px;color:#5A6F66;display:flex;align-items:center;gap:8px;margin-top:16px;">
+          <span style="width:7px;height:7px;border-radius:999px;background:#0E3B2E;display:block;"></span>This action is recorded in the audit log as <span style="font-family:'JetBrains Mono',monospace;">venue.reject</span>.
+        </div>
+      </div>
+      <div style="padding:16px 24px;border-top:1px solid #E2E7E3;display:flex;justify-content:flex-end;gap:10px;">
+        <button onClick="{{ closeReject }}" style="padding:10px 18px;border-radius:10px;border:1px solid #D9E1DC;background:#fff;color:#12222B;font-size:13.5px;font-weight:600;cursor:pointer;">Cancel</button>
+        <button onClick="{{ confirmReject }}" disabled="{{ rejectDisabled }}" style="{{ rejectBtnStyle }}">Reject &amp; send email</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+  <!-- ===================== ROLE MODAL ===================== -->
+  <sc-if value="{{ roleOpen }}">
+  <div style="position:fixed;inset:0;background:rgba(9,42,33,.55);display:flex;align-items:center;justify-content:center;padding:24px;z-index:50;" onClick="{{ closeRole }}">
+    <div onClick="{{ stop }}" style="width:520px;max-width:100%;background:#fff;border-radius:12px;box-shadow:0 24px 60px rgba(9,42,33,.35);overflow:hidden;">
+      <div style="padding:20px 24px;border-bottom:1px solid #E2E7E3;">
+        <div style="font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;letter-spacing:.5px;">Change {{ roleUser.firstName }}’s role</div>
+      </div>
+      <div style="padding:22px 24px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px;">
+          <span style="font-size:13px;font-weight:600;background:#EEF3F0;color:#3A4A43;border-radius:999px;padding:6px 14px;">{{ roleUser.role }}</span>
+          <span style="color:#8B9C93;font-size:18px;">→</span>
+          <span style="font-size:13px;font-weight:600;background:#0E3B2E;color:#F7F6F2;border-radius:999px;padding:6px 14px;">{{ roleUser.nextRole }}</span>
+        </div>
+        <div style="border-left:3px solid #FF6A2B;background:#FFF3EE;padding:12px 16px;border-radius:0 8px 8px 0;font-size:13.5px;line-height:1.5;color:#12222B;">{{ roleUser.consequence }}</div>
+        <div style="font-size:12px;color:#5A6F66;display:flex;align-items:center;gap:8px;margin-top:16px;">
+          <span style="width:7px;height:7px;border-radius:999px;background:#0E3B2E;display:block;"></span>This action is recorded in the audit log as <span style="font-family:'JetBrains Mono',monospace;">user.role_change</span>.
+        </div>
+      </div>
+      <div style="padding:16px 24px;border-top:1px solid #E2E7E3;display:flex;justify-content:flex-end;gap:10px;">
+        <button onClick="{{ closeRole }}" style="padding:10px 18px;border-radius:10px;border:1px solid #D9E1DC;background:#fff;color:#12222B;font-size:13.5px;font-weight:600;cursor:pointer;">Cancel</button>
+        <button onClick="{{ confirmRole }}" style="padding:10px 18px;border-radius:10px;border:none;background:#FF6A2B;color:#fff;font-size:13.5px;font-weight:700;cursor:pointer;">{{ roleConfirmLabel }}</button>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    screen: 'venues',
+    selectedVenueId: 'v1',
+    decidedIds: [],
+    rejectOpen: false,
+    rejectReason: '',
+    roleUser: null,
+    expanded: {},
+    flags: { f1: true, f2: false, f3: true, f4: false, f5: false },
+    userQuery: '',
+    userRoles: {},
+    auditActor: 'all',
+    auditAction: 'all',
+    extraAudit: [],
+  };
+
+  nav = [
+    { id: 'dashboard', label: 'Dashboard' },
+    { id: 'users', label: 'Users' },
+    { id: 'venues', label: 'Venue approvals' },
+    { id: 'bookings', label: 'Bookings' },
+    { id: 'audit', label: 'Audit log' },
+    { id: 'flags', label: 'Feature flags' },
+    { id: 'system', label: 'System' },
+  ];
+
+  venues = [
+    { id: 'v1', name: 'Turf Arena Baneshwor', area: 'Baneshwor', owner: 'Rajesh Shrestha', ownerEmail: 'rajesh.shrestha@gmail.com', submitted: '3 Jul 2026', type: 'edit', pricePerHr: 'Rs 1,500', openHours: '6:00 AM – 11:00 PM', rating: '4.6', amenities: ['Floodlights', 'Changing rooms', 'Parking', 'Drinking water'], diff: [
+      { field: 'Price / hour', before: 'Rs 1,200', after: 'Rs 1,500' },
+      { field: 'Amenities', before: '3 listed', after: '+ Floodlights' },
+      { field: 'Closing time', before: '10:00 PM', after: '11:00 PM' },
+    ] },
+    { id: 'v2', name: 'Green Court Kupondole', area: 'Kupondole', owner: 'Sita Gurung', ownerEmail: 'sita.gurung@gmail.com', submitted: '4 Jul 2026', type: 'new', pricePerHr: 'Rs 1,300', openHours: '6:00 AM – 10:00 PM', rating: 'New', amenities: ['Changing rooms', 'Parking'], diff: [] },
+    { id: 'v3', name: 'PowerPlay Sanepa', area: 'Sanepa', owner: 'Bikash Tamang', ownerEmail: 'bikash.tamang@gmail.com', submitted: '4 Jul 2026', type: 'new', pricePerHr: 'Rs 1,600', openHours: '7:00 AM – 11:00 PM', rating: 'New', amenities: ['Floodlights', 'Cafeteria', 'Parking', 'First aid'], diff: [] },
+    { id: 'v4', name: 'Futsal Point Chabahil', area: 'Chabahil', owner: 'Anita Rai', ownerEmail: 'anita.rai@gmail.com', submitted: '2 Jul 2026', type: 'edit', pricePerHr: 'Rs 1,400', openHours: '6:00 AM – 10:30 PM', rating: '4.3', amenities: ['Changing rooms', 'Parking', 'Drinking water'], diff: [
+      { field: 'Venue name', before: 'Chabahil Futsal', after: 'Futsal Point Chabahil' },
+      { field: 'Opening time', before: '7:00 AM', after: '6:00 AM' },
+    ] },
+    { id: 'v5', name: 'Satdobato Sports Hub', area: 'Satdobato', owner: 'Deepak Karki', ownerEmail: 'deepak.karki@gmail.com', submitted: '5 Jul 2026', type: 'new', pricePerHr: 'Rs 1,450', openHours: '6:00 AM – 11:00 PM', rating: 'New', amenities: ['Floodlights', 'Changing rooms', 'Parking', 'Cafeteria', 'Drinking water'], diff: [] },
+  ];
+
+  users = [
+    { id: 'u1', name: 'Sita Gurung', email: 'sita.gurung@gmail.com', role: 'Player', joined: '12 Jan 2026', status: 'Active' },
+    { id: 'u2', name: 'Rajesh Shrestha', email: 'rajesh.shrestha@gmail.com', role: 'Owner', joined: '4 Nov 2025', status: 'Active' },
+    { id: 'u3', name: 'Bikash Tamang', email: 'bikash.tamang@gmail.com', role: 'Owner', joined: '22 Feb 2026', status: 'Active' },
+    { id: 'u4', name: 'Anita Rai', email: 'anita.rai@gmail.com', role: 'Player', joined: '9 Mar 2026', status: 'Active' },
+    { id: 'u5', name: 'Deepak Karki', email: 'deepak.karki@gmail.com', role: 'Player', joined: '18 May 2026', status: 'Active' },
+    { id: 'u6', name: 'Prakash Thapa', email: 'prakash.thapa@courtbook.com', role: 'Admin', joined: '1 Oct 2025', status: 'Active' },
+    { id: 'u7', name: 'Manisha Shakya', email: 'manisha.shakya@gmail.com', role: 'Player', joined: '27 Apr 2026', status: 'Suspended' },
+    { id: 'u8', name: 'Kiran Maharjan', email: 'kiran.maharjan@gmail.com', role: 'Owner', joined: '15 Dec 2025', status: 'Active' },
+  ];
+
+  audit = [
+    { id: 'a1', ts: '5 Jul 2026 · 14:22', actor: 'Prakash Thapa', code: 'venue.approve', target: 'PowerPlay Sanepa', kind: 'venue', before: { status: 'pending' }, after: { status: 'approved' } },
+    { id: 'a2', ts: '5 Jul 2026 · 13:58', actor: 'Prakash Thapa', code: 'user.role_change', target: 'Bikash Tamang', kind: 'user', before: { role: 'player' }, after: { role: 'owner' } },
+    { id: 'a3', ts: '5 Jul 2026 · 11:04', actor: 'System', code: 'flag.toggle', target: 'sms_reminders', kind: 'flag', before: { enabled: 'false' }, after: { enabled: 'true' } },
+    { id: 'a4', ts: '4 Jul 2026 · 19:31', actor: 'Prakash Thapa', code: 'venue.reject', target: 'Balaju Turf', kind: 'venue', before: { status: 'pending' }, after: { status: 'rejected' } },
+    { id: 'a5', ts: '4 Jul 2026 · 16:12', actor: 'Manisha Shakya', code: 'booking.cancel', target: '#BK-20418', kind: 'booking', before: { status: 'confirmed' }, after: { status: 'cancelled' } },
+    { id: 'a6', ts: '4 Jul 2026 · 09:47', actor: 'Prakash Thapa', code: 'user.suspend', target: 'Manisha Shakya', kind: 'user', before: { status: 'active' }, after: { status: 'suspended' } },
+  ];
+
+  flagDefs = [
+    { id: 'f1', name: 'new_booking_flow', desc: 'Two-step slot picker with live availability.', by: 'Prakash Thapa', when: '2 Jul 2026' },
+    { id: 'f2', name: 'owner_payouts_v2', desc: 'Weekly automated payouts to venue owners.', by: 'System', when: '28 Jun 2026' },
+    { id: 'f3', name: 'sms_reminders', desc: 'SMS match reminder 2 hours before kickoff.', by: 'Prakash Thapa', when: '5 Jul 2026' },
+    { id: 'f4', name: 'dark_court_theme', desc: 'Floodlight dark theme for the player app.', by: 'Amit Bhandari', when: '20 Jun 2026' },
+    { id: 'f5', name: 'instant_refunds', desc: 'Auto-refund on cancellations over 6h before kickoff.', by: 'System', when: '1 Jul 2026' },
+  ];
+
+  stop = (e) => { e.stopPropagation(); };
+
+  selectScreen = (id) => this.setState({ screen: id, rejectOpen: false, roleUser: null });
+  selectVenue = (id) => this.setState({ selectedVenueId: id, rejectOpen: false });
+
+  openReject = () => this.setState({ rejectOpen: true });
+  closeReject = () => this.setState({ rejectOpen: false, rejectReason: '' });
+  setRejectReason = (e) => this.setState({ rejectReason: e.target.value });
+
+  decide = (id, code, target) => {
+    const entry = { id: 'x' + Date.now(), ts: 'Just now', actor: 'Prakash Thapa', code, target, kind: 'venue',
+      before: { status: 'pending' }, after: { status: code === 'venue.approve' ? 'approved' : 'rejected' } };
+    this.setState((s) => {
+      const decided = [...s.decidedIds, id];
+      const nextQueue = this.venues.filter((v) => !decided.includes(v.id));
+      return { decidedIds: decided, selectedVenueId: nextQueue.length ? nextQueue[0].id : null,
+        rejectOpen: false, rejectReason: '', extraAudit: [entry, ...s.extraAudit] };
+    });
+  };
+  approveVenue = () => { const v = this.currentVenue(); if (v) this.decide(v.id, 'venue.approve', v.name); };
+  confirmReject = () => { const v = this.currentVenue(); if (v) this.decide(v.id, 'venue.reject', v.name); };
+
+  currentVenue() {
+    const queue = this.venues.filter((v) => !this.state.decidedIds.includes(v.id));
+    return queue.find((v) => v.id === this.state.selectedVenueId) || queue[0] || null;
+  }
+
+  openRole = (u) => {
+    const firstName = u.name.split(' ')[0];
+    const role = this.state.userRoles[u.id] || u.role;
+    const nextRole = role === 'Player' ? 'Owner' : (role === 'Owner' ? 'Player' : 'Owner');
+    let consequence;
+    if (nextRole === 'Owner') consequence = firstName + ' will gain access to all owner tools — venue management, slot pricing, and payouts.';
+    else if (nextRole === 'Player') consequence = firstName + ' will lose access to all owner tools and revert to a standard player account.';
+    else consequence = firstName + ' will gain full administrative access.';
+    this.setState({ roleUser: { ...u, role, firstName, nextRole, consequence } });
+  };
+  closeRole = () => this.setState({ roleUser: null });
+  confirmRole = () => this.setState((s) => ({ userRoles: { ...s.userRoles, [s.roleUser.id]: s.roleUser.nextRole }, roleUser: null }));
+
+  toggleExpand = (id) => this.setState((s) => ({ expanded: { ...s.expanded, [id]: !s.expanded[id] } }));
+  toggleFlag = (id) => this.setState((s) => ({ flags: { ...s.flags, [id]: !s.flags[id] } }));
+  setUserQuery = (e) => this.setState({ userQuery: e.target.value });
+  setAuditActor = (e) => this.setState({ auditActor: e.target.value });
+  setAuditAction = (e) => this.setState({ auditAction: e.target.value });
+
+  maskEmail(e) { const p = e.split('@'); return p[0][0] + '•••@' + p[1]; }
+
+  roleChipStyle(role) {
+    const base = 'font-size:12px;font-weight:600;border-radius:999px;padding:4px 11px;white-space:nowrap;';
+    if (role === 'Owner') return base + 'background:#0E3B2E;color:#F7F6F2;';
+    if (role === 'Admin') return base + 'background:#12222B;color:#F7F6F2;';
+    return base + 'background:#EEF3F0;color:#3A4A43;';
+  }
+
+  renderVals() {
+    const s = this.state;
+    const screen = s.screen;
+
+    const navItems = this.nav.map((n) => {
+      const active = n.id === screen;
+      const style = 'display:flex;align-items:center;gap:8px;width:100%;padding:9px 12px;border:none;border-radius:8px;cursor:pointer;font-size:13.5px;font-weight:' +
+        (active ? '600' : '500') + ';font-family:Figtree,sans-serif;background:' +
+        (active ? '#0E3B2E' : 'transparent') + ';color:' + (active ? '#F7F6F2' : '#9FB4AC') + ';';
+      const pending = this.venues.filter((v) => !s.decidedIds.includes(v.id)).length;
+      return { ...n, style, active, onSelect: () => this.selectScreen(n.id), badge: n.id === 'venues' && pending ? pending : null };
+    });
+
+    const titles = {
+      dashboard: ['Dashboard', 'Operational overview'],
+      users: ['Users', 'Accounts, roles and access'],
+      venues: ['Venue approvals', 'Review and decide on submitted venues'],
+      bookings: ['Bookings', 'All court reservations'],
+      audit: ['Audit log', 'Append-only record of every mutation'],
+      flags: ['Feature flags', 'Runtime toggles across the platform'],
+      system: ['System', 'Health and configuration'],
+    };
+    const [screenTitle, screenSub] = titles[screen] || ['', ''];
+
+    // ---- venues ----
+    const queue = this.venues.filter((v) => !s.decidedIds.includes(v.id)).map((v) => {
+      const selected = this.currentVenue() && this.currentVenue().id === v.id;
+      const itemStyle = 'width:100%;text-align:left;border:none;border-bottom:1px solid #EEF1EF;cursor:pointer;padding:14px 18px;display:flex;flex-direction:column;gap:5px;background:' +
+        (selected ? '#F3F7F4' : '#fff') + ';border-left:3px solid ' + (selected ? '#0E3B2E' : 'transparent') + ';';
+      const isNew = v.type === 'new';
+      const typeChip = 'font-family:JetBrains Mono,monospace;font-size:9.5px;letter-spacing:1px;padding:2px 7px;border-radius:5px;flex-shrink:0;' +
+        (isNew ? 'background:#0E3B2E;color:#F7F6F2;' : 'border:1px solid #C9D4CE;color:#5A6F66;');
+      return { ...v, selected, itemStyle, typeChip, typeLabel: isNew ? 'NEW' : 'EDIT', onSelect: () => this.selectVenue(v.id) };
+    });
+    const sv = this.currentVenue();
+    const selectedVenue = sv ? { ...sv, typeFull: sv.type === 'new' ? 'New submission' : 'Edit resubmission' } : null;
+    const hasSelection = !!sv;
+    const queueEmpty = queue.length === 0;
+    const hasDiff = sv && sv.type === 'edit' && sv.diff.length > 0;
+    const ownerFirst = sv ? sv.owner.split(' ')[0] : '';
+
+    // ---- users ----
+    const q = s.userQuery.trim().toLowerCase();
+    const userRows = this.users
+      .filter((u) => !q || u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q))
+      .map((u) => {
+        const role = s.userRoles[u.id] || u.role;
+        const suspended = u.status === 'Suspended';
+        return {
+          ...u, role,
+          maskedEmail: this.maskEmail(u.email),
+          roleStyle: this.roleChipStyle(role),
+          dotStyle: 'width:7px;height:7px;border-radius:999px;display:block;background:' + (suspended ? '#C8892B' : '#0E3B2E') + ';',
+          statusTextStyle: 'color:' + (suspended ? '#8B7333' : '#3A4A43') + ';',
+          onChangeRole: () => this.openRole(u),
+        };
+      });
+
+    // ---- audit ----
+    const allAudit = [...s.extraAudit, ...this.audit];
+    const auditRows = allAudit
+      .filter((a) => s.auditActor === 'all' || a.actor === s.auditActor)
+      .filter((a) => s.auditAction === 'all' || a.kind === s.auditAction)
+      .map((a) => {
+        const expanded = !!s.expanded[a.id];
+        const diffRows = Object.keys(a.before).map((k) => ({ k, before: String(a.before[k]), after: String(a.after[k]) }));
+        return { ...a, expanded, diffRows, onToggle: () => this.toggleExpand(a.id),
+          chevStyle: 'font-size:20px;color:#8B9C93;justify-self:end;transition:transform .15s;transform:rotate(' + (expanded ? '90deg' : '0deg') + ');' };
+      });
+
+    // ---- flags ----
+    const flagRows = this.flagDefs.map((f) => {
+      const on = !!s.flags[f.id];
+      return { ...f, on,
+        trackStyle: 'width:42px;height:24px;border-radius:999px;border:none;cursor:pointer;position:relative;padding:0;transition:background .15s;background:' + (on ? '#0E3B2E' : '#C7D2CC') + ';',
+        knobStyle: 'position:absolute;top:3px;left:' + (on ? '21px' : '3px') + ';width:18px;height:18px;border-radius:999px;background:#fff;transition:left .15s;display:block;box-shadow:0 1px 2px rgba(0,0,0,.2);' };
+    });
+
+    const rejectDisabled = s.rejectReason.trim().length === 0;
+    const rejectBtnStyle = 'padding:10px 18px;border-radius:10px;border:none;font-size:13.5px;font-weight:700;cursor:' +
+      (rejectDisabled ? 'not-allowed' : 'pointer') + ';background:' + (rejectDisabled ? '#F1C7B4' : '#FF6A2B') + ';color:#fff;';
+
+    const ru = s.roleUser;
+
+    return {
+      navItems, screenTitle, screenSub,
+      isVenues: screen === 'venues', isUsers: screen === 'users', isAudit: screen === 'audit',
+      isFlags: screen === 'flags', isOther: ['dashboard', 'bookings', 'system'].includes(screen),
+      queue, pendingCount: queue.length, selectedVenue, hasSelection, queueEmpty, hasDiff, ownerFirst,
+      approveVenue: this.approveVenue, openReject: this.openReject,
+      userRows, userCount: userRows.length, userQuery: s.userQuery, setUserQuery: this.setUserQuery,
+      noUsers: userRows.length === 0,
+      auditRows, auditCount: auditRows.length, auditActor: s.auditActor, auditAction: s.auditAction,
+      setAuditActor: this.setAuditActor, setAuditAction: this.setAuditAction,
+      flagRows,
+      rejectOpen: s.rejectOpen, closeReject: this.closeReject, setRejectReason: this.setRejectReason,
+      rejectReason: s.rejectReason, rejectReasonDisplay: s.rejectReason.trim() || 'Your reason will appear here as you type…',
+      confirmReject: this.confirmReject, rejectDisabled, rejectBtnStyle, stop: this.stop,
+      roleOpen: !!ru, roleUser: ru || { firstName: '', role: '', nextRole: '', consequence: '' },
+      roleConfirmLabel: ru ? 'Make ' + ru.firstName + ' ' + (ru.nextRole === 'Admin' ? 'an admin' : ru.nextRole === 'Owner' ? 'an owner' : 'a player') : '',
+      closeRole: this.closeRole, confirmRole: this.confirmRole,
+    };
+  }
+}
+</script>
+</body>
+</html>

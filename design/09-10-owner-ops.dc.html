@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#E4EAE6}
+  @keyframes floodlight{0%,100%{opacity:.55}50%{opacity:1}}
+  @keyframes livepulse{0%,100%{box-shadow:0 0 0 0 rgba(255,106,43,.45)}50%{box-shadow:0 0 0 6px rgba(255,106,43,0)}}
+</style>
+</helmet>
+<div style="min-height:100%;background:#E4EAE6;padding:56px 56px 120px;font-family:Figtree,system-ui,sans-serif;display:flex;flex-direction:column;gap:72px;color:#0E3B2E">
+
+<div style="max-width:1160px">
+  <div style="font-family:Anton;font-size:30px;letter-spacing:.02em;text-transform:uppercase;color:#0E3B2E;line-height:1">CourtBook — Owner Operations</div>
+  <div style="font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5C7A6E;margin-top:10px">Night-match ops · futsal court booking · Kathmandu</div>
+</div>
+
+<!-- ===================== SECTION 1 · DAILY OPS DESKTOP ===================== -->
+<section id="1a" style="position:relative">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+    <span style="background:#0E3B2E;color:#F7F6F2;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;padding:4px 9px;border-radius:999px">1a</span>
+    <span style="font-family:Anton;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#0E3B2E">Daily Operations · Desktop</span>
+    <span style="flex:1;height:2px;background:#0E3B2E;opacity:.18"></span>
+  </div>
+
+  <div style="width:1160px;background:#F7F6F2;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px -28px rgba(9,42,33,.5);border:1px solid #D7E2DC">
+    <!-- Turf top bar -->
+    <div style="background:#0E3B2E;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;color:#F7F6F2">
+      <div style="display:flex;align-items:center;gap:22px">
+        <span style="font-family:Anton;font-size:20px;letter-spacing:.03em;text-transform:uppercase">CourtBook</span>
+        <button style="display:flex;align-items:center;gap:10px;background:#092A21;border:1px solid rgba(191,216,206,.28);color:#F7F6F2;padding:8px 14px;border-radius:999px;font-family:Figtree;font-size:14px;font-weight:600;cursor:pointer">
+          Baneshwor Arena
+          <span style="color:#BFD8CE;font-size:11px">▼</span>
+        </button>
+      </div>
+      <div style="display:flex;align-items:center;gap:18px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#BFD8CE;letter-spacing:.04em">Sat · 4 Jul · 7:20 PM</span>
+        <span style="width:34px;height:34px;border-radius:999px;background:#FF6A2B;color:#0E3B2E;font-family:Anton;font-size:14px;display:flex;align-items:center;justify-content:center">RK</span>
+      </div>
+    </div>
+
+    <div style="padding:26px 28px 30px">
+      <!-- Stat cards on a court line -->
+      <div style="position:relative">
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+          <div style="background:#fff;border:1px solid #D7E2DC;border-radius:12px;padding:18px 20px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#5C7A6E">Today's bookings</div>
+            <div style="display:flex;align-items:baseline;gap:12px;margin-top:8px">
+              <span style="font-family:Anton;font-size:44px;line-height:.9;color:#12222B;font-variant-numeric:tabular-nums">14</span>
+              <span style="font-family:Figtree;font-size:13px;font-weight:600;color:#0E7A4E">▲ 2 vs last wk</span>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #D7E2DC;border-radius:12px;padding:18px 20px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#5C7A6E">Occupancy</div>
+            <div style="display:flex;align-items:baseline;gap:12px;margin-top:8px">
+              <span style="font-family:Anton;font-size:44px;line-height:.9;color:#12222B;font-variant-numeric:tabular-nums">78<span style="font-size:24px">%</span></span>
+              <span style="font-family:Figtree;font-size:13px;font-weight:600;color:#0E7A4E">▲ 6 pts</span>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #D7E2DC;border-radius:12px;padding:18px 20px">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#5C7A6E">Revenue</div>
+            <div style="display:flex;align-items:baseline;gap:12px;margin-top:8px">
+              <span style="font-family:Anton;font-size:44px;line-height:.9;color:#12222B;font-variant-numeric:tabular-nums">Rs 18,500</span>
+              <span style="font-family:Figtree;font-size:13px;font-weight:600;color:#0E7A4E">▲ Rs 2,100</span>
+            </div>
+          </div>
+        </div>
+        <!-- signature court line + corner arc -->
+        <div style="position:relative;height:2px;background:#0E3B2E;margin-top:20px;opacity:.9">
+          <div style="position:absolute;left:0;bottom:0;width:22px;height:22px;border-left:2px solid #0E3B2E;border-bottom:2px solid #0E3B2E;border-bottom-left-radius:22px"></div>
+        </div>
+      </div>
+
+      <!-- Timeline header + legend -->
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin:24px 0 12px">
+        <span style="font-family:Anton;font-size:18px;letter-spacing:.05em;text-transform:uppercase;color:#0E3B2E">Today · Timeline</span>
+        <div style="display:flex;align-items:center;gap:16px;font-family:Figtree;font-size:12px;font-weight:500;color:#5C7A6E">
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:rgba(255,106,43,.18);border-left:3px solid #FF6A2B"></span>Confirmed</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:rgba(201,122,0,.16);border-left:3px solid #C97A00"></span>Pending</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:3px;background:repeating-linear-gradient(45deg,#DCE5E0,#DCE5E0 3px,#0E3B2E22 3px,#0E3B2E22 5px)"></span>Blocked</span>
+          <span style="width:1px;height:14px;background:#D7E2DC"></span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:9px;height:9px;border:1.5px solid #5C7A6E;border-radius:999px"></span>Online</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:9px;height:9px;background:#5C7A6E;transform:rotate(45deg)"></span>Walk-in</span>
+        </div>
+      </div>
+
+      <!-- Timeline grid -->
+      <div style="position:relative;background:#fff;border:1px solid #D7E2DC;border-radius:12px;padding:14px 16px 18px">
+        <!-- hour axis -->
+        <div style="position:relative;height:18px;margin-left:78px;margin-bottom:6px">
+          <span style="position:absolute;left:0%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:#5C7A6E">6a</span>
+          <span style="position:absolute;left:12.5%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:#5C7A6E">8a</span>
+          <span style="position:absolute;left:25%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:#5C7A6E">10a</span>
+          <span style="position:absolute;left:37.5%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:#5C7A6E">12p</span>
+          <span style="position:absolute;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:#5C7A6E">2p</span>
+          <span style="position:absolute;left:62.5%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:#5C7A6E">4p</span>
+          <span style="position:absolute;left:75%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:#5C7A6E">6p</span>
+          <span style="position:absolute;left:87.5%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:#5C7A6E">8p</span>
+          <span style="position:absolute;left:100%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:11px;color:#5C7A6E">10p</span>
+        </div>
+
+        <!-- Court A lane -->
+        <div style="display:flex;align-items:stretch;gap:0;margin-bottom:10px">
+          <div style="width:78px;flex:none;display:flex;flex-direction:column;justify-content:center">
+            <span style="font-family:Anton;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:#0E3B2E">Court A</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5C7A6E">turf · 5v5</span>
+          </div>
+          <div style="position:relative;flex:1;height:56px;background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;overflow:hidden">
+            <div style="position:absolute;left:6.25%;width:6.25%;top:6px;bottom:6px;background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:6px;padding:6px 7px;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Aayush</span>
+              <span style="width:8px;height:8px;border:1.5px solid #0E3B2E;border-radius:999px"></span>
+            </div>
+            <div style="position:absolute;left:12.5%;width:6.25%;top:6px;bottom:6px;background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:6px;padding:6px 7px;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Sujan</span>
+              <span style="width:8px;height:8px;background:#0E3B2E;transform:rotate(45deg)"></span>
+            </div>
+            <div style="position:absolute;left:37.5%;width:6.25%;top:6px;bottom:6px;background:repeating-linear-gradient(45deg,#E7EDE9,#E7EDE9 4px,rgba(14,59,46,.16) 4px,rgba(14,59,46,.16) 7px);border:1px solid #CBD8D1;border-radius:6px;padding:6px 7px;display:flex;align-items:center">
+              <span style="font-family:Figtree;font-size:11px;font-weight:600;color:#5C7A6E">Maintenance</span>
+            </div>
+            <div style="position:absolute;left:75%;width:6.25%;top:6px;bottom:6px;background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:6px;padding:6px 7px;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Rojan</span>
+              <span style="width:8px;height:8px;border:1.5px solid #0E3B2E;border-radius:999px"></span>
+            </div>
+            <!-- LIVE block, selected -->
+            <div style="position:absolute;left:81.25%;width:9.375%;top:6px;bottom:6px;background:#FF6A2B;border-radius:6px;padding:6px 8px;display:flex;flex-direction:column;justify-content:space-between;animation:livepulse 2.4s infinite;z-index:3">
+              <span style="font-family:Figtree;font-size:12px;font-weight:700;color:#0E3B2E">Prabin</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;color:#0E3B2E">● LIVE</span>
+            </div>
+            <div style="position:absolute;left:90.625%;width:6.25%;top:6px;bottom:6px;background:rgba(201,122,0,.14);border-left:3px solid #C97A00;border-radius:6px;padding:6px 7px;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-family:Figtree;font-size:12px;font-weight:600;color:#7A4E00">Nabin</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:#C97A00">04:58</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Court B lane -->
+        <div style="display:flex;align-items:stretch;gap:0">
+          <div style="width:78px;flex:none;display:flex;flex-direction:column;justify-content:center">
+            <span style="font-family:Anton;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:#0E3B2E">Court B</span>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5C7A6E">turf · 5v5</span>
+          </div>
+          <div style="position:relative;flex:1;height:56px;background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;overflow:hidden">
+            <div style="position:absolute;left:3.125%;width:6.25%;top:6px;bottom:6px;background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:6px;padding:6px 7px;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Manish</span>
+              <span style="width:8px;height:8px;border:1.5px solid #0E3B2E;border-radius:999px"></span>
+            </div>
+            <div style="position:absolute;left:62.5%;width:6.25%;top:6px;bottom:6px;background:rgba(201,122,0,.14);border-left:3px solid #C97A00;border-radius:6px;padding:6px 7px;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-family:Figtree;font-size:12px;font-weight:600;color:#7A4E00">Kiran</span>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:#C97A00">12:10</span>
+            </div>
+            <div style="position:absolute;left:68.75%;width:6.25%;top:6px;bottom:6px;background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:6px;padding:6px 7px;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Deepak</span>
+              <span style="width:8px;height:8px;border:1.5px solid #0E3B2E;border-radius:999px"></span>
+            </div>
+            <div style="position:absolute;left:81.25%;width:6.25%;top:6px;bottom:6px;background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:6px;padding:6px 7px;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Sagar</span>
+              <span style="width:8px;height:8px;background:#0E3B2E;transform:rotate(45deg)"></span>
+            </div>
+            <div style="position:absolute;left:93.75%;width:6.25%;top:6px;bottom:6px;background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:6px;padding:6px 7px;display:flex;flex-direction:column;justify-content:space-between">
+              <span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Ramesh</span>
+              <span style="width:8px;height:8px;border:1.5px solid #0E3B2E;border-radius:999px"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floodlight current-time marker -->
+        <div style="position:absolute;left:calc(78px + 16px + (100% - 78px - 32px) * 0.833);top:38px;bottom:18px;width:2px;background:#F7F6F2;box-shadow:0 0 10px 2px rgba(247,246,242,.9),0 0 3px 1px #FF6A2B;z-index:4;pointer-events:none"></div>
+      </div>
+      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#5C7A6E;margin-top:8px;display:flex;align-items:center;gap:7px"><span style="width:2px;height:12px;background:#F7F6F2;box-shadow:0 0 6px 1px #FF6A2B;display:inline-block"></span> Floodlight marks now · 7:20 PM</div>
+    </div>
+  </div>
+
+  <!-- Details popover (floats over live block) -->
+  <div style="position:absolute;right:36px;top:300px;width:270px;background:#fff;border:1px solid #D7E2DC;border-radius:12px;box-shadow:0 24px 50px -18px rgba(9,42,33,.55);overflow:hidden">
+    <div style="background:#0E3B2E;padding:12px 16px;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-family:Anton;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:#F7F6F2">Prabin Thapa</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.1em;background:#FF6A2B;color:#0E3B2E;padding:3px 6px;border-radius:999px">LIVE</span>
+    </div>
+    <div style="padding:14px 16px 16px;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between;font-family:Figtree;font-size:13px"><span style="color:#5C7A6E">Slot</span><span style="font-weight:600;color:#12222B">Court A · 7:00–8:30 PM</span></div>
+      <div style="display:flex;justify-content:space-between;font-family:Figtree;font-size:13px"><span style="color:#5C7A6E">Phone</span><span style="font-weight:600;color:#12222B;font-family:'JetBrains Mono',monospace">+977 9841-023xxx</span></div>
+      <div style="display:flex;justify-content:space-between;font-family:Figtree;font-size:13px"><span style="color:#5C7A6E">Payment</span><span style="font-weight:700;color:#0E7A4E">Paid · Rs 1,500</span></div>
+      <div style="height:1px;background:#E4EAE6;margin:2px 0"></div>
+      <div style="display:flex;gap:8px">
+        <button style="flex:1;background:#F7F6F2;border:1px solid #D7E2DC;color:#0E3B2E;font-family:Figtree;font-size:13px;font-weight:600;padding:9px;border-radius:9px;cursor:pointer">Mark no-show</button>
+        <button style="flex:none;background:#fff;border:1px solid #E7B4A0;color:#C0361A;font-family:Figtree;font-size:13px;font-weight:600;padding:9px 12px;border-radius:9px;cursor:pointer">Cancel</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 2 · MOBILE ROW ===================== -->
+<section id="1b" style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+  <!-- Mobile daily ops -->
+  <div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <span style="background:#0E3B2E;color:#F7F6F2;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;padding:4px 9px;border-radius:999px">1b</span>
+      <span style="font-family:Anton;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#0E3B2E">Daily Ops · Mobile</span>
+    </div>
+    <div style="width:380px;background:#F7F6F2;border-radius:34px;padding:10px;box-shadow:0 24px 60px -28px rgba(9,42,33,.55);border:1px solid #C9D6CF">
+      <div style="background:#F7F6F2;border-radius:26px;overflow:hidden;position:relative">
+        <!-- turf bar -->
+        <div style="background:#0E3B2E;padding:14px 18px 16px;color:#F7F6F2">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <button style="display:flex;align-items:center;gap:8px;background:#092A21;border:1px solid rgba(191,216,206,.28);color:#F7F6F2;padding:7px 12px;border-radius:999px;font-family:Figtree;font-size:13px;font-weight:600;cursor:pointer">Baneshwor Arena <span style="color:#BFD8CE;font-size:10px">▼</span></button>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#BFD8CE">Sat 4 Jul</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px">
+            <div style="background:#092A21;border-radius:10px;padding:9px 10px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:#BFD8CE">Bookings</div>
+              <div style="font-family:Anton;font-size:26px;color:#F7F6F2;line-height:1;margin-top:3px;font-variant-numeric:tabular-nums">14</div>
+            </div>
+            <div style="background:#092A21;border-radius:10px;padding:9px 10px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:#BFD8CE">Occupancy</div>
+              <div style="font-family:Anton;font-size:26px;color:#F7F6F2;line-height:1;margin-top:3px;font-variant-numeric:tabular-nums">78%</div>
+            </div>
+            <div style="background:#092A21;border-radius:10px;padding:9px 10px">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.08em;text-transform:uppercase;color:#BFD8CE">Revenue</div>
+              <div style="font-family:Anton;font-size:19px;color:#F7F6F2;line-height:1;margin-top:6px;font-variant-numeric:tabular-nums">Rs 18.5k</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:14px 16px 96px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <span style="font-family:Anton;font-size:15px;letter-spacing:.05em;text-transform:uppercase">Today</span>
+            <div style="display:flex;background:#E7EDE9;border-radius:999px;padding:3px">
+              <span style="font-family:Figtree;font-size:12px;font-weight:700;background:#0E3B2E;color:#F7F6F2;padding:5px 14px;border-radius:999px">Court A</span>
+              <span style="font-family:Figtree;font-size:12px;font-weight:600;color:#5C7A6E;padding:5px 14px">Court B</span>
+            </div>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#5C7A6E;margin-bottom:8px">Vertical lane on mobile · one court at a time via tab</div>
+
+          <!-- vertical timeline 4pm-10pm -->
+          <div style="position:relative;background:#fff;border:1px solid #D7E2DC;border-radius:12px;padding:10px 10px 10px 46px;height:340px;overflow:hidden">
+            <!-- hour rail -->
+            <div style="position:absolute;left:8px;top:10px;bottom:10px;width:34px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#5C7A6E">
+              <span style="position:absolute;top:0%">4p</span>
+              <span style="position:absolute;top:16.6%">5p</span>
+              <span style="position:absolute;top:33.3%">6p</span>
+              <span style="position:absolute;top:50%">7p</span>
+              <span style="position:absolute;top:66.6%">8p</span>
+              <span style="position:absolute;top:83.3%">9p</span>
+              <span style="position:absolute;bottom:0%">10p</span>
+            </div>
+            <div style="position:relative;height:100%;background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px">
+              <div style="position:absolute;top:33.3%;height:16.3%;left:6px;right:6px;background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:7px;padding:7px 10px;display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-family:Figtree;font-size:13px;font-weight:600;color:#0E3B2E">Rojan</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">6:00–7:00 PM</div></div>
+                <span style="width:9px;height:9px;border:1.5px solid #0E3B2E;border-radius:999px"></span>
+              </div>
+              <div style="position:absolute;top:50%;height:24.5%;left:6px;right:6px;background:#FF6A2B;border-radius:7px;padding:7px 10px;display:flex;justify-content:space-between;align-items:center;animation:livepulse 2.4s infinite;z-index:3">
+                <div><div style="font-family:Figtree;font-size:13px;font-weight:700;color:#0E3B2E">Prabin</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#0E3B2E">7:00–8:30 PM · Paid</div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;letter-spacing:.08em;color:#0E3B2E">● LIVE</span>
+              </div>
+              <div style="position:absolute;top:75%;height:16.3%;left:6px;right:6px;background:rgba(201,122,0,.14);border-left:3px solid #C97A00;border-radius:7px;padding:7px 10px;display:flex;justify-content:space-between;align-items:center">
+                <div><div style="font-family:Figtree;font-size:13px;font-weight:600;color:#7A4E00">Nabin</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#C97A00">holds 04:58</div></div>
+                <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:#C97A00">04:58</span>
+              </div>
+              <!-- floodlight now marker -->
+              <div style="position:absolute;left:0;right:0;top:55.5%;height:2px;background:#F7F6F2;box-shadow:0 0 10px 2px rgba(247,246,242,.9),0 0 3px 1px #FF6A2B;z-index:4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- sticky bottom actions -->
+        <div style="position:absolute;left:0;right:0;bottom:0;background:#F7F6F2;border-top:2px solid #0E3B2E;padding:12px 16px 16px;display:flex;gap:10px">
+          <button style="flex:1;background:#FF6A2B;border:none;color:#0E3B2E;font-family:Figtree;font-size:15px;font-weight:700;padding:14px;border-radius:12px;cursor:pointer">+ Add walk-in</button>
+          <button style="flex:1;background:transparent;border:2px solid #0E3B2E;color:#0E3B2E;font-family:Figtree;font-size:15px;font-weight:700;padding:12px;border-radius:12px;cursor:pointer">Block slot</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add walk-in modal -->
+  <div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <span style="background:#0E3B2E;color:#F7F6F2;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;padding:4px 9px;border-radius:999px">1c</span>
+      <span style="font-family:Anton;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#0E3B2E">Add Walk-in</span>
+    </div>
+    <div id="1c" style="width:360px;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(9,42,33,.55);border:1px solid #C9D6CF">
+      <div style="background:#0E3B2E;padding:16px 20px;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-family:Anton;font-size:18px;letter-spacing:.04em;text-transform:uppercase;color:#F7F6F2">Add walk-in</span>
+        <span style="color:#BFD8CE;font-size:18px;cursor:pointer">✕</span>
+      </div>
+      <div style="padding:18px 20px 22px;display:flex;flex-direction:column;gap:16px">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5C7A6E;margin-bottom:8px">Court &amp; slot</div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div style="display:flex;gap:6px;align-items:center">
+              <span style="width:52px;font-family:Anton;font-size:13px;text-transform:uppercase;color:#0E3B2E">Ct A</span>
+              <div style="display:flex;gap:6px;flex:1">
+                <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:8px 0;border-radius:999px;background:#F2F6F4;border:1px solid #D7E2DC;color:#5C7A6E">6p</span>
+                <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:8px 0;border-radius:999px;background:#FF6A2B;border:1px solid #FF6A2B;color:#0E3B2E">7p</span>
+                <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:8px 0;border-radius:999px;background:#F2F6F4;border:1px solid #D7E2DC;color:#5C7A6E">8p</span>
+                <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:8px 0;border-radius:999px;background:#F2F6F4;border:1px solid #D7E2DC;color:#5C7A6E">9p</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <span style="width:52px;font-family:Anton;font-size:13px;text-transform:uppercase;color:#0E3B2E">Ct B</span>
+              <div style="display:flex;gap:6px;flex:1">
+                <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:8px 0;border-radius:999px;background:#F2F6F4;border:1px solid #D7E2DC;color:#5C7A6E">6p</span>
+                <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:8px 0;border-radius:999px;background:#F2F6F4;border:1px solid #D7E2DC;color:#5C7A6E">7p</span>
+                <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:8px 0;border-radius:999px;background:#F2F6F4;border:1px solid #D7E2DC;color:#5C7A6E">8p</span>
+                <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:8px 0;border-radius:999px;background:#F2F6F4;border:1px solid #D7E2DC;color:#5C7A6E">9p</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5C7A6E;margin-bottom:6px">Name</div>
+          <div style="border:1.5px solid #0E3B2E;border-radius:10px;padding:11px 13px;font-family:Figtree;font-size:14px;font-weight:600;color:#12222B">Prabin Thapa</div>
+        </div>
+        <div style="display:flex;gap:12px">
+          <div style="flex:1.3">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5C7A6E;margin-bottom:6px">Phone <span style="text-transform:none;letter-spacing:0">(optional)</span></div>
+            <div style="border:1.5px solid #D7E2DC;border-radius:10px;padding:11px 13px;font-family:'JetBrains Mono',monospace;font-size:13px;color:#9DB0A7">98xxxxxxxx</div>
+          </div>
+          <div style="flex:1">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5C7A6E;margin-bottom:6px">Price</div>
+            <div style="border:1.5px solid #D7E2DC;border-radius:10px;padding:11px 13px;font-family:Figtree;font-size:14px;font-weight:600;color:#12222B;display:flex;justify-content:space-between;align-items:center">Rs 1,500 <span style="font-size:10px;color:#5C7A6E">edit</span></div>
+          </div>
+        </div>
+        <button style="background:#FF6A2B;border:none;color:#0E3B2E;font-family:Figtree;font-size:15px;font-weight:700;padding:15px;border-radius:12px;cursor:pointer;margin-top:2px">Confirm walk-in — Rs 1,500</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Race-loss error -->
+  <div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <span style="background:#0E3B2E;color:#F7F6F2;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;padding:4px 9px;border-radius:999px">1d</span>
+      <span style="font-family:Anton;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#0E3B2E">Race-loss Error</span>
+    </div>
+    <div id="1d" style="width:360px;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(9,42,33,.55);border:1px solid #C9D6CF">
+      <div style="background:#0E3B2E;padding:16px 20px;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-family:Anton;font-size:18px;letter-spacing:.04em;text-transform:uppercase;color:#F7F6F2">Add walk-in</span>
+        <span style="color:#BFD8CE;font-size:18px;cursor:pointer">✕</span>
+      </div>
+      <div style="padding:18px 20px 22px;display:flex;flex-direction:column;gap:16px">
+        <div style="background:#FBECE7;border:1px solid #E7B4A0;border-left:3px solid #C0361A;border-radius:10px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start">
+          <span style="width:18px;height:18px;flex:none;border-radius:999px;background:#C0361A;color:#fff;font-family:Anton;font-size:12px;display:flex;align-items:center;justify-content:center;margin-top:1px">!</span>
+          <span style="font-family:Figtree;font-size:13.5px;font-weight:600;color:#8A2412;line-height:1.35">That slot was just booked online. Pick another.</span>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5C7A6E;margin-bottom:8px">Court &amp; slot</div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <span style="width:52px;font-family:Anton;font-size:13px;text-transform:uppercase;color:#0E3B2E">Ct A</span>
+            <div style="display:flex;gap:6px;flex:1">
+              <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:8px 0;border-radius:999px;background:#F2F6F4;border:1px solid #D7E2DC;color:#5C7A6E">6p</span>
+              <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;padding:8px 0;border-radius:999px;background:repeating-linear-gradient(45deg,#E7EDE9,#E7EDE9 3px,rgba(14,59,46,.16) 3px,rgba(14,59,46,.16) 5px);border:1px solid #CBD8D1;color:#9DB0A7;text-decoration:line-through">7p</span>
+              <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:8px 0;border-radius:999px;background:#F2F6F4;border:1px solid #D7E2DC;color:#5C7A6E">8p</span>
+              <span style="flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;padding:8px 0;border-radius:999px;background:#F2F6F4;border:1px solid #D7E2DC;color:#5C7A6E">9p</span>
+            </div>
+          </div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#C0361A;margin-top:7px;margin-left:58px">7 PM taken · choose an open slot</div>
+        </div>
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#5C7A6E;margin-bottom:6px">Name</div>
+          <div style="border:1.5px solid #D7E2DC;border-radius:10px;padding:11px 13px;font-family:Figtree;font-size:14px;font-weight:600;color:#12222B">Prabin Thapa</div>
+        </div>
+        <button style="background:#E7EDE9;border:none;color:#9DB0A7;font-family:Figtree;font-size:15px;font-weight:700;padding:15px;border-radius:12px;cursor:not-allowed">Confirm walk-in — pick a slot</button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===================== SECTION 3 · EMPTY STATE ===================== -->
+<section id="1e" style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+  <!-- Desktop empty state -->
+  <div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <span style="background:#0E3B2E;color:#F7F6F2;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;padding:4px 9px;border-radius:999px">1e</span>
+      <span style="font-family:Anton;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#0E3B2E">New-owner Empty State · Desktop</span>
+    </div>
+    <div style="width:720px;background:#0E3B2E;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px -28px rgba(9,42,33,.6);position:relative">
+      <!-- court-line frame accents -->
+      <div style="position:absolute;left:28px;top:28px;width:40px;height:40px;border-left:2px solid rgba(247,246,242,.5);border-top:2px solid rgba(247,246,242,.5)"></div>
+      <div style="position:absolute;right:28px;bottom:28px;width:40px;height:40px;border-right:2px solid rgba(247,246,242,.5);border-bottom:2px solid rgba(247,246,242,.5)"></div>
+      <div style="padding:52px 56px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#BFD8CE">Welcome to CourtBook</div>
+        <div style="font-family:Anton;font-size:40px;letter-spacing:.02em;text-transform:uppercase;color:#F7F6F2;line-height:1.02;margin-top:12px;max-width:440px">Let's get your courts online</div>
+        <div style="font-family:Figtree;font-size:15px;color:#BFD8CE;margin-top:12px;max-width:420px;line-height:1.5">Four steps to your first booking. You're two down — set your schedule next.</div>
+
+        <!-- progress along a court line -->
+        <div style="margin-top:40px;position:relative">
+          <div style="position:absolute;left:5%;right:5%;top:13px;height:2px;background:rgba(247,246,242,.22)"></div>
+          <div style="position:absolute;left:5%;width:35%;top:13px;height:2px;background:#F7F6F2"></div>
+          <div style="display:flex;justify-content:space-between;position:relative">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:25%">
+              <span style="width:28px;height:28px;border-radius:999px;background:#F7F6F2;color:#0E3B2E;font-family:Anton;font-size:14px;display:flex;align-items:center;justify-content:center">✓</span>
+              <span style="font-family:Figtree;font-size:13px;font-weight:600;color:#BFD8CE">Add venue</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:25%">
+              <span style="width:28px;height:28px;border-radius:999px;background:#F7F6F2;color:#0E3B2E;font-family:Anton;font-size:14px;display:flex;align-items:center;justify-content:center">✓</span>
+              <span style="font-family:Figtree;font-size:13px;font-weight:600;color:#BFD8CE">Add court</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:25%">
+              <span style="width:28px;height:28px;border-radius:999px;background:#FF6A2B;color:#0E3B2E;font-family:Anton;font-size:13px;display:flex;align-items:center;justify-content:center;animation:livepulse 2.4s infinite">3</span>
+              <span style="font-family:Figtree;font-size:13px;font-weight:700;color:#FF6A2B">Set schedule</span>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:12px;width:25%">
+              <span style="width:28px;height:28px;border-radius:999px;background:transparent;border:2px solid rgba(247,246,242,.4);color:#BFD8CE;font-family:Anton;font-size:13px;display:flex;align-items:center;justify-content:center">4</span>
+              <span style="font-family:Figtree;font-size:13px;font-weight:600;color:#8FA89D">Publish</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:40px;display:flex;align-items:center;gap:18px">
+          <button style="background:#FF6A2B;border:none;color:#0E3B2E;font-family:Figtree;font-size:15px;font-weight:700;padding:15px 28px;border-radius:12px;cursor:pointer">Set schedule →</button>
+          <span style="font-family:Figtree;font-size:13px;color:#8FA89D">Step 3 of 4 · about 2 min</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile empty state -->
+  <div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <span style="background:#0E3B2E;color:#F7F6F2;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;padding:4px 9px;border-radius:999px">1f</span>
+      <span style="font-family:Anton;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#0E3B2E">Empty State · Mobile</span>
+    </div>
+    <div style="width:360px;background:#0E3B2E;border-radius:34px;padding:10px;box-shadow:0 24px 60px -28px rgba(9,42,33,.55)">
+      <div style="background:#0E3B2E;border-radius:26px;overflow:hidden;padding:34px 24px 30px;position:relative">
+        <div style="position:absolute;right:22px;top:22px;width:26px;height:26px;border-right:2px solid rgba(247,246,242,.4);border-top:2px solid rgba(247,246,242,.4)"></div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#BFD8CE">Welcome to CourtBook</div>
+        <div style="font-family:Anton;font-size:29px;letter-spacing:.02em;text-transform:uppercase;color:#F7F6F2;line-height:1.04;margin-top:10px">Let's get your courts online</div>
+
+        <!-- vertical checklist along a court line -->
+        <div style="margin-top:28px;position:relative;padding-left:6px">
+          <div style="position:absolute;left:19px;top:14px;bottom:14px;width:2px;background:rgba(247,246,242,.22)"></div>
+          <div style="position:absolute;left:19px;top:14px;height:36%;width:2px;background:#F7F6F2"></div>
+          <div style="display:flex;flex-direction:column;gap:20px;position:relative">
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="width:28px;height:28px;flex:none;border-radius:999px;background:#F7F6F2;color:#0E3B2E;font-family:Anton;font-size:14px;display:flex;align-items:center;justify-content:center">✓</span>
+              <span style="font-family:Figtree;font-size:15px;font-weight:600;color:#BFD8CE">Add venue</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="width:28px;height:28px;flex:none;border-radius:999px;background:#F7F6F2;color:#0E3B2E;font-family:Anton;font-size:14px;display:flex;align-items:center;justify-content:center">✓</span>
+              <span style="font-family:Figtree;font-size:15px;font-weight:600;color:#BFD8CE">Add court</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="width:28px;height:28px;flex:none;border-radius:999px;background:#FF6A2B;color:#0E3B2E;font-family:Anton;font-size:13px;display:flex;align-items:center;justify-content:center;animation:livepulse 2.4s infinite">3</span>
+              <span style="font-family:Figtree;font-size:15px;font-weight:700;color:#FF6A2B">Set schedule</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="width:28px;height:28px;flex:none;border-radius:999px;background:transparent;border:2px solid rgba(247,246,242,.4);color:#BFD8CE;font-family:Anton;font-size:13px;display:flex;align-items:center;justify-content:center">4</span>
+              <span style="font-family:Figtree;font-size:15px;font-weight:600;color:#8FA89D">Publish</span>
+            </div>
+          </div>
+        </div>
+
+        <button style="width:100%;background:#FF6A2B;border:none;color:#0E3B2E;font-family:Figtree;font-size:15px;font-weight:700;padding:15px;border-radius:12px;cursor:pointer;margin-top:30px">Set schedule →</button>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===================== SECTION 4 · WEEK CALENDAR DESKTOP ===================== -->
+<section id="2a" style="position:relative">
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+    <span style="background:#0E3B2E;color:#F7F6F2;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;padding:4px 9px;border-radius:999px">2a</span>
+    <span style="font-family:Anton;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#0E3B2E">Week Calendar · Desktop · Manage Mode</span>
+    <span style="flex:1;height:2px;background:#0E3B2E;opacity:.18"></span>
+  </div>
+
+  <div style="width:1080px;background:#F7F6F2;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px -28px rgba(9,42,33,.5);border:1px solid #D7E2DC">
+    <!-- turf bar -->
+    <div style="background:#0E3B2E;padding:15px 24px;display:flex;align-items:center;justify-content:space-between;color:#F7F6F2">
+      <div style="display:flex;align-items:center;gap:20px">
+        <span style="font-family:Anton;font-size:19px;letter-spacing:.03em;text-transform:uppercase">CourtBook</span>
+        <button style="display:flex;align-items:center;gap:9px;background:#092A21;border:1px solid rgba(191,216,206,.28);color:#F7F6F2;padding:7px 13px;border-radius:999px;font-family:Figtree;font-size:13px;font-weight:600;cursor:pointer">Baneshwor Arena <span style="color:#BFD8CE;font-size:10px">▼</span></button>
+      </div>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#BFD8CE;letter-spacing:.06em">Week view · Manage</span>
+    </div>
+
+    <div style="padding:20px 22px 26px">
+      <!-- court tabs + week pager -->
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div style="display:flex;gap:0;background:#E7EDE9;border-radius:999px;padding:4px">
+          <span style="font-family:Figtree;font-size:13px;font-weight:700;background:#0E3B2E;color:#F7F6F2;padding:8px 18px;border-radius:999px">Court A</span>
+          <span style="font-family:Figtree;font-size:13px;font-weight:600;color:#5C7A6E;padding:8px 18px">Court B</span>
+          <span style="font-family:Figtree;font-size:13px;font-weight:600;color:#5C7A6E;padding:8px 16px">+ Court</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px">
+          <button style="background:#fff;border:1px solid #D7E2DC;color:#0E3B2E;font-family:Figtree;font-size:13px;font-weight:600;padding:8px 12px;border-radius:9px;cursor:pointer">Today</button>
+          <div style="display:flex;align-items:center;gap:14px">
+            <span style="font-family:Figtree;font-size:16px;color:#0E3B2E;cursor:pointer">←</span>
+            <span style="font-family:Anton;font-size:15px;letter-spacing:.03em;text-transform:uppercase;color:#0E3B2E">Jun 30 – Jul 6</span>
+            <span style="font-family:Figtree;font-size:16px;color:#0E3B2E;cursor:pointer">→</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- grid -->
+      <div style="position:relative;background:#fff;border:1px solid #D7E2DC;border-radius:12px;padding:14px 16px 16px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#A9BAB1;text-align:center;margin-bottom:8px">▲ 6 AM – 1 PM · scroll up · free cells show price</div>
+        <div style="display:grid;grid-template-columns:48px repeat(7,1fr);gap:5px">
+          <!-- header row -->
+          <div></div>
+          <div style="text-align:center"><div style="font-family:Anton;font-size:13px;text-transform:uppercase;color:#0E3B2E">Mon</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#A9BAB1">30</div></div>
+          <div style="text-align:center"><div style="font-family:Anton;font-size:13px;text-transform:uppercase;color:#0E3B2E">Tue</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#A9BAB1">01</div></div>
+          <div style="text-align:center"><div style="font-family:Anton;font-size:13px;text-transform:uppercase;color:#0E3B2E">Wed</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#A9BAB1">02</div></div>
+          <div style="text-align:center"><div style="font-family:Anton;font-size:13px;text-transform:uppercase;color:#0E3B2E">Thu</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#A9BAB1">03</div></div>
+          <div style="text-align:center"><div style="font-family:Anton;font-size:13px;text-transform:uppercase;color:#0E3B2E">Fri</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#A9BAB1">04</div></div>
+          <div style="text-align:center;position:relative"><div style="font-family:Anton;font-size:13px;text-transform:uppercase;color:#FF6A2B">Sat</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#A9BAB1">05</div></div>
+          <div style="text-align:center"><div style="font-family:Anton;font-size:13px;text-transform:uppercase;color:#0E3B2E">Sun</div><div style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#A9BAB1">06</div></div>
+
+          <!-- 3 PM -->
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5C7A6E;display:flex;align-items:center;justify-content:flex-end;padding-right:6px">3p</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+          <div style="background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:8px;min-height:46px;padding:6px 8px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Amir</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">3–4p</span></div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+
+          <!-- 4 PM -->
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5C7A6E;display:flex;align-items:center;justify-content:flex-end;padding-right:6px">4p</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+          <div style="background:repeating-linear-gradient(45deg,#E7EDE9,#E7EDE9 4px,rgba(14,59,46,.16) 4px,rgba(14,59,46,.16) 7px);border:1px solid #CBD8D1;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:Figtree;font-size:11px;font-weight:600;color:#5C7A6E">Maint.</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,200</div>
+
+          <!-- 5 PM -->
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5C7A6E;display:flex;align-items:center;justify-content:flex-end;padding-right:6px">5p</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:8px;min-height:46px;padding:6px 8px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Prabin</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">5–6p</span></div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+
+          <!-- 6 PM -->
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5C7A6E;display:flex;align-items:center;justify-content:flex-end;padding-right:6px">6p</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:rgba(255,106,43,.12);border:2px dashed #FF6A2B;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:#FF6A2B">✓</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:8px;min-height:46px;padding:6px 8px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Manish</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">6–7p</span></div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+
+          <!-- 7 PM -->
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5C7A6E;display:flex;align-items:center;justify-content:flex-end;padding-right:6px">7p</div>
+          <div style="background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:8px;min-height:46px;padding:6px 8px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Rojan</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">7–8p</span></div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:rgba(255,106,43,.12);border:2px dashed #FF6A2B;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:#FF6A2B">✓</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:8px;min-height:46px;padding:6px 8px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Sagar</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">7–8p</span></div>
+          <div style="background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:8px;min-height:46px;padding:6px 8px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Bibek</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">7–8p</span></div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+
+          <!-- 8 PM -->
+          <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#5C7A6E;display:flex;align-items:center;justify-content:flex-end;padding-right:6px">8p</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:rgba(201,122,0,.14);border-left:3px solid #C97A00;border-radius:8px;min-height:46px;padding:6px 8px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:12px;font-weight:600;color:#7A4E00">Kiran</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:600;color:#C97A00">holds 09:12</span></div>
+          <div style="background:rgba(255,106,43,.12);border:2px dashed #FF6A2B;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:#FF6A2B">✓</div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+          <div style="background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:8px;min-height:46px;padding:6px 8px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Deepak</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">8–9p</span></div>
+          <div style="background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:8px;min-height:46px;padding:6px 8px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:12px;font-weight:600;color:#0E3B2E">Ramesh</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">8–9p</span></div>
+          <div style="background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;min-height:46px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Rs1,500</div>
+        </div>
+
+        <!-- floating action pill from drag-select -->
+        <div style="position:absolute;left:50%;top:250px;transform:translateX(-50%);background:#0E3B2E;border-radius:999px;padding:8px 10px 8px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 16px 34px -12px rgba(9,42,33,.6);z-index:5">
+          <span style="font-family:Figtree;font-size:13px;font-weight:600;color:#F7F6F2">3 slots selected · Wed 6–9 PM</span>
+          <div style="display:flex;gap:8px">
+            <button style="background:transparent;border:1.5px solid rgba(247,246,242,.5);color:#F7F6F2;font-family:Figtree;font-size:13px;font-weight:700;padding:8px 14px;border-radius:999px;cursor:pointer">Add walk-in</button>
+            <button style="background:#FF6A2B;border:none;color:#0E3B2E;font-family:Figtree;font-size:13px;font-weight:700;padding:8px 16px;border-radius:999px;cursor:pointer">Block 3 slots</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SECTION 5 · CONFLICT MODAL + MOBILE DAY ===================== -->
+<section id="2b" style="display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start">
+
+  <!-- Block-slot conflict modal -->
+  <div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <span style="background:#0E3B2E;color:#F7F6F2;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;padding:4px 9px;border-radius:999px">2b</span>
+      <span style="font-family:Anton;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#0E3B2E">Block-slot · Conflict State</span>
+    </div>
+    <div style="width:440px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 24px 60px -24px rgba(9,42,33,.55);border:1px solid #C9D6CF">
+      <div style="background:#0E3B2E;padding:18px 22px;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-family:Anton;font-size:19px;letter-spacing:.04em;text-transform:uppercase;color:#F7F6F2">Block slots</span>
+        <span style="color:#BFD8CE;font-size:18px;cursor:pointer">✕</span>
+      </div>
+      <div style="padding:20px 22px 24px">
+        <div style="font-family:Figtree;font-size:14px;color:#5C7A6E;margin-bottom:16px">Blocking <b style="color:#0E3B2E">Court A · Sat 6–9 PM</b> (3 slots) for:</div>
+        <div style="display:inline-flex;background:#F2F6F4;border:1px solid #D7E2DC;border-radius:999px;padding:8px 16px;font-family:Figtree;font-size:13px;font-weight:600;color:#0E3B2E;margin-bottom:22px">Reason: Maintenance ▾</div>
+
+        <div style="background:#FBECE7;border:1px solid #E7B4A0;border-radius:12px;overflow:hidden">
+          <div style="background:#C0361A;padding:10px 16px;display:flex;align-items:center;gap:9px">
+            <span style="width:18px;height:18px;flex:none;border-radius:999px;background:#fff;color:#C0361A;font-family:Anton;font-size:12px;display:flex;align-items:center;justify-content:center">!</span>
+            <span style="font-family:Anton;font-size:13px;letter-spacing:.04em;text-transform:uppercase;color:#fff">2 confirmed bookings in the way</span>
+          </div>
+          <div style="padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #E7B4A0;border-radius:10px;padding:11px 13px">
+              <div><div style="font-family:Figtree;font-size:14px;font-weight:700;color:#12222B">Manish Gurung</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8A6B62">Sat 6–7 PM · Paid Rs 1,500</div></div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:#0E7A4E;background:#E4F1EA;padding:4px 8px;border-radius:999px">PAID</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid #E7B4A0;border-radius:10px;padding:11px 13px">
+              <div><div style="font-family:Figtree;font-size:14px;font-weight:700;color:#12222B">Bibek Shrestha</div><div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#8A6B62">Sat 7–8 PM · Paid Rs 1,500</div></div>
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:#0E7A4E;background:#E4F1EA;padding:4px 8px;border-radius:999px">PAID</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:11px;align-items:flex-start;margin-top:16px;padding:12px 14px;border-left:2px solid #0E3B2E;background:#F2F6F4;border-radius:0 10px 10px 0">
+          <span style="font-family:Figtree;font-size:13.5px;font-weight:600;color:#0E3B2E;line-height:1.4">Cancel these bookings first — blocking never cancels a paid booking silently.</span>
+        </div>
+
+        <div style="display:flex;gap:11px;margin-top:20px">
+          <button style="flex:1;background:#fff;border:2px solid #0E3B2E;color:#0E3B2E;font-family:Figtree;font-size:14px;font-weight:700;padding:13px;border-radius:12px;cursor:pointer">Keep bookings</button>
+          <button style="flex:1.3;background:#fff;border:1.5px solid #C0361A;color:#C0361A;font-family:Figtree;font-size:14px;font-weight:700;padding:13px;border-radius:12px;cursor:pointer">Review &amp; cancel 2 bookings</button>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#A9BAB1;text-align:center;margin-top:12px">Block can't proceed while paid bookings exist</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile single-day fallback -->
+  <div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+      <span style="background:#0E3B2E;color:#F7F6F2;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500;letter-spacing:.1em;padding:4px 9px;border-radius:999px">2c</span>
+      <span style="font-family:Anton;font-size:15px;letter-spacing:.06em;text-transform:uppercase;color:#0E3B2E">Week · Mobile Fallback</span>
+    </div>
+    <div style="width:360px;background:#F7F6F2;border-radius:34px;padding:10px;box-shadow:0 24px 60px -28px rgba(9,42,33,.55);border:1px solid #C9D6CF">
+      <div style="background:#F7F6F2;border-radius:26px;overflow:hidden">
+        <div style="background:#0E3B2E;padding:14px 18px;color:#F7F6F2">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <button style="display:flex;align-items:center;gap:8px;background:#092A21;border:1px solid rgba(191,216,206,.28);color:#F7F6F2;padding:7px 12px;border-radius:999px;font-family:Figtree;font-size:13px;font-weight:600">Court A <span style="color:#BFD8CE;font-size:10px">▼</span></button>
+            <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#BFD8CE">Manage</span>
+          </div>
+        </div>
+
+        <!-- adaptation note -->
+        <div style="background:#E7EDE9;border-bottom:1px solid #D7E2DC;padding:9px 16px;display:flex;gap:8px;align-items:center">
+          <span style="width:6px;height:6px;border-radius:999px;background:#FF6A2B;flex:none"></span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.02em;color:#5C7A6E;line-height:1.3">Week grid → single-day view on mobile. Swipe or page days.</span>
+        </div>
+
+        <!-- day pager -->
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px">
+          <span style="font-family:Figtree;font-size:18px;color:#0E3B2E;cursor:pointer">←</span>
+          <div style="text-align:center">
+            <div style="font-family:Anton;font-size:17px;letter-spacing:.04em;text-transform:uppercase;color:#0E3B2E">Sat · Jul 5</div>
+            <div style="font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#5C7A6E">6 of 7 · this week</div>
+          </div>
+          <span style="font-family:Figtree;font-size:18px;color:#0E3B2E;cursor:pointer">→</span>
+        </div>
+
+        <div style="padding:4px 16px 16px">
+          <div style="background:#fff;border:1px solid #D7E2DC;border-radius:12px;padding:12px 12px 12px 42px;position:relative">
+            <div style="position:absolute;left:10px;top:12px;bottom:12px;width:28px;font-family:'JetBrains Mono',monospace;font-size:10px;color:#5C7A6E">
+              <div style="height:52px;display:flex;align-items:center">5p</div>
+              <div style="height:52px;display:flex;align-items:center">6p</div>
+              <div style="height:52px;display:flex;align-items:center">7p</div>
+              <div style="height:52px;display:flex;align-items:center">8p</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <div style="height:46px;background:#F2F6F4;border:1px solid #E4EAE6;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:#B7C6BD">Free · Rs 1,500</div>
+              <div style="height:46px;background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:8px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:13px;font-weight:600;color:#0E3B2E">Manish Gurung</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">6–7 PM · Paid</span></div>
+              <div style="height:46px;background:rgba(255,106,43,.16);border-left:3px solid #FF6A2B;border-radius:8px;padding:8px 11px;display:flex;flex-direction:column;justify-content:center"><span style="font-family:Figtree;font-size:13px;font-weight:600;color:#0E3B2E">Bibek Shrestha</span><span style="font-family:'JetBrains Mono',monospace;font-size:9px;color:#5C7A6E">7–8 PM · Paid</span></div>
+              <div style="height:46px;background:rgba(201,122,0,.14);border-left:3px solid #C97A00;border-radius:8px;padding:8px 11px;display:flex;justify-content:space-between;align-items:center"><span style="font-family:Figtree;font-size:13px;font-weight:600;color:#7A4E00">Held online</span><span style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:#C97A00">04:58</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="padding:0 16px 18px">
+          <button style="width:100%;background:transparent;border:2px solid #0E3B2E;color:#0E3B2E;font-family:Figtree;font-size:15px;font-weight:700;padding:13px;border-radius:12px;cursor:pointer">Block slot on this day</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!--END-->
+</div>
+</x-dc>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+</helmet>
+<div style="position:relative; height:100%; width:100%; background:linear-gradient(160deg,#0E3B2E 0%,#092A21 100%); overflow:hidden; color:#F7F6F2; display:flex; flex-direction:column; justify-content:space-between; padding:40px 38px;">
+
+  <!-- COURT LINES: quarter-circle corner mark (bottom-left) -->
+  <div style="position:absolute; left:-46px; bottom:-46px; width:150px; height:150px; border:2px solid rgba(247,246,242,0.42); border-radius:50%; pointer-events:none;"></div>
+  <!-- COURT LINES: right-angle top-right frame -->
+  <div style="position:absolute; right:26px; top:26px; width:120px; height:120px; border-top:2px solid rgba(247,246,242,0.32); border-right:2px solid rgba(247,246,242,0.32); pointer-events:none;"></div>
+  <!-- COURT LINES: vertical run left edge -->
+  <div style="position:absolute; left:24px; top:110px; bottom:120px; width:2px; background:rgba(247,246,242,0.16); pointer-events:none;"></div>
+
+  <div style="position:relative; display:flex; align-items:center; gap:11px;">
+    <div style="width:12px; height:12px; border-radius:50%; background:#FF6A2B;"></div>
+    <span style="font-family:'Anton',sans-serif; font-size:22px; letter-spacing:2px; text-transform:uppercase;">CourtBook</span>
+  </div>
+
+  <div style="position:relative; max-width:340px;">
+    <div style="font-family:'Figtree',sans-serif; font-size:11px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:#BFD8CE; margin-bottom:16px;">{{ eyebrow }}</div>
+    <div style="font-family:'Anton',sans-serif; font-size:46px; line-height:0.98; letter-spacing:1px; text-transform:uppercase; margin-bottom:22px;">{{ headline }}</div>
+    <div style="height:2px; width:56px; background:#FF6A2B; margin-bottom:22px;"></div>
+    <div style="display:flex; align-items:baseline; gap:10px;">
+      <span style="font-family:'Anton',sans-serif; font-size:34px; color:#FF6A2B; letter-spacing:1px;">{{ proofStat }}</span>
+    </div>
+    <div style="font-family:'Figtree',sans-serif; font-size:14px; line-height:1.5; color:#BFD8CE; margin-top:4px;">{{ proof }}</div>
+  </div>
+
+  <div style="position:relative; font-family:'Figtree',sans-serif; font-size:12px; color:rgba(191,216,206,0.7);">Baneshwor · Kupondole · Sanepa · Chabahil · Satdobato</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:420,&quot;height&quot;:620},&quot;eyebrow&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Play under the lights&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;headline&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Book your pitch before it's gone&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;proofStat&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;2,300&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;proof&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;slots booked in Kathmandu last month&quot;,&quot;tsType&quot;:&quot;string&quot;}}"></script>
+</body>
+</html>

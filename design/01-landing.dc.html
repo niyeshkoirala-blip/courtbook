@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100,600;100,700;125,800;125,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#E7E4DD;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  ::selection{background:#FF6A2B;color:#F7F6F2}
+  @keyframes cbpulse{0%,100%{opacity:1}50%{opacity:.35}}
+</style>
+</helmet>
+<div style="display:flex;flex-wrap:wrap;gap:96px;align-items:flex-start;padding:80px;background:#E7E4DD;min-height:100%;">
+
+  <!-- ============ DESKTOP FRAME 1440 ============ -->
+  <div style="flex:0 0 auto;">
+    <div style="font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5b6b63;margin-bottom:14px;font-family:ui-monospace,monospace;">Desktop · 1440</div>
+    <div data-screen-label="Landing / Desktop" style="width:1440px;background:#F7F6F2;border-radius:16px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(9,42,33,.5);">
+
+      <!-- ---- HERO ---- -->
+      <div style="position:relative;background:#0E3B2E;overflow:hidden;">
+        <!-- floodlight glow -->
+        <div style="position:absolute;top:-260px;left:50%;transform:translateX(-50%);width:1200px;height:700px;background:radial-gradient(ellipse at center,rgba(191,216,206,.18),rgba(191,216,206,0) 65%);pointer-events:none;"></div>
+        <!-- faint court markings -->
+        <div style="position:absolute;inset:0;pointer-events:none;opacity:.5;">
+          <div style="position:absolute;left:64px;right:64px;bottom:150px;height:2px;background:rgba(247,246,242,.10);"></div>
+          <div style="position:absolute;left:50%;bottom:60px;transform:translateX(-50%);width:220px;height:220px;border:2px solid rgba(247,246,242,.08);border-radius:50%;"></div>
+        </div>
+
+        <!-- nav -->
+        <div style="position:relative;display:flex;align-items:center;justify-content:space-between;padding:26px 64px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:26px;height:26px;border-radius:50%;background:#FF6A2B;position:relative;box-shadow:0 0 0 2px rgba(247,246,242,.25);"></div>
+            <span style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;letter-spacing:.04em;font-size:22px;color:#F7F6F2;text-transform:uppercase;">CourtBook</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:36px;">
+            <a href="#" style="font-size:15px;color:#F7F6F2;text-decoration:none;font-weight:500;">Find a court</a>
+            <a href="#" style="font-size:15px;color:#BFD8CE;text-decoration:none;font-weight:500;">For owners</a>
+            <a href="#" style="font-size:15px;color:#BFD8CE;text-decoration:none;font-weight:500;">Log in</a>
+          </div>
+        </div>
+
+        <!-- hero body: split by center line -->
+        <div style="position:relative;display:grid;grid-template-columns:1fr 2px 1fr;gap:0;padding:70px 64px 130px;align-items:center;">
+          <!-- left: thesis -->
+          <div style="padding-right:64px;">
+            <div style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#BFD8CE;margin-bottom:26px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#FF6A2B;animation:cbpulse 1.8s infinite;"></span>
+              Kathmandu Futsal
+            </div>
+            <h1 style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;text-transform:uppercase;letter-spacing:.01em;line-height:.94;font-size:66px;color:#F7F6F2;">Your court.<br>Your time.<br>Booked in<br><span style="color:#FF6A2B;">30 seconds.</span></h1>
+            <p style="margin-top:28px;font-size:19px;line-height:1.5;color:#BFD8CE;max-width:440px;">See live availability at futsal courts across Kathmandu — no more calling five venues.</p>
+          </div>
+
+          <!-- center court line + corner arc -->
+          <div style="position:relative;align-self:stretch;">
+            <div style="position:absolute;left:0;top:-40px;bottom:-90px;width:2px;background:rgba(247,246,242,.55);"></div>
+          </div>
+
+          <!-- right: scoreboard search card -->
+          <div style="padding-left:64px;">
+            <div style="background:#F7F6F2;border-radius:12px;padding:28px;box-shadow:0 24px 60px -20px rgba(9,42,33,.6);">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;">
+                <span style="font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#12222B;">Find a court</span>
+                <span style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#0E3B2E;"><span style="width:6px;height:6px;border-radius:50%;background:#FF6A2B;animation:cbpulse 1.8s infinite;"></span>Live</span>
+              </div>
+
+              <label style="display:block;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#5b6b63;margin-bottom:7px;">Area</label>
+              <div tabindex="0" style="display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 16px;border:1.5px solid #D9E2DB;border-radius:10px;margin-bottom:16px;background:#fff;" style-focus="outline:none;border-color:#0E3B2E;box-shadow:0 0 0 3px rgba(14,59,46,.15)">
+                <span style="font-size:16px;color:#9aa8a0;">Baneshwor</span>
+                <span style="color:#5b6b63;font-size:12px;">▾</span>
+              </div>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px;">
+                <div>
+                  <label style="display:block;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#5b6b63;margin-bottom:7px;">Date</label>
+                  <div tabindex="0" style="display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 16px;border:1.5px solid #D9E2DB;border-radius:10px;background:#fff;" style-focus="outline:none;border-color:#0E3B2E;box-shadow:0 0 0 3px rgba(14,59,46,.15)">
+                    <span style="font-size:16px;color:#12222B;font-weight:500;">Sat, 5 Jul</span>
+                  </div>
+                </div>
+                <div>
+                  <label style="display:block;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#5b6b63;margin-bottom:7px;">Time</label>
+                  <div tabindex="0" style="display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 16px;border:1.5px solid #D9E2DB;border-radius:10px;background:#fff;" style-focus="outline:none;border-color:#0E3B2E;box-shadow:0 0 0 3px rgba(14,59,46,.15)">
+                    <span style="font-size:16px;color:#12222B;font-weight:500;font-variant-numeric:tabular-nums;">7:00 PM</span>
+                  </div>
+                </div>
+              </div>
+
+              <button tabindex="0" style="width:100%;height:56px;border:none;border-radius:10px;background:#FF6A2B;color:#F7F6F2;font-family:'Inter',sans-serif;font-size:17px;font-weight:700;cursor:pointer;letter-spacing:.01em;" style-hover="background:#F25715" style-focus="outline:none;box-shadow:0 0 0 3px #F7F6F2,0 0 0 6px #FF6A2B">Find free courts</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- corner arc bottom-left -->
+        <div style="position:absolute;left:-100px;bottom:-100px;width:220px;height:220px;border:2px solid rgba(247,246,242,.55);border-radius:50%;pointer-events:none;"></div>
+      </div>
+
+      <!-- ---- HOW IT WORKS ---- -->
+      <div style="background:#F7F6F2;padding:90px 64px;">
+        <div style="font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#5b6b63;margin-bottom:10px;">How it works</div>
+        <h2 style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:38px;color:#12222B;letter-spacing:.01em;margin-bottom:56px;">From "let's play" to on the turf</h2>
+        <div style="position:relative;">
+          <!-- horizontal court line -->
+          <div style="position:absolute;left:0;right:0;top:34px;height:2px;background:#0E3B2E;opacity:.85;"></div>
+          <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:48px;">
+            <div>
+              <div style="width:70px;height:70px;border-radius:50%;background:#0E3B2E;color:#F7F6F2;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:26px;margin-bottom:26px;">01</div>
+              <h3 style="font-size:22px;font-weight:700;color:#12222B;margin-bottom:10px;">Find</h3>
+              <p style="font-size:16px;line-height:1.55;color:#4a5952;">Pick your area and time. See every free court nearby with live prices.</p>
+            </div>
+            <div>
+              <div style="width:70px;height:70px;border-radius:50%;background:#0E3B2E;color:#F7F6F2;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:26px;margin-bottom:26px;">02</div>
+              <h3 style="font-size:22px;font-weight:700;color:#12222B;margin-bottom:10px;">Book</h3>
+              <p style="font-size:16px;line-height:1.55;color:#4a5952;">Tap your slot and confirm. Your court is locked in — no phone tag.</p>
+            </div>
+            <div>
+              <div style="width:70px;height:70px;border-radius:50%;background:#FF6A2B;color:#F7F6F2;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:26px;margin-bottom:26px;">03</div>
+              <h3 style="font-size:22px;font-weight:700;color:#12222B;margin-bottom:10px;">Play</h3>
+              <p style="font-size:16px;line-height:1.55;color:#4a5952;">Show up under the floodlights. Your squad's already got the group chat.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- LIVE PROOF STRIP ---- -->
+      <div style="background:#EDEBE4;padding:80px 64px;">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:36px;">
+          <div>
+            <div style="display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#0E3B2E;margin-bottom:12px;"><span style="width:7px;height:7px;border-radius:50%;background:#FF6A2B;animation:cbpulse 1.8s infinite;"></span>Live right now</div>
+            <h2 style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:34px;color:#12222B;letter-spacing:.01em;">Tonight in Kupondole</h2>
+          </div>
+          <a href="#" style="font-size:15px;font-weight:600;color:#0E3B2E;text-decoration:none;">See all courts →</a>
+        </div>
+
+        <div style="background:#F7F6F2;border-radius:12px;padding:26px 28px;box-shadow:0 12px 40px -24px rgba(9,42,33,.4);">
+          <div style="display:grid;grid-template-columns:180px repeat(7,1fr);gap:10px;align-items:center;">
+            <div></div>
+            <div style="text-align:center;font-size:12px;font-weight:600;color:#5b6b63;font-variant-numeric:tabular-nums;">6 PM</div>
+            <div style="text-align:center;font-size:12px;font-weight:600;color:#5b6b63;font-variant-numeric:tabular-nums;">7 PM</div>
+            <div style="text-align:center;font-size:12px;font-weight:600;color:#5b6b63;font-variant-numeric:tabular-nums;">8 PM</div>
+            <div style="text-align:center;font-size:12px;font-weight:600;color:#5b6b63;font-variant-numeric:tabular-nums;">9 PM</div>
+            <div style="text-align:center;font-size:12px;font-weight:600;color:#5b6b63;font-variant-numeric:tabular-nums;">10 PM</div>
+            <div style="text-align:center;font-size:12px;font-weight:600;color:#5b6b63;font-variant-numeric:tabular-nums;">11 PM</div>
+            <div style="text-align:center;font-size:12px;font-weight:600;color:#5b6b63;font-variant-numeric:tabular-nums;">12 AM</div>
+
+            <!-- row 1 -->
+            <div style="font-size:15px;font-weight:600;color:#12222B;">Futsal Arena</div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+            <div style="height:40px;border-radius:8px;background:#FF6A2B;"></div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+            <div style="height:40px;border-radius:8px;background:#FF6A2B;"></div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+            <div style="height:40px;border-radius:8px;background:#0E3B2E;opacity:.14;"></div>
+
+            <!-- row 2 -->
+            <div style="font-size:15px;font-weight:600;color:#12222B;">Goal Zone Kupondole</div>
+            <div style="height:40px;border-radius:8px;background:#0E3B2E;opacity:.14;"></div>
+            <div style="height:40px;border-radius:8px;background:#0E3B2E;opacity:.14;"></div>
+            <div style="height:40px;border-radius:8px;background:#FF6A2B;"></div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+            <div style="height:40px;border-radius:8px;background:#FF6A2B;"></div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+
+            <!-- row 3 -->
+            <div style="font-size:15px;font-weight:600;color:#12222B;">The Pitch · Kupondole</div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+            <div style="height:40px;border-radius:8px;background:#0E3B2E;opacity:.14;"></div>
+            <div style="height:40px;border-radius:8px;background:#FF6A2B;"></div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+            <div style="height:40px;border-radius:8px;background:#E1E7E1;"></div>
+          </div>
+          <div style="display:flex;gap:24px;margin-top:22px;padding-top:20px;border-top:1px solid #E4E1D9;">
+            <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#4a5952;"><span style="width:14px;height:14px;border-radius:4px;background:#FF6A2B;"></span>Free — tap to book</span>
+            <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#4a5952;"><span style="width:14px;height:14px;border-radius:4px;background:#E1E7E1;"></span>Available</span>
+            <span style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#4a5952;"><span style="width:14px;height:14px;border-radius:4px;background:#0E3B2E;opacity:.4;"></span>Booked</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- FOR COURT OWNERS (Turf) ---- -->
+      <div style="position:relative;background:#0E3B2E;padding:90px 64px;overflow:hidden;">
+        <div style="position:absolute;right:-90px;top:-90px;width:200px;height:200px;border:2px solid rgba(247,246,242,.3);border-radius:50%;pointer-events:none;"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+          <div>
+            <div style="font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#BFD8CE;margin-bottom:18px;">For court owners</div>
+            <h2 style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:44px;line-height:.98;color:#F7F6F2;letter-spacing:.01em;margin-bottom:22px;">Run your court<br>from your pocket</h2>
+            <p style="font-size:18px;line-height:1.55;color:#BFD8CE;max-width:420px;margin-bottom:34px;">Fill empty slots, take bookings 24/7, and stop juggling calls during a match. See every booking on one screen.</p>
+            <button style="height:54px;padding:0 30px;background:transparent;border:1.5px solid #BFD8CE;border-radius:10px;color:#F7F6F2;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;cursor:pointer;" style-hover="border-color:#F7F6F2;background:rgba(247,246,242,.06)" style-focus="outline:none;box-shadow:0 0 0 3px rgba(191,216,206,.4)">List your venue</button>
+          </div>
+          <!-- dashboard mock -->
+          <div style="background:#092A21;border:1px solid rgba(191,216,206,.18);border-radius:14px;padding:20px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+              <span style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:16px;color:#F7F6F2;text-transform:uppercase;letter-spacing:.03em;">Today</span>
+              <span style="font-size:12px;color:#BFD8CE;">Futsal Arena · Kupondole</span>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px;">
+              <div style="background:#0E3B2E;border-radius:10px;padding:14px;">
+                <div style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:28px;color:#F7F6F2;">9</div>
+                <div style="font-size:11px;color:#BFD8CE;letter-spacing:.06em;">Bookings</div>
+              </div>
+              <div style="background:#0E3B2E;border-radius:10px;padding:14px;">
+                <div style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:28px;color:#FF6A2B;">2</div>
+                <div style="font-size:11px;color:#BFD8CE;letter-spacing:.06em;">Free slots</div>
+              </div>
+              <div style="background:#0E3B2E;border-radius:10px;padding:14px;">
+                <div style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:22px;color:#F7F6F2;font-variant-numeric:tabular-nums;">13.5k</div>
+                <div style="font-size:11px;color:#BFD8CE;letter-spacing:.06em;">Rs today</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;background:#0E3B2E;border-radius:10px;padding:12px 14px;">
+                <div style="display:flex;align-items:center;gap:12px;"><span style="width:8px;height:8px;border-radius:50%;background:#FF6A2B;"></span><span style="font-size:14px;color:#F7F6F2;font-weight:500;">7:00 PM · 5-a-side</span></div>
+                <span style="font-size:13px;color:#BFD8CE;font-variant-numeric:tabular-nums;">Rs 1,500</span>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;background:#0E3B2E;border-radius:10px;padding:12px 14px;">
+                <div style="display:flex;align-items:center;gap:12px;"><span style="width:8px;height:8px;border-radius:50%;background:#BFD8CE;"></span><span style="font-size:14px;color:#F7F6F2;font-weight:500;">8:00 PM · Free</span></div>
+                <span style="font-size:13px;color:#BFD8CE;">Open</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ---- FOOTER (Deep Pitch) ---- -->
+      <div style="background:#092A21;border-top:2px solid rgba(247,246,242,.55);padding:56px 64px 40px;">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:40px;">
+          <div style="max-width:300px;">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+              <div style="width:22px;height:22px;border-radius:50%;background:#FF6A2B;"></div>
+              <span style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;letter-spacing:.04em;font-size:19px;color:#F7F6F2;text-transform:uppercase;">CourtBook</span>
+            </div>
+            <p style="font-size:14px;line-height:1.55;color:#7f978c;">Live futsal court booking across Kathmandu. Baneshwor, Kupondole, Sanepa, Chabahil, Satdobato.</p>
+          </div>
+          <div style="display:flex;gap:64px;">
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5f7a6f;margin-bottom:4px;">Players</span>
+              <a href="#" style="font-size:14px;color:#BFD8CE;text-decoration:none;">Find a court</a>
+              <a href="#" style="font-size:14px;color:#BFD8CE;text-decoration:none;">How it works</a>
+              <a href="#" style="font-size:14px;color:#BFD8CE;text-decoration:none;">Areas</a>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <span style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#5f7a6f;margin-bottom:4px;">Owners</span>
+              <a href="#" style="font-size:14px;color:#BFD8CE;text-decoration:none;">List your venue</a>
+              <a href="#" style="font-size:14px;color:#BFD8CE;text-decoration:none;">Owner login</a>
+              <a href="#" style="font-size:14px;color:#BFD8CE;text-decoration:none;">Pricing</a>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:40px;padding-top:22px;border-top:1px solid rgba(191,216,206,.12);display:flex;justify-content:space-between;font-size:13px;color:#5f7a6f;">
+          <span>© 2026 CourtBook</span>
+          <span>Made in Kathmandu</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============ MOBILE FRAME 390 ============ -->
+  <div style="flex:0 0 auto;">
+    <div style="font-family:ui-monospace,monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#5b6b63;margin-bottom:14px;">Mobile · 390</div>
+    <div data-screen-label="Landing / Mobile" style="width:390px;height:844px;background:#F7F6F2;border-radius:40px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(9,42,33,.5);position:relative;border:8px solid #12222B;">
+      <!-- scroll area -->
+      <div style="position:absolute;inset:0;overflow:hidden;">
+        <div style="height:100%;overflow-y:auto;padding-bottom:132px;">
+
+          <!-- status bar -->
+          <div style="background:#0E3B2E;display:flex;justify-content:space-between;align-items:center;padding:12px 22px 0;">
+            <span style="font-size:13px;font-weight:600;color:#F7F6F2;font-variant-numeric:tabular-nums;">9:41</span>
+            <span style="font-size:12px;color:#F7F6F2;">● ▲ ▮</span>
+          </div>
+
+          <!-- hero -->
+          <div style="position:relative;background:#0E3B2E;padding:16px 22px 40px;overflow:hidden;">
+            <div style="position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:500px;height:340px;background:radial-gradient(ellipse at center,rgba(191,216,206,.2),rgba(191,216,206,0) 65%);pointer-events:none;"></div>
+            <!-- nav -->
+            <div style="position:relative;display:flex;align-items:center;justify-content:space-between;margin-bottom:34px;">
+              <div style="display:flex;align-items:center;gap:9px;">
+                <div style="width:20px;height:20px;border-radius:50%;background:#FF6A2B;"></div>
+                <span style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;letter-spacing:.04em;font-size:17px;color:#F7F6F2;text-transform:uppercase;">CourtBook</span>
+              </div>
+              <span style="font-size:22px;color:#F7F6F2;line-height:1;">≡</span>
+            </div>
+            <div style="position:relative;">
+              <div style="display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#BFD8CE;margin-bottom:18px;"><span style="width:6px;height:6px;border-radius:50%;background:#FF6A2B;animation:cbpulse 1.8s infinite;"></span>Kathmandu Futsal</div>
+              <h1 style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;text-transform:uppercase;line-height:.94;font-size:40px;color:#F7F6F2;letter-spacing:.01em;">Your court.<br>Your time.<br><span style="color:#FF6A2B;">Booked in 30s.</span></h1>
+              <p style="margin-top:18px;font-size:16px;line-height:1.5;color:#BFD8CE;">See live availability at futsal courts across Kathmandu — no more calling five venues.</p>
+            </div>
+            <!-- corner arc -->
+            <div style="position:absolute;left:-70px;bottom:-70px;width:150px;height:150px;border:2px solid rgba(247,246,242,.5);border-radius:50%;pointer-events:none;"></div>
+          </div>
+
+          <!-- how it works (vertical line) -->
+          <div style="background:#F7F6F2;padding:44px 22px;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#5b6b63;margin-bottom:8px;">How it works</div>
+            <h2 style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:26px;color:#12222B;margin-bottom:30px;letter-spacing:.01em;">Play in three taps</h2>
+            <div style="position:relative;padding-left:52px;">
+              <div style="position:absolute;left:34px;top:8px;bottom:8px;width:2px;background:#0E3B2E;opacity:.85;"></div>
+              <div style="position:relative;margin-bottom:28px;">
+                <div style="position:absolute;left:-52px;top:0;width:36px;height:36px;border-radius:50%;background:#0E3B2E;color:#F7F6F2;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:14px;">01</div>
+                <h3 style="font-size:18px;font-weight:700;color:#12222B;margin-bottom:5px;">Find</h3>
+                <p style="font-size:15px;line-height:1.5;color:#4a5952;">Pick your area and time. See free courts nearby.</p>
+              </div>
+              <div style="position:relative;margin-bottom:28px;">
+                <div style="position:absolute;left:-52px;top:0;width:36px;height:36px;border-radius:50%;background:#0E3B2E;color:#F7F6F2;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:14px;">02</div>
+                <h3 style="font-size:18px;font-weight:700;color:#12222B;margin-bottom:5px;">Book</h3>
+                <p style="font-size:15px;line-height:1.5;color:#4a5952;">Tap your slot and confirm. No phone tag.</p>
+              </div>
+              <div style="position:relative;">
+                <div style="position:absolute;left:-52px;top:0;width:36px;height:36px;border-radius:50%;background:#FF6A2B;color:#F7F6F2;display:flex;align-items:center;justify-content:center;font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:14px;">03</div>
+                <h3 style="font-size:18px;font-weight:700;color:#12222B;margin-bottom:5px;">Play</h3>
+                <p style="font-size:15px;line-height:1.5;color:#4a5952;">Show up under the floodlights.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- proof strip -->
+          <div style="background:#EDEBE4;padding:40px 22px;">
+            <div style="display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#0E3B2E;margin-bottom:10px;"><span style="width:6px;height:6px;border-radius:50%;background:#FF6A2B;animation:cbpulse 1.8s infinite;"></span>Live right now</div>
+            <h2 style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:24px;color:#12222B;margin-bottom:20px;letter-spacing:.01em;">Tonight in Kupondole</h2>
+            <div style="background:#F7F6F2;border-radius:12px;padding:16px;">
+              <div style="display:flex;gap:8px;margin-bottom:12px;padding-left:0;">
+                <div style="flex:1;text-align:center;font-size:11px;font-weight:600;color:#5b6b63;">7 PM</div>
+                <div style="flex:1;text-align:center;font-size:11px;font-weight:600;color:#5b6b63;">8 PM</div>
+                <div style="flex:1;text-align:center;font-size:11px;font-weight:600;color:#5b6b63;">9 PM</div>
+                <div style="flex:1;text-align:center;font-size:11px;font-weight:600;color:#5b6b63;">10 PM</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:96px;font-size:13px;font-weight:600;color:#12222B;">Futsal Arena</div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#FF6A2B;"></div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#E1E7E1;"></div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#FF6A2B;"></div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#E1E7E1;"></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:96px;font-size:13px;font-weight:600;color:#12222B;">Goal Zone</div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#FF6A2B;"></div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#E1E7E1;"></div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#0E3B2E;opacity:.14;"></div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#E1E7E1;"></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <div style="width:96px;font-size:13px;font-weight:600;color:#12222B;">The Pitch</div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#E1E7E1;"></div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#FF6A2B;"></div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#E1E7E1;"></div>
+                  <div style="flex:1;height:34px;border-radius:7px;background:#E1E7E1;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- owners -->
+          <div style="position:relative;background:#0E3B2E;padding:44px 22px;overflow:hidden;">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#BFD8CE;margin-bottom:14px;">For court owners</div>
+            <h2 style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:30px;line-height:.98;color:#F7F6F2;letter-spacing:.01em;margin-bottom:16px;">Run your court from your pocket</h2>
+            <p style="font-size:15px;line-height:1.55;color:#BFD8CE;margin-bottom:24px;">Fill empty slots, take bookings 24/7, and stop juggling calls during a match.</p>
+            <div style="background:#092A21;border:1px solid rgba(191,216,206,.18);border-radius:12px;padding:16px;margin-bottom:26px;">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+                <div style="background:#0E3B2E;border-radius:9px;padding:12px;"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:22px;color:#F7F6F2;">9</div><div style="font-size:10px;color:#BFD8CE;">Bookings</div></div>
+                <div style="background:#0E3B2E;border-radius:9px;padding:12px;"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:22px;color:#FF6A2B;">2</div><div style="font-size:10px;color:#BFD8CE;">Free</div></div>
+                <div style="background:#0E3B2E;border-radius:9px;padding:12px;"><div style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;font-size:18px;color:#F7F6F2;">13.5k</div><div style="font-size:10px;color:#BFD8CE;">Rs</div></div>
+              </div>
+            </div>
+            <button style="width:100%;height:52px;background:transparent;border:1.5px solid #BFD8CE;border-radius:10px;color:#F7F6F2;font-family:'Inter',sans-serif;font-size:16px;font-weight:600;cursor:pointer;" style-focus="outline:none;box-shadow:0 0 0 3px rgba(191,216,206,.4)">List your venue</button>
+          </div>
+
+          <!-- footer -->
+          <div style="background:#092A21;border-top:2px solid rgba(247,246,242,.5);padding:34px 22px;">
+            <div style="display:flex;align-items:center;gap:9px;margin-bottom:12px;">
+              <div style="width:18px;height:18px;border-radius:50%;background:#FF6A2B;"></div>
+              <span style="font-family:'Archivo',sans-serif;font-weight:900;font-stretch:125%;letter-spacing:.04em;font-size:16px;color:#F7F6F2;text-transform:uppercase;">CourtBook</span>
+            </div>
+            <p style="font-size:13px;line-height:1.5;color:#7f978c;margin-bottom:16px;">Live futsal booking across Kathmandu.</p>
+            <div style="font-size:12px;color:#5f7a6f;">© 2026 CourtBook · Made in Kathmandu</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- sticky bottom search card -->
+      <div style="position:absolute;left:0;right:0;bottom:0;background:#F7F6F2;border-top:1px solid #E4E1D9;padding:16px 18px calc(16px + env(safe-area-inset-bottom));box-shadow:0 -12px 30px -18px rgba(9,42,33,.4);">
+        <div style="display:flex;gap:8px;margin-bottom:12px;">
+          <div style="flex:1.3;display:flex;flex-direction:column;justify-content:center;height:46px;padding:0 12px;border:1.5px solid #D9E2DB;border-radius:9px;background:#fff;">
+            <span style="font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#5b6b63;">Area</span>
+            <span style="font-size:14px;color:#9aa8a0;">Baneshwor</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;height:46px;padding:0 12px;border:1.5px solid #D9E2DB;border-radius:9px;background:#fff;">
+            <span style="font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#5b6b63;">Date</span>
+            <span style="font-size:14px;color:#12222B;font-weight:500;">Sat 5</span>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;justify-content:center;height:46px;padding:0 12px;border:1.5px solid #D9E2DB;border-radius:9px;background:#fff;">
+            <span style="font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#5b6b63;">Time</span>
+            <span style="font-size:14px;color:#12222B;font-weight:500;font-variant-numeric:tabular-nums;">7 PM</span>
+          </div>
+        </div>
+        <button style="width:100%;height:52px;border:none;border-radius:10px;background:#FF6A2B;color:#F7F6F2;font-family:'Inter',sans-serif;font-size:16px;font-weight:700;cursor:pointer;" style-focus="outline:none;box-shadow:0 0 0 3px #F7F6F2,0 0 0 6px #FF6A2B">Find free courts</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

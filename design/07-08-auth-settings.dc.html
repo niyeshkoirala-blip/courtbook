@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+<style>
+  *{ box-sizing:border-box; }
+  .cb-input{ width:100%; padding:13px 14px; border:1.5px solid #D3DDD7; border-radius:12px; font-family:'Figtree',sans-serif; font-size:15px; background:#FFFFFF; color:#12222B; outline:none; transition:border-color .15s, box-shadow .15s; }
+  .cb-input::placeholder{ color:#9FB3AA; }
+  .cb-input:focus{ border-color:#0E3B2E; box-shadow:0 0 0 3px rgba(14,59,46,0.14); }
+  .cb-primary{ width:100%; padding:15px 16px; border:none; border-radius:12px; background:#FF6A2B; color:#FFFFFF; font-family:'Figtree',sans-serif; font-weight:700; font-size:15px; cursor:pointer; transition:background .15s, transform .05s; }
+  .cb-primary:hover{ background:#EE5A1D; }
+  .cb-primary:active{ transform:translateY(1px); }
+  .cb-primary:focus-visible{ outline:3px solid #0E3B2E; outline-offset:2px; }
+  .cb-link{ color:#0E3B2E; font-weight:600; text-decoration:none; border-bottom:1.5px solid rgba(14,59,46,0.25); cursor:pointer; }
+  .cb-link:hover{ border-bottom-color:#0E3B2E; }
+  @keyframes cbspin{ to{ transform:rotate(360deg); } }
+</style>
+</helmet>
+<div style="font-family:'Figtree',sans-serif; background:#092A21; min-height:100vh; padding:60px 64px 96px; display:flex; flex-direction:column; gap:64px;">
+
+  <!-- BOARD HEADER -->
+  <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:20px; border-bottom:2px solid rgba(247,246,242,0.16); padding-bottom:26px;">
+    <div>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
+        <div style="width:14px; height:14px; border-radius:50%; background:#FF6A2B;"></div>
+        <span style="font-family:'Anton',sans-serif; font-size:26px; letter-spacing:2px; color:#F7F6F2; text-transform:uppercase;">CourtBook</span>
+      </div>
+      <div style="font-family:'Anton',sans-serif; font-size:40px; letter-spacing:1px; color:#F7F6F2; text-transform:uppercase; line-height:1;">Auth &amp; Account System</div>
+    </div>
+    <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE; max-width:340px; text-align:right;">Futsal court booking · Kathmandu · Mobile-first. Night-match energy: turf, floodlights, court lines, one orange ball.</div>
+  </div>
+
+  <!-- ================= AUTH ================= -->
+  <div>
+    <div style="font-family:'Figtree',sans-serif; font-size:12px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:#BFD8CE; margin-bottom:6px;">01 — Authentication</div>
+    <div style="font-family:'Anton',sans-serif; font-size:24px; letter-spacing:1px; color:#F7F6F2; text-transform:uppercase; margin-bottom:28px;">Sign-in / Sign-up flow</div>
+
+    <div style="display:flex; flex-wrap:wrap; gap:40px; align-items:flex-start;">
+
+      <!-- LOGIN DEFAULT -->
+      <div style="display:flex; flex-direction:column; gap:14px;">
+        <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE;"><strong style="color:#F7F6F2;">Login</strong> · default</div>
+        <div style="width:840px; height:600px; background:#F7F6F2; border-radius:20px; overflow:hidden; display:flex; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+          <dc-import name="CourtPanel" eyebrow="Play under the lights" headline="Your pitch is waiting" proofStat="2,300" proof="slots booked in Kathmandu last month" style="width:330px; flex:none;" hint-size="330px,100%"></dc-import>
+          <div style="flex:1; padding:52px 48px; display:flex; flex-direction:column; justify-content:center;">
+            <div style="font-family:'Figtree',sans-serif; font-size:11px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:#0E3B2E; margin-bottom:10px;">Welcome back</div>
+            <div style="font-family:'Anton',sans-serif; font-size:34px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:30px;">Log in</div>
+            <label style="display:block; font-family:'Figtree',sans-serif; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Email</label>
+            <input class="cb-input" type="email" placeholder="you@example.com" style="margin-bottom:18px;" />
+            <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:7px;">
+              <label style="font-family:'Figtree',sans-serif; font-size:13px; font-weight:600; color:#12222B;">Password</label>
+              <a class="cb-link" style="font-size:13px;">Forgot password?</a>
+            </div>
+            <input class="cb-input" type="password" placeholder="••••••••" style="margin-bottom:26px;" />
+            <button class="cb-primary">Log in</button>
+            <div style="display:flex; align-items:center; gap:14px; margin:26px 0;">
+              <div style="flex:1; height:1px; background:#D3DDD7;"></div>
+              <span style="font-family:'Figtree',sans-serif; font-size:12px; color:#7F958B;">new to CourtBook?</span>
+              <div style="flex:1; height:1px; background:#D3DDD7;"></div>
+            </div>
+            <div style="text-align:center; font-family:'Figtree',sans-serif; font-size:14px; color:#12222B;">Don't have an account? <a class="cb-link">Create one</a></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOGIN STATES (error + locked) -->
+      <div style="display:flex; flex-direction:column; gap:26px;">
+        <!-- ERROR -->
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE;"><strong style="color:#F7F6F2;">Login</strong> · error</div>
+          <div style="width:420px; background:#F7F6F2; border-radius:20px; padding:38px 36px; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+            <div style="font-family:'Anton',sans-serif; font-size:26px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:20px;">Log in</div>
+            <div role="alert" style="display:flex; align-items:center; gap:11px; background:#FFF; border:1.5px solid #FF6A2B; border-radius:12px; padding:12px 14px; margin-bottom:20px;">
+              <div style="width:20px; height:20px; border-radius:50%; background:#FF6A2B; color:#fff; font-weight:700; font-size:13px; display:flex; align-items:center; justify-content:center; flex:none;">!</div>
+              <span style="font-family:'Figtree',sans-serif; font-size:13.5px; color:#12222B; font-weight:500;">Email or password is incorrect.</span>
+            </div>
+            <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Email</label>
+            <input class="cb-input" type="email" value="ramesh@gmail.com" style="margin-bottom:16px; border-color:#FF6A2B;" />
+            <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Password</label>
+            <input class="cb-input" type="password" value="••••••" style="margin-bottom:22px; border-color:#FF6A2B;" />
+            <button class="cb-primary">Log in</button>
+          </div>
+        </div>
+        <!-- LOCKED -->
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE;"><strong style="color:#F7F6F2;">Login</strong> · locked</div>
+          <div style="width:420px; background:#F7F6F2; border-radius:20px; padding:38px 36px; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+            <div style="font-family:'Anton',sans-serif; font-size:26px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:20px;">Log in</div>
+            <div role="alert" style="display:flex; align-items:center; gap:11px; background:#12222B; border-radius:12px; padding:14px 15px; margin-bottom:20px;">
+              <div style="width:20px; height:20px; border-radius:50%; border:2px solid #BFD8CE; flex:none; position:relative;"><div style="position:absolute; left:50%; top:3px; width:2px; height:6px; background:#BFD8CE; transform:translateX(-50%);"></div></div>
+              <span style="font-family:'Figtree',sans-serif; font-size:13.5px; color:#F7F6F2; font-weight:500;">Too many attempts. Try again in 14 minutes.</span>
+            </div>
+            <label style="display:block; font-size:13px; font-weight:600; color:#9FB3AA; margin-bottom:7px;">Email</label>
+            <input class="cb-input" type="email" value="ramesh@gmail.com" disabled style="margin-bottom:16px; background:#EEF2F0; color:#9FB3AA;" />
+            <label style="display:block; font-size:13px; font-weight:600; color:#9FB3AA; margin-bottom:7px;">Password</label>
+            <input class="cb-input" type="password" value="••••••" disabled style="margin-bottom:22px; background:#EEF2F0;" />
+            <button disabled style="width:100%; padding:15px 16px; border:none; border-radius:12px; background:#BFD8CE; color:#F7F6F2; font-family:'Figtree',sans-serif; font-weight:700; font-size:15px; cursor:not-allowed;">Locked — try again soon</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- REGISTER + VERIFY ROW -->
+  <div style="display:flex; flex-wrap:wrap; gap:40px; align-items:flex-start; margin-top:44px;">
+
+    <!-- REGISTER -->
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE;"><strong style="color:#F7F6F2;">Register</strong> · with strength meter</div>
+      <div style="width:840px; background:#F7F6F2; border-radius:20px; overflow:hidden; display:flex; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+        <dc-import name="CourtPanel" eyebrow="Free to join" headline="Get on the pitch tonight" proofStat="180+" proof="courts across five Kathmandu neighbourhoods" style="width:330px; flex:none;" hint-size="330px,100%"></dc-import>
+        <div style="flex:1; padding:46px 44px;">
+          <div style="font-family:'Anton',sans-serif; font-size:30px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:24px;">Create account</div>
+
+          <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Full name</label>
+          <input class="cb-input" type="text" placeholder="Ramesh Shrestha" style="margin-bottom:16px;" />
+
+          <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Email</label>
+          <input class="cb-input" type="email" placeholder="you@example.com" style="margin-bottom:16px;" />
+
+          <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Phone</label>
+          <div style="display:flex; gap:8px; margin-bottom:16px;">
+            <div style="display:flex; align-items:center; padding:0 14px; border:1.5px solid #D3DDD7; border-radius:12px; background:#EEF2F0; font-size:15px; font-weight:600; color:#12222B;">+977</div>
+            <input class="cb-input" type="tel" placeholder="98XXXXXXXX" style="flex:1;" />
+          </div>
+
+          <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Password</label>
+          <input class="cb-input" type="password" placeholder="Create a password" value="{{ regPw }}" onChange="{{ onRegPw }}" style="margin-bottom:12px;" />
+          <div style="height:6px; border-radius:99px; background:#E4EAE6; overflow:hidden; margin-bottom:8px;">
+            <div style="height:100%; border-radius:99px; width:{{ strengthPct }}; background:{{ strengthColor }}; transition:width .25s, background .25s;"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; min-height:18px; margin-bottom:26px;">
+            <span style="font-family:'Figtree',sans-serif; font-size:12.5px; color:#12222B; font-weight:500;">{{ strengthLabel }}</span>
+            <span style="font-family:'Figtree',sans-serif; font-size:11px; color:#7F958B;">8+ chars · mix case · a number</span>
+          </div>
+
+          <button class="cb-primary">Create account</button>
+          <div style="text-align:center; font-family:'Figtree',sans-serif; font-size:14px; color:#12222B; margin-top:20px;">Already have an account? <a class="cb-link">Log in</a></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VERIFY EMAIL -->
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE;"><strong style="color:#F7F6F2;">Verify email</strong> · interstitial</div>
+      <div style="width:420px; background:#F7F6F2; border-radius:20px; overflow:hidden; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+        <!-- Court-line envelope motif on turf -->
+        <div style="position:relative; height:190px; background:linear-gradient(160deg,#0E3B2E,#092A21); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+          <div style="position:absolute; left:-30px; bottom:-30px; width:110px; height:110px; border:2px solid rgba(247,246,242,0.3); border-radius:50%;"></div>
+          <div style="position:absolute; right:20px; top:20px; width:70px; height:70px; border-top:2px solid rgba(247,246,242,0.25); border-right:2px solid rgba(247,246,242,0.25);"></div>
+          <div style="position:relative; width:112px; height:80px; border:2px solid #F7F6F2; border-radius:6px;">
+            <div style="position:absolute; left:0; top:0; width:100%; height:100%; overflow:hidden;">
+              <div style="position:absolute; left:50%; top:-2px; width:80px; height:80px; border-right:2px solid #F7F6F2; border-bottom:2px solid #F7F6F2; transform:translateX(-50%) rotate(45deg); transform-origin:top;"></div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:36px 36px 40px; text-align:center;">
+          <div style="font-family:'Anton',sans-serif; font-size:26px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:14px;">Check your email</div>
+          <div style="font-family:'Figtree',sans-serif; font-size:14.5px; line-height:1.55; color:#3C4A44; margin-bottom:28px;">We sent a link to <strong style="color:#12222B;">n***@gmail.com</strong>. Tap it to confirm your account and start booking.</div>
+
+          <div style="display:flex; align-items:center; justify-content:center; gap:14px;">
+            <div style="position:relative; width:38px; height:38px; flex:none;">
+              <svg width="38" height="38" viewBox="0 0 38 38">
+                <circle cx="19" cy="19" r="15" fill="none" stroke="#E4EAE6" stroke-width="3"></circle>
+                <circle cx="19" cy="19" r="15" fill="none" stroke="#FF6A2B" stroke-width="3" stroke-linecap="round" stroke-dasharray="{{ ringCirc }}" stroke-dashoffset="{{ ringOffset }}" transform="rotate(-90 19 19)"></circle>
+              </svg>
+            </div>
+            <button onClick="{{ onResend }}" disabled="{{ resendActive }}" style="padding:12px 20px; border:1.5px solid #0E3B2E; border-radius:12px; background:transparent; color:#0E3B2E; font-family:'Figtree',sans-serif; font-weight:700; font-size:14px; cursor:pointer;">{{ resendText }}</button>
+          </div>
+          <div style="font-family:'Figtree',sans-serif; font-size:12.5px; color:#7F958B; margin-top:22px;">Wrong address? <a class="cb-link" style="font-size:12.5px;">Change email</a></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- FORGOT + RESET ROW -->
+  <div style="display:flex; flex-wrap:wrap; gap:40px; align-items:flex-start; margin-top:44px;">
+
+    <!-- FORGOT -->
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE;"><strong style="color:#F7F6F2;">Forgot password</strong> · request</div>
+      <div style="width:400px; background:#F7F6F2; border-radius:20px; padding:44px 38px; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+        <div style="font-family:'Anton',sans-serif; font-size:26px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:12px;">Reset your password</div>
+        <div style="font-family:'Figtree',sans-serif; font-size:14px; line-height:1.5; color:#3C4A44; margin-bottom:26px;">Enter your email and we'll send a link to set a new one.</div>
+        <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Email</label>
+        <input class="cb-input" type="email" placeholder="you@example.com" style="margin-bottom:24px;" />
+        <button class="cb-primary">Send reset link</button>
+        <div style="text-align:center; margin-top:20px;"><a class="cb-link" style="font-size:13.5px;">Back to log in</a></div>
+      </div>
+    </div>
+
+    <!-- FORGOT SUCCESS (identical whether or not account exists) -->
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE;"><strong style="color:#F7F6F2;">Forgot password</strong> · sent</div>
+      <div style="width:400px; background:#F7F6F2; border-radius:20px; padding:44px 38px; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+        <div style="width:44px; height:44px; border-radius:50%; border:2px solid #0E3B2E; display:flex; align-items:center; justify-content:center; margin-bottom:22px;">
+          <div style="width:14px; height:8px; border-left:2px solid #0E3B2E; border-bottom:2px solid #0E3B2E; transform:rotate(-45deg); margin-top:-3px;"></div>
+        </div>
+        <div style="font-family:'Anton',sans-serif; font-size:24px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:12px;">Check your email</div>
+        <div style="font-family:'Figtree',sans-serif; font-size:14px; line-height:1.55; color:#3C4A44; margin-bottom:26px;">If an account exists for that email, a reset link is on its way. The link expires in 30 minutes.</div>
+        <div style="height:2px; width:100%; background:#E4EAE6; margin-bottom:22px;"></div>
+        <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#7F958B;">Didn't get it? Check spam, or <a class="cb-link" style="font-size:13px;">try another email</a>.</div>
+      </div>
+    </div>
+
+    <!-- RESET -->
+    <div style="display:flex; flex-direction:column; gap:14px;">
+      <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE;"><strong style="color:#F7F6F2;">Reset password</strong> · new + confirm, success toast</div>
+      <div style="position:relative; width:400px; background:#F7F6F2; border-radius:20px; padding:44px 38px; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+        <!-- success toast -->
+        <div style="position:absolute; left:22px; right:22px; top:22px; display:flex; align-items:center; gap:12px; background:#0E3B2E; border-radius:12px; padding:13px 15px; box-shadow:0 12px 30px -12px rgba(0,0,0,0.5);">
+          <div style="width:22px; height:22px; border-radius:50%; background:#FF6A2B; display:flex; align-items:center; justify-content:center; flex:none;">
+            <div style="width:8px; height:5px; border-left:2px solid #fff; border-bottom:2px solid #fff; transform:rotate(-45deg); margin-top:-2px;"></div>
+          </div>
+          <span style="font-family:'Figtree',sans-serif; font-size:13px; color:#F7F6F2; font-weight:500; line-height:1.35;">Password changed — you've been logged out of other devices.</span>
+        </div>
+
+        <div style="font-family:'Anton',sans-serif; font-size:26px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin:78px 0 22px;">Set a new password</div>
+        <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">New password</label>
+        <input class="cb-input" type="password" placeholder="New password" style="margin-bottom:16px;" />
+        <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Confirm password</label>
+        <input class="cb-input" type="password" placeholder="Re-enter password" style="margin-bottom:24px;" />
+        <button class="cb-primary">Change password</button>
+      </div>
+    </div>
+
+  </div>
+  <!-- ================= SETTINGS ================= -->
+  <div style="margin-top:24px;">
+    <div style="font-family:'Figtree',sans-serif; font-size:12px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:#BFD8CE; margin-bottom:6px;">02 — Account</div>
+    <div style="font-family:'Anton',sans-serif; font-size:24px; letter-spacing:1px; color:#F7F6F2; text-transform:uppercase; margin-bottom:28px;">Settings</div>
+
+    <div style="width:1060px; max-width:100%; background:#F7F6F2; border-radius:20px; overflow:hidden; display:flex; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+      <!-- STICKY NAV -->
+      <div style="width:220px; flex:none; background:#0E3B2E; padding:36px 22px; display:flex; flex-direction:column; gap:4px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:24px;">
+          <div style="width:11px; height:11px; border-radius:50%; background:#FF6A2B;"></div>
+          <span style="font-family:'Anton',sans-serif; font-size:17px; letter-spacing:1.5px; color:#F7F6F2; text-transform:uppercase;">CourtBook</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; padding:11px 12px; border-radius:10px; background:rgba(255,106,43,0.16);"><div style="width:3px; height:16px; background:#FF6A2B; border-radius:2px;"></div><span style="font-family:'Figtree',sans-serif; font-size:14px; font-weight:600; color:#F7F6F2;">Profile</span></div>
+        <div style="padding:11px 15px; font-family:'Figtree',sans-serif; font-size:14px; font-weight:500; color:#BFD8CE; cursor:pointer;">Security</div>
+        <div style="padding:11px 15px; font-family:'Figtree',sans-serif; font-size:14px; font-weight:500; color:#BFD8CE; cursor:pointer;">Notifications</div>
+        <div style="padding:11px 15px; font-family:'Figtree',sans-serif; font-size:14px; font-weight:500; color:#BFD8CE; cursor:pointer;">Sessions</div>
+      </div>
+
+      <!-- CONTENT -->
+      <div style="flex:1; padding:44px 46px; min-width:0;">
+
+        <!-- PROFILE -->
+        <div style="font-family:'Anton',sans-serif; font-size:22px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:4px;">Profile</div>
+        <div style="height:2px; width:40px; background:#FF6A2B; margin-bottom:24px;"></div>
+        <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:16px;">
+          <div style="flex:1; min-width:220px;"><label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Name</label><input class="cb-input" value="Ramesh Shrestha" /></div>
+          <div style="flex:1; min-width:220px;"><label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Phone</label><input class="cb-input" value="+977 9812345678" /></div>
+        </div>
+        <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Email</label>
+        <div style="display:flex; gap:10px; align-items:center; margin-bottom:6px;">
+          <input class="cb-input" value="ramesh@gmail.com" style="flex:1;" />
+          <div style="display:flex; align-items:center; gap:6px; padding:7px 12px; background:rgba(14,59,46,0.08); border-radius:99px; flex:none;"><div style="width:14px; height:14px; border-radius:50%; background:#0E3B2E; display:flex; align-items:center; justify-content:center;"><div style="width:5px; height:3px; border-left:1.5px solid #fff; border-bottom:1.5px solid #fff; transform:rotate(-45deg); margin-top:-1px;"></div></div><span style="font-family:'Figtree',sans-serif; font-size:12px; font-weight:600; color:#0E3B2E;">Verified</span></div>
+        </div>
+        <div style="font-family:'Figtree',sans-serif; font-size:12.5px; color:#7F958B; margin-bottom:36px;">Changing your email means we'll send a new verification link before it takes effect.</div>
+
+        <!-- SECURITY -->
+        <div style="font-family:'Anton',sans-serif; font-size:22px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:4px;">Security</div>
+        <div style="height:2px; width:40px; background:#FF6A2B; margin-bottom:24px;"></div>
+        <div style="border:1.5px solid #E4EAE6; border-radius:12px; padding:22px 22px; margin-bottom:36px;">
+          <div style="font-family:'Figtree',sans-serif; font-size:15px; font-weight:600; color:#12222B; margin-bottom:16px;">Change password</div>
+          <div style="display:flex; gap:14px; flex-wrap:wrap;">
+            <input class="cb-input" type="password" placeholder="Current password" style="flex:1; min-width:180px;" />
+            <input class="cb-input" type="password" placeholder="New password" style="flex:1; min-width:180px;" />
+          </div>
+          <button class="cb-primary" style="width:auto; padding:12px 22px; margin-top:16px;">Update password</button>
+        </div>
+
+        <!-- NOTIFICATIONS -->
+        <div style="font-family:'Anton',sans-serif; font-size:22px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:4px;">Notifications</div>
+        <div style="height:2px; width:40px; background:#FF6A2B; margin-bottom:8px;"></div>
+        <div style="display:grid; grid-template-columns:1fr 96px 96px; align-items:center; gap:0; margin-bottom:36px;">
+          <div></div>
+          <div style="font-family:'Figtree',sans-serif; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#7F958B; text-align:center; padding-bottom:6px;">Email</div>
+          <div style="font-family:'Figtree',sans-serif; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:#7F958B; text-align:center; padding-bottom:6px;">SMS</div>
+
+          <!-- Booking confirmations -->
+          <div style="padding:16px 0; border-top:1.5px solid #E4EAE6;"><div style="font-family:'Figtree',sans-serif; font-size:14.5px; font-weight:600; color:#12222B;">Booking confirmations</div><div style="font-family:'Figtree',sans-serif; font-size:12.5px; color:#7F958B;">When a slot is confirmed</div></div>
+          <div style="padding:16px 0; border-top:1.5px solid #E4EAE6; display:flex; justify-content:center; align-items:center;">
+            <sc-if value="{{ confirmIdle }}" hint-placeholder-val="{{ true }}"><div onClick="{{ toggleConfirm }}" style="width:46px; height:26px; border-radius:99px; background:{{ confirmBg }}; position:relative; cursor:pointer; transition:background .2s;"><div style="position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; transform:{{ confirmKnob }}; transition:transform .2s; box-shadow:0 1px 3px rgba(0,0,0,0.25);"></div></div></sc-if>
+            <sc-if value="{{ confirmSaving }}"><div style="width:20px; height:20px; border-radius:50%; border:2px solid #E4EAE6; border-top-color:#FF6A2B; animation:cbspin .7s linear infinite;"></div></sc-if>
+          </div>
+          <div style="padding:16px 0; border-top:1.5px solid #E4EAE6; display:flex; justify-content:center; align-items:center; gap:6px;"><div style="width:46px; height:26px; border-radius:99px; background:#E4EAE6; opacity:0.6; position:relative;"><div style="position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff;"></div></div></div>
+
+          <!-- Match reminders -->
+          <div style="padding:16px 0; border-top:1.5px solid #E4EAE6;"><div style="font-family:'Figtree',sans-serif; font-size:14.5px; font-weight:600; color:#12222B;">Match reminders</div><div style="font-family:'Figtree',sans-serif; font-size:12.5px; color:#7F958B;">2 hours before kickoff</div></div>
+          <div style="padding:16px 0; border-top:1.5px solid #E4EAE6; display:flex; justify-content:center; align-items:center; gap:8px;">
+            <sc-if value="{{ remindersIdle }}" hint-placeholder-val="{{ true }}"><div onClick="{{ toggleReminders }}" style="width:46px; height:26px; border-radius:99px; background:{{ remindersBg }}; position:relative; cursor:pointer; transition:background .2s;"><div style="position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; transform:{{ remindersKnob }}; transition:transform .2s; box-shadow:0 1px 3px rgba(0,0,0,0.25);"></div></div></sc-if>
+            <sc-if value="{{ remindersSaving }}"><div style="width:20px; height:20px; border-radius:50%; border:2px solid #E4EAE6; border-top-color:#FF6A2B; animation:cbspin .7s linear infinite;"></div></sc-if>
+            <sc-if value="{{ remindersSaved }}"><span style="font-family:'Figtree',sans-serif; font-size:11px; font-weight:600; color:#0E3B2E;">Saved ✓</span></sc-if>
+          </div>
+          <div style="padding:16px 0; border-top:1.5px solid #E4EAE6; display:flex; justify-content:center; align-items:center;"><div style="width:46px; height:26px; border-radius:99px; background:#E4EAE6; opacity:0.6; position:relative;"><div style="position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff;"></div></div></div>
+
+          <!-- Cancellations -->
+          <div style="padding:16px 0; border-top:1.5px solid #E4EAE6; border-bottom:1.5px solid #E4EAE6;"><div style="font-family:'Figtree',sans-serif; font-size:14.5px; font-weight:600; color:#12222B;">Cancellations</div><div style="font-family:'Figtree',sans-serif; font-size:12.5px; color:#7F958B;">If a match is called off</div></div>
+          <div style="padding:16px 0; border-top:1.5px solid #E4EAE6; border-bottom:1.5px solid #E4EAE6; display:flex; justify-content:center; align-items:center;">
+            <sc-if value="{{ cancelIdle }}" hint-placeholder-val="{{ true }}"><div onClick="{{ toggleCancel }}" style="width:46px; height:26px; border-radius:99px; background:{{ cancelBg }}; position:relative; cursor:pointer; transition:background .2s;"><div style="position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff; transform:{{ cancelKnob }}; transition:transform .2s; box-shadow:0 1px 3px rgba(0,0,0,0.25);"></div></div></sc-if>
+            <sc-if value="{{ cancelSaving }}"><div style="width:20px; height:20px; border-radius:50%; border:2px solid #E4EAE6; border-top-color:#FF6A2B; animation:cbspin .7s linear infinite;"></div></sc-if>
+          </div>
+          <div style="padding:16px 0; border-top:1.5px solid #E4EAE6; border-bottom:1.5px solid #E4EAE6; display:flex; justify-content:center; align-items:center;"><div style="display:flex; align-items:center; gap:6px;"><div style="width:46px; height:26px; border-radius:99px; background:#E4EAE6; opacity:0.6; position:relative;"><div style="position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#fff;"></div></div></div></div>
+        </div>
+        <div style="display:inline-flex; align-items:center; gap:7px; padding:5px 11px; background:#EEF2F0; border-radius:99px; margin:-24px 0 36px;"><span style="font-family:'Figtree',sans-serif; font-size:11px; font-weight:600; color:#7F958B;">SMS · Coming soon</span></div>
+
+        <!-- SESSIONS -->
+        <div style="font-family:'Anton',sans-serif; font-size:22px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:4px;">Sessions</div>
+        <div style="height:2px; width:40px; background:#FF6A2B; margin-bottom:20px;"></div>
+        <div style="border:1.5px solid #E4EAE6; border-radius:12px; overflow:hidden; margin-bottom:16px;">
+          <div style="display:flex; align-items:center; gap:14px; padding:16px 18px; border-bottom:1.5px solid #E4EAE6;">
+            <div style="width:38px; height:38px; border-radius:10px; background:#0E3B2E; display:flex; align-items:center; justify-content:center; flex:none;"><div style="width:14px; height:20px; border:2px solid #F7F6F2; border-radius:3px;"></div></div>
+            <div style="flex:1; min-width:0;"><div style="font-family:'Figtree',sans-serif; font-size:14px; font-weight:600; color:#12222B;">Chrome · Android</div><div style="font-family:'Figtree',sans-serif; font-size:12.5px; color:#0E3B2E; font-weight:500;">Kathmandu · current session</div></div>
+            <span style="font-family:'Figtree',sans-serif; font-size:12.5px; color:#BFD8CE; font-weight:600;">Active now</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:14px; padding:16px 18px;">
+            <div style="width:38px; height:38px; border-radius:10px; background:#EEF2F0; display:flex; align-items:center; justify-content:center; flex:none;"><div style="width:20px; height:15px; border:2px solid #7F958B; border-radius:2px;"></div></div>
+            <div style="flex:1; min-width:0;"><div style="font-family:'Figtree',sans-serif; font-size:14px; font-weight:600; color:#12222B;">Safari · Mac</div><div style="font-family:'Figtree',sans-serif; font-size:12.5px; color:#7F958B;">Lalitpur · last active 2 d ago</div></div>
+            <button style="padding:8px 14px; border:1.5px solid #D3DDD7; border-radius:99px; background:transparent; font-family:'Figtree',sans-serif; font-size:12.5px; font-weight:600; color:#12222B; cursor:pointer;">Log out</button>
+          </div>
+        </div>
+        <button style="padding:12px 20px; border:1.5px solid #FF6A2B; border-radius:12px; background:transparent; font-family:'Figtree',sans-serif; font-size:13.5px; font-weight:700; color:#FF6A2B; cursor:pointer;">Log out all other devices</button>
+
+        <!-- DANGER ZONE separated by court line -->
+        <div style="margin-top:40px; padding-top:36px; border-top:2px solid #12222B; position:relative;">
+          <div style="position:absolute; left:0; top:-2px; width:24px; height:24px; border-left:2px solid #12222B; border-top:2px solid #12222B;"></div>
+          <div style="font-family:'Anton',sans-serif; font-size:20px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:8px;">Danger zone</div>
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap;">
+            <div style="max-width:520px;"><div style="font-family:'Figtree',sans-serif; font-size:14px; color:#3C4A44; line-height:1.5;">Deleting your account removes your booking history and cannot be undone. You'll be asked to type <strong style="color:#12222B;">DELETE</strong> to confirm.</div></div>
+            <button style="padding:12px 20px; border:1.5px solid #12222B; border-radius:12px; background:#12222B; font-family:'Figtree',sans-serif; font-size:13.5px; font-weight:700; color:#F7F6F2; cursor:pointer; flex:none;">Delete account</button>
+          </div>
+          <!-- typed-confirmation modal preview -->
+          <div style="margin-top:22px; width:400px; max-width:100%; background:#fff; border:1.5px solid #E4EAE6; border-radius:14px; padding:24px; box-shadow:0 20px 50px -24px rgba(0,0,0,0.3);">
+            <div style="font-family:'Anton',sans-serif; font-size:18px; letter-spacing:0.5px; text-transform:uppercase; color:#12222B; margin-bottom:8px;">Delete account?</div>
+            <div style="font-family:'Figtree',sans-serif; font-size:13.5px; color:#3C4A44; margin-bottom:16px;">Type <strong style="color:#12222B;">DELETE</strong> to confirm.</div>
+            <input class="cb-input" placeholder="DELETE" value="{{ del }}" onInput="{{ onDel }}" style="margin-bottom:16px;" />
+            <div style="display:flex; gap:10px; justify-content:flex-end;">
+              <button style="padding:11px 18px; border:1.5px solid #D3DDD7; border-radius:12px; background:transparent; font-family:'Figtree',sans-serif; font-size:13.5px; font-weight:600; color:#12222B; cursor:pointer;">Cancel</button>
+              <button disabled="{{ delReady }}" style="padding:11px 18px; border:none; border-radius:12px; background:{{ delBtnBg }}; font-family:'Figtree',sans-serif; font-size:13.5px; font-weight:700; color:#F7F6F2; cursor:pointer;">Delete forever</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MOBILE ================= -->
+  <div style="margin-top:24px;">
+    <div style="font-family:'Figtree',sans-serif; font-size:12px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:#BFD8CE; margin-bottom:6px;">03 — Mobile-first</div>
+    <div style="font-family:'Anton',sans-serif; font-size:24px; letter-spacing:1px; color:#F7F6F2; text-transform:uppercase; margin-bottom:28px;">85% of bookings happen on a phone</div>
+    <div style="display:flex; gap:40px; flex-wrap:wrap;">
+
+      <!-- MOBILE LOGIN -->
+      <div style="width:360px; background:#F7F6F2; border-radius:26px; overflow:hidden; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+        <div style="position:relative; height:120px; background:linear-gradient(160deg,#0E3B2E,#092A21); padding:22px; overflow:hidden;">
+          <div style="position:absolute; right:-24px; top:-24px; width:90px; height:90px; border:2px solid rgba(247,246,242,0.28); border-radius:50%;"></div>
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:11px; height:11px; border-radius:50%; background:#FF6A2B;"></div><span style="font-family:'Anton',sans-serif; font-size:18px; letter-spacing:1.5px; color:#F7F6F2; text-transform:uppercase;">CourtBook</span></div>
+          <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE; margin-top:12px;">Log in to book tonight's pitch.</div>
+        </div>
+        <div style="padding:28px 24px 32px;">
+          <label style="display:block; font-size:13px; font-weight:600; color:#12222B; margin-bottom:7px;">Email</label>
+          <input class="cb-input" type="email" placeholder="you@example.com" style="margin-bottom:16px;" />
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px;"><label style="font-size:13px; font-weight:600; color:#12222B;">Password</label><a class="cb-link" style="font-size:12.5px;">Forgot?</a></div>
+          <input class="cb-input" type="password" placeholder="••••••••" style="margin-bottom:22px;" />
+          <button class="cb-primary">Log in</button>
+          <div style="text-align:center; font-family:'Figtree',sans-serif; font-size:13.5px; color:#12222B; margin-top:18px;">New here? <a class="cb-link" style="font-size:13.5px;">Create account</a></div>
+        </div>
+      </div>
+
+      <!-- MOBILE REGISTER -->
+      <div style="width:360px; background:#F7F6F2; border-radius:26px; overflow:hidden; box-shadow:0 30px 70px -34px rgba(0,0,0,0.7);">
+        <div style="position:relative; height:120px; background:linear-gradient(160deg,#0E3B2E,#092A21); padding:22px; overflow:hidden;">
+          <div style="position:absolute; left:-24px; bottom:-24px; width:90px; height:90px; border:2px solid rgba(247,246,242,0.28); border-radius:50%;"></div>
+          <div style="display:flex; align-items:center; gap:9px;"><div style="width:11px; height:11px; border-radius:50%; background:#FF6A2B;"></div><span style="font-family:'Anton',sans-serif; font-size:18px; letter-spacing:1.5px; color:#F7F6F2; text-transform:uppercase;">CourtBook</span></div>
+          <div style="font-family:'Figtree',sans-serif; font-size:13px; color:#BFD8CE; margin-top:12px;">Create your account — it's free.</div>
+        </div>
+        <div style="padding:24px 24px 30px;">
+          <input class="cb-input" type="text" placeholder="Full name" style="margin-bottom:12px;" />
+          <input class="cb-input" type="email" placeholder="Email" style="margin-bottom:12px;" />
+          <div style="display:flex; gap:8px; margin-bottom:12px;"><div style="display:flex; align-items:center; padding:0 12px; border:1.5px solid #D3DDD7; border-radius:12px; background:#EEF2F0; font-size:14px; font-weight:600; color:#12222B;">+977</div><input class="cb-input" type="tel" placeholder="98XXXXXXXX" style="flex:1;" /></div>
+          <input class="cb-input" type="password" placeholder="Password" value="{{ regPw }}" onChange="{{ onRegPw }}" style="margin-bottom:10px;" />
+          <div style="height:6px; border-radius:99px; background:#E4EAE6; overflow:hidden; margin-bottom:7px;"><div style="height:100%; border-radius:99px; width:{{ strengthPct }}; background:{{ strengthColor }}; transition:width .25s, background .25s;"></div></div>
+          <div style="font-family:'Figtree',sans-serif; font-size:12px; color:#12222B; font-weight:500; min-height:16px; margin-bottom:18px;">{{ strengthLabel }}</div>
+          <button class="cb-primary">Create account</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+<!-- INSERT -->
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = {
+    regPw: "",
+    resend: 60,
+    notif: { confirm: true, reminders: true, cancel: false },
+    saving: {},
+    saved: {},
+    del: ""
+  };
+
+  componentDidMount() {
+    this._t = setInterval(() => {
+      this.setState(s => ({ resend: s.resend > 0 ? s.resend - 1 : 0 }));
+    }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this._t); if (this._st) clearTimeout(this._st); }
+
+  _mix(a, b, t) {
+    const h = x => [parseInt(x.slice(1,3),16), parseInt(x.slice(3,5),16), parseInt(x.slice(5,7),16)];
+    const A = h(a), B = h(b);
+    const c = A.map((v,i) => Math.round(v + (B[i]-v)*t));
+    return "rgb(" + c.join(",") + ")";
+  }
+
+  _strength(pw) {
+    if (!pw) return { pct: 0, label: "", color: "#D3DDD7" };
+    let s = 0;
+    if (pw.length >= 8) s++;
+    if (/[a-z]/.test(pw) && /[A-Z]/.test(pw)) s++;
+    if (/[0-9]/.test(pw)) s++;
+    if (/[^A-Za-z0-9]/.test(pw)) s++;
+    const map = [
+      { pct: 22, label: "Too easy to guess" },
+      { pct: 22, label: "Too easy to guess" },
+      { pct: 52, label: "Getting there" },
+      { pct: 78, label: "Good" },
+      { pct: 100, label: "Strong" }
+    ];
+    const m = map[s];
+    return { pct: m.pct, label: m.label, color: this._mix("#BFD8CE", "#FF6A2B", m.pct/100) };
+  }
+
+  toggle(key) {
+    if (this.state.saving[key]) return;
+    this.setState(s => ({ saving: { ...s.saving, [key]: true } }));
+    setTimeout(() => {
+      this.setState(s => ({
+        saving: { ...s.saving, [key]: false },
+        notif: { ...s.notif, [key]: !s.notif[key] },
+        saved: { ...s.saved, [key]: true }
+      }));
+      setTimeout(() => this.setState(s => ({ saved: { ...s.saved, [key]: false } })), 1800);
+    }, 850);
+  }
+
+  restartResend() { this.setState({ resend: 60 }); }
+
+  renderVals() {
+    const st = this._strength(this.state.regPw);
+    const circ = 2 * Math.PI * 15;
+    const r = this.state.resend;
+    const ringOffset = circ * (r / 60);
+    return {
+      regPw: this.state.regPw,
+      onRegPw: e => this.setState({ regPw: e.target.value }),
+      strengthPct: st.pct + "%",
+      strengthLabel: st.label,
+      strengthColor: st.color,
+
+      resendActive: r > 0,
+      resendText: r > 0 ? ("Resend in " + r + "s") : "Resend email",
+      ringCirc: circ,
+      ringOffset: ringOffset,
+      onResend: () => { if (r === 0) this.restartResend(); },
+
+      confirmBg: this.state.notif.confirm ? "#FF6A2B" : "#BFD8CE",
+      confirmKnob: this.state.notif.confirm ? "translateX(20px)" : "translateX(0px)",
+      remindersBg: this.state.notif.reminders ? "#FF6A2B" : "#BFD8CE",
+      remindersKnob: this.state.notif.reminders ? "translateX(20px)" : "translateX(0px)",
+      cancelBg: this.state.notif.cancel ? "#FF6A2B" : "#BFD8CE",
+      cancelKnob: this.state.notif.cancel ? "translateX(20px)" : "translateX(0px)",
+      confirmSaving: !!this.state.saving.confirm,
+      confirmIdle: !this.state.saving.confirm,
+      confirmSaved: !!this.state.saved.confirm,
+      remindersSaving: !!this.state.saving.reminders,
+      remindersIdle: !this.state.saving.reminders,
+      remindersSaved: !!this.state.saved.reminders,
+      cancelSaving: !!this.state.saving.cancel,
+      cancelIdle: !this.state.saving.cancel,
+      cancelSaved: !!this.state.saved.cancel,
+      toggleConfirm: () => this.toggle("confirm"),
+      toggleReminders: () => this.toggle("reminders"),
+      toggleCancel: () => this.toggle("cancel"),
+
+      del: this.state.del,
+      onDel: e => this.setState({ del: e.target.value }),
+      delReady: this.state.del !== "DELETE",
+      delBtnBg: this.state.del === "DELETE" ? "#FF6A2B" : "#BFD8CE"
+    };
+  }
+}
+</script>
+</body>
+</html>

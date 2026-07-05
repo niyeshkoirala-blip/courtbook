@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  @keyframes cbfall{ to{ transform:translateY(560px) rotate(720deg); opacity:.82 } }
+  @keyframes cbpulse{ 0%,100%{ transform:scale(1); opacity:1 } 50%{ transform:scale(.99); opacity:.84 } }
+  @keyframes cbdot{ 0%,100%{ opacity:.25 } 50%{ opacity:1 } }
+  @keyframes cbshimmer{ 0%{ background-position:-220px 0 } 100%{ background-position:220px 0 } }
+  .cbPulse{ animation:cbpulse 2.2s ease-in-out infinite }
+  .cbDot{ animation:cbdot 1.2s ease-in-out infinite }
+  .cbSkel{ background:linear-gradient(90deg,#e6e5df 0px,#f3f2ed 90px,#e6e5df 180px); background-size:220px 100%; animation:cbshimmer 1.25s linear infinite }
+  @media (prefers-reduced-motion: reduce){
+    .cbConfetti{ display:none !important }
+    .cbPulse,.cbDot,.cbSkel{ animation:none !important }
+  }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:#1e221d;padding:56px 60px 80px;font-family:Figtree,-apple-system,sans-serif">
+
+  <div style="max-width:1180px;margin:0 auto 8px">
+    <div style="font-family:Anton;font-size:13px;letter-spacing:3px;color:#FF6A2B;text-transform:uppercase">CourtBook — Kathmandu Futsal</div>
+    <h1 style="font-family:Anton;font-size:46px;letter-spacing:1px;color:#F7F6F2;text-transform:uppercase;line-height:1;margin-top:10px">The booking flow</h1>
+    <p style="color:#BFD8CE;font-size:15px;margin-top:12px;max-width:560px">Checkout, confirmation and bookings — designed under floodlights. Green turf, white court lines, one orange ball. Mobile-first.</p>
+  </div>
+
+  <!-- ===================== CHECKOUT ===================== -->
+  <div style="max-width:1180px;margin:52px auto 0;border-top:2px solid #375248;padding-top:16px">
+    <div style="font-family:Anton;font-size:22px;letter-spacing:1.5px;color:#F7F6F2;text-transform:uppercase">01 · Checkout</div>
+    <p style="color:#BFD8CE;font-size:14px;margin-top:4px">Complete payment inside a 10-minute hold — without anxiety.</p>
+  </div>
+
+  <div style="display:flex;gap:44px;flex-wrap:wrap;margin-top:34px">
+
+    <!-- CHECKOUT DEFAULT -->
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-family:Figtree;font-size:11px;font-weight:700;letter-spacing:1.5px;color:#BFD8CE;text-transform:uppercase">Checkout</span><span style="background:#375248;color:#BFD8CE;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">1a</span></div>
+      <div style="width:402px;background:#F7F6F2;border:9px solid #0c0c0c;border-radius:46px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.4)">
+        <div style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:700;color:#12222B"><span>9:41</span><span style="letter-spacing:2px;font-size:9px">●●●</span></div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 20px 14px">
+          <span style="font-size:22px;color:#12222B;line-height:1">‹</span>
+          <span style="font-family:Figtree;font-size:11px;font-weight:700;letter-spacing:2px;color:#5b6d64;text-transform:uppercase">Checkout</span>
+          <span style="width:22px"></span>
+        </div>
+
+        <!-- scoreboard timer -->
+        <div style="display:flex;justify-content:center;padding:0 20px 18px">
+          <div style="background:#0E3B2E;border-radius:16px;padding:14px 30px;text-align:center;min-width:210px">
+            <div style="font-family:Figtree;font-size:10px;font-weight:700;letter-spacing:2.5px;color:#BFD8CE;text-transform:uppercase">Slot held for you</div>
+            <div style="font-family:Anton;font-size:44px;letter-spacing:2px;color:#F7F6F2;line-height:1.05;font-variant-numeric:tabular-nums;margin-top:2px">9:42</div>
+          </div>
+        </div>
+
+        <!-- summary card framed by court lines -->
+        <div style="margin:0 20px;border:1px solid #d8ddd6;border-radius:12px;overflow:hidden;background:#fff">
+          <div style="position:relative;background:#0E3B2E;padding:16px 18px;overflow:hidden">
+            <div style="position:absolute;top:10px;right:12px;width:38px;height:38px;border-top:2px solid #F7F6F2;border-right:2px solid #F7F6F2;border-top-right-radius:38px;opacity:.6"></div>
+            <div style="font-family:Anton;font-size:22px;letter-spacing:.5px;color:#F7F6F2;text-transform:uppercase;line-height:1">Sanepa Futsal</div>
+            <div style="font-size:13px;color:#BFD8CE;margin-top:5px">Court B · 5-a-side · Sanepa</div>
+            <div style="height:2px;background:#F7F6F2;opacity:.25;margin-top:14px"></div>
+          </div>
+          <div style="padding:16px 18px">
+            <div style="display:flex;align-items:center;gap:8px;color:#12222B;font-size:15px;font-weight:600"><span style="width:8px;height:8px;background:#FF6A2B;border-radius:2px;display:inline-block"></span>Sat 4 Jul · 7:00–8:00 PM</div>
+            <div style="height:1px;background:#e7e6e1;margin:14px 0"></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:#5b6d64;margin-bottom:8px"><span>Court fee</span><span style="font-variant-numeric:tabular-nums;color:#12222B">Rs 1,500</span></div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13px;font-weight:700;letter-spacing:1px;color:#12222B;text-transform:uppercase">Total</span><span style="font-family:Anton;font-size:26px;color:#0E3B2E;font-variant-numeric:tabular-nums">Rs 1,500</span></div>
+          </div>
+        </div>
+
+        <!-- payment methods -->
+        <div style="padding:20px 20px 8px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:#5b6d64;text-transform:uppercase;margin-bottom:10px">Payment method</div>
+
+          <div style="display:flex;align-items:center;gap:12px;border:2px solid #FF6A2B;border-radius:12px;padding:14px;background:#fff;margin-bottom:10px">
+            <span style="width:20px;height:20px;border-radius:999px;border:6px solid #FF6A2B;flex:none"></span>
+            <div style="flex:1"><div style="font-size:15px;font-weight:700;color:#12222B">eSewa</div><div style="font-size:12px;color:#5b6d64">Wallet · instant</div></div>
+            <span style="background:#60BB46;color:#fff;font-size:12px;font-weight:800;padding:5px 10px;border-radius:8px">eSewa</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;border:1px solid #d8ddd6;border-radius:12px;padding:14px;background:#fff;margin-bottom:10px">
+            <span style="width:20px;height:20px;border-radius:999px;border:2px solid #BFD8CE;flex:none"></span>
+            <div style="flex:1"><div style="font-size:15px;font-weight:700;color:#12222B">Khalti</div><div style="font-size:12px;color:#5b6d64">Wallet · instant</div></div>
+            <span style="background:#5C2D91;color:#fff;font-size:12px;font-weight:800;padding:5px 10px;border-radius:8px">Khalti</span>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:12px;border:1px solid #d8ddd6;border-radius:12px;padding:14px;background:#fff">
+            <span style="width:20px;height:20px;border-radius:999px;border:2px solid #BFD8CE;flex:none"></span>
+            <div style="flex:1"><div style="font-size:15px;font-weight:700;color:#12222B">Pay at venue</div><div style="font-size:12px;color:#5b6d64">Reserve now, pay cash when you play</div></div>
+          </div>
+
+          <p style="font-size:12px;color:#5b6d64;line-height:1.5;margin-top:14px">By booking you agree to our terms. <span style="color:#0E3B2E;font-weight:700;text-decoration:underline">Free cancellation until Fri 7 PM</span>.</p>
+        </div>
+
+        <!-- sticky pay -->
+        <div style="position:sticky;bottom:0;background:#F7F6F2;border-top:1px solid #e0dfd9;padding:14px 20px 22px;box-shadow:0 -8px 20px rgba(14,59,46,.06)">
+          <button style="width:100%;height:56px;background:#FF6A2B;color:#F7F6F2;border:none;border-radius:14px;font-family:Figtree;font-size:16px;font-weight:700;cursor:pointer">Pay Rs 1,500 with eSewa</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONFIRMING -->
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#BFD8CE;text-transform:uppercase">Confirming payment</span><span style="background:#375248;color:#BFD8CE;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">1b</span></div>
+      <div style="width:402px;background:#F7F6F2;border:9px solid #0c0c0c;border-radius:46px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.4)">
+        <div style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:700;color:#12222B"><span>9:41</span><span style="letter-spacing:2px;font-size:9px">●●●</span></div>
+        <div style="text-align:center;padding:8px 20px 4px"><span style="font-family:Figtree;font-size:11px;font-weight:700;letter-spacing:2px;color:#5b6d64;text-transform:uppercase">Checkout</span></div>
+
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:34px 24px 40px;min-height:560px">
+          <div class="cbPulse" style="width:100%;border:1px solid #d8ddd6;border-radius:12px;overflow:hidden;background:#fff">
+            <div style="background:#0E3B2E;padding:16px 18px">
+              <div style="font-family:Anton;font-size:22px;color:#F7F6F2;text-transform:uppercase;line-height:1">Sanepa Futsal</div>
+              <div style="font-size:13px;color:#BFD8CE;margin-top:5px">Court B · 5-a-side · Sanepa</div>
+            </div>
+            <div style="padding:16px 18px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:14px;color:#12222B;font-weight:600">Sat 4 Jul · 7:00–8:00 PM</span><span style="font-family:Anton;font-size:22px;color:#0E3B2E;font-variant-numeric:tabular-nums">Rs 1,500</span></div>
+          </div>
+
+          <div style="display:flex;gap:7px;margin-top:34px">
+            <span class="cbDot" style="width:9px;height:9px;border-radius:999px;background:#0E3B2E"></span>
+            <span class="cbDot" style="width:9px;height:9px;border-radius:999px;background:#0E3B2E;animation-delay:.2s"></span>
+            <span class="cbDot" style="width:9px;height:9px;border-radius:999px;background:#0E3B2E;animation-delay:.4s"></span>
+          </div>
+          <div style="font-family:Anton;font-size:20px;letter-spacing:.5px;color:#12222B;text-transform:uppercase;margin-top:20px">Confirming payment…</div>
+          <p style="text-align:center;font-size:14px;color:#5b6d64;line-height:1.55;margin-top:10px;max-width:300px">Confirming with eSewa — this can take up to a minute. We'll email you either way.</p>
+        </div>
+
+        <div style="background:#F7F6F2;border-top:1px solid #e0dfd9;padding:14px 20px 22px">
+          <button style="width:100%;height:56px;background:#BFD8CE;color:#0E3B2E;border:none;border-radius:14px;font-family:Figtree;font-size:16px;font-weight:700">Confirming…</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOLD EXPIRED -->
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#BFD8CE;text-transform:uppercase">Hold expired</span><span style="background:#375248;color:#BFD8CE;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">1c</span></div>
+      <div style="width:402px;background:#F7F6F2;border:9px solid #0c0c0c;border-radius:46px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.4)">
+        <div style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:700;color:#12222B"><span>9:51</span><span style="letter-spacing:2px;font-size:9px">●●●</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 20px 14px"><span style="font-size:22px;color:#12222B">‹</span><span style="font-size:11px;font-weight:700;letter-spacing:2px;color:#5b6d64;text-transform:uppercase">Checkout</span><span style="width:22px"></span></div>
+
+        <div style="display:flex;justify-content:center;padding:0 20px 18px">
+          <div style="background:#5b6d64;border-radius:16px;padding:14px 30px;text-align:center;min-width:210px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#d8ddd6;text-transform:uppercase">Hold released</div>
+            <div style="font-family:Anton;font-size:44px;letter-spacing:2px;color:#F7F6F2;line-height:1.05;font-variant-numeric:tabular-nums;margin-top:2px">0:00</div>
+          </div>
+        </div>
+
+        <div style="margin:0 20px;border:1px solid #d8ddd6;border-radius:12px;overflow:hidden;background:#fff;filter:grayscale(1);opacity:.6">
+          <div style="background:#0E3B2E;padding:16px 18px">
+            <div style="font-family:Anton;font-size:22px;color:#F7F6F2;text-transform:uppercase;line-height:1">Sanepa Futsal</div>
+            <div style="font-size:13px;color:#BFD8CE;margin-top:5px">Court B · 5-a-side · Sanepa</div>
+          </div>
+          <div style="padding:16px 18px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:14px;color:#12222B;font-weight:600">Sat 4 Jul · 7:00–8:00 PM</span><span style="font-family:Anton;font-size:22px;color:#12222B;font-variant-numeric:tabular-nums">Rs 1,500</span></div>
+        </div>
+
+        <div style="padding:22px 24px 8px;text-align:center">
+          <div style="font-family:Anton;font-size:22px;letter-spacing:.5px;color:#12222B;text-transform:uppercase;line-height:1.05">Hold expired</div>
+          <p style="font-size:14px;color:#5b6d64;line-height:1.55;margin-top:10px">Your hold expired and the slot was released. It's back in the pool for other players.</p>
+        </div>
+
+        <div style="padding:18px 20px 26px">
+          <button style="width:100%;height:56px;background:#FF6A2B;color:#F7F6F2;border:none;border-radius:14px;font-size:16px;font-weight:700;margin-bottom:10px">Pick another slot</button>
+          <button style="width:100%;height:52px;background:transparent;color:#0E3B2E;border:1.5px solid #BFD8CE;border-radius:14px;font-size:15px;font-weight:700">Back to venue</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAYMENT FAILED -->
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#BFD8CE;text-transform:uppercase">Payment failed</span><span style="background:#375248;color:#BFD8CE;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">1d</span></div>
+      <div style="width:402px;background:#F7F6F2;border:9px solid #0c0c0c;border-radius:46px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.4)">
+        <div style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:700;color:#12222B"><span>9:44</span><span style="letter-spacing:2px;font-size:9px">●●●</span></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 20px 14px"><span style="font-size:22px;color:#12222B">‹</span><span style="font-size:11px;font-weight:700;letter-spacing:2px;color:#5b6d64;text-transform:uppercase">Checkout</span><span style="width:22px"></span></div>
+
+        <div style="display:flex;justify-content:center;padding:0 20px 18px">
+          <div style="background:#0E3B2E;border-radius:16px;padding:14px 30px;text-align:center;min-width:210px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#BFD8CE;text-transform:uppercase">Slot still held</div>
+            <div style="font-family:Anton;font-size:44px;letter-spacing:2px;color:#F7F6F2;line-height:1.05;font-variant-numeric:tabular-nums;margin-top:2px">4:12</div>
+          </div>
+        </div>
+
+        <!-- inline error card -->
+        <div style="margin:0 20px 4px;border-radius:12px;background:#12222B;padding:16px 18px;position:relative;overflow:hidden">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#FF6A2B"></div>
+          <div style="display:flex;align-items:center;gap:10px"><span style="width:22px;height:22px;border-radius:999px;border:2px solid #FF6A2B;color:#FF6A2B;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center">!</span><span style="font-family:Anton;font-size:16px;letter-spacing:.5px;color:#F7F6F2;text-transform:uppercase">Payment didn't complete</span></div>
+          <p style="font-size:14px;color:#BFD8CE;line-height:1.55;margin-top:10px">eSewa didn't complete the payment. Your slot is still held for <span style="color:#F7F6F2;font-weight:700;font-variant-numeric:tabular-nums">4:12</span>.</p>
+        </div>
+
+        <div style="margin:16px 20px 0;border:1px solid #d8ddd6;border-radius:12px;overflow:hidden;background:#fff">
+          <div style="padding:14px 18px;display:flex;justify-content:space-between;align-items:center"><div><div style="font-family:Anton;font-size:18px;color:#0E3B2E;text-transform:uppercase;line-height:1">Sanepa Futsal</div><div style="font-size:13px;color:#5b6d64;margin-top:4px">Sat 4 Jul · 7:00–8:00 PM</div></div><span style="font-family:Anton;font-size:20px;color:#0E3B2E;font-variant-numeric:tabular-nums">Rs 1,500</span></div>
+        </div>
+
+        <div style="padding:20px;">
+          <button style="width:100%;height:56px;background:#FF6A2B;color:#F7F6F2;border:none;border-radius:14px;font-size:16px;font-weight:700;margin-bottom:12px">Try again</button>
+          <div style="text-align:center"><span style="font-size:14px;color:#0E3B2E;font-weight:700;text-decoration:underline">Switch payment method</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===================== CONFIRMATION ===================== -->
+  <div style="max-width:1180px;margin:64px auto 0;border-top:2px solid #375248;padding-top:16px">
+    <div style="font-family:Anton;font-size:22px;letter-spacing:1.5px;color:#F7F6F2;text-transform:uppercase">02 · Confirmation</div>
+    <p style="color:#BFD8CE;font-size:14px;margin-top:4px">The celebration moment — but useful.</p>
+  </div>
+
+  <div style="display:flex;gap:44px;flex-wrap:wrap;margin-top:34px">
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#BFD8CE;text-transform:uppercase">You're on the pitch</span><span style="background:#375248;color:#BFD8CE;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">2a</span></div>
+      <div style="position:relative;width:402px;background:#0E3B2E;border:9px solid #0c0c0c;border-radius:46px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.4)">
+        <!-- court lines -->
+        <div style="position:absolute;top:70px;left:50%;transform:translateX(-50%);width:150px;height:150px;border:2px solid #F7F6F2;border-radius:999px;opacity:.12"></div>
+        <div style="position:absolute;top:0;left:50%;width:2px;height:150px;background:#F7F6F2;opacity:.12"></div>
+        <div style="position:absolute;bottom:16px;left:16px;width:46px;height:46px;border-left:2px solid #F7F6F2;border-bottom:2px solid #F7F6F2;border-bottom-left-radius:46px;opacity:.3"></div>
+        <div style="position:absolute;bottom:16px;right:16px;width:46px;height:46px;border-right:2px solid #F7F6F2;border-bottom:2px solid #F7F6F2;border-bottom-right-radius:46px;opacity:.3"></div>
+        {{ confettiLayer }}
+
+        <div style="position:relative;z-index:2">
+          <div style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:700;color:#F7F6F2"><span>9:43</span><span style="letter-spacing:2px;font-size:9px">●●●</span></div>
+
+          <div style="text-align:center;padding:26px 30px 6px">
+            <div style="font-family:Anton;font-size:34px;letter-spacing:1px;color:#F7F6F2;text-transform:uppercase;line-height:.98">You're on<br>the pitch.</div>
+          </div>
+
+          <!-- ticket -->
+          <div style="margin:22px 26px 0;position:relative">
+            <div style="background:#F7F6F2;border-radius:16px;overflow:hidden">
+              <div style="padding:20px 22px 18px">
+                <div style="font-size:10px;font-weight:700;letter-spacing:2.5px;color:#5b6d64;text-transform:uppercase">Match ticket</div>
+                <div style="font-family:Anton;font-size:28px;letter-spacing:.5px;color:#0E3B2E;text-transform:uppercase;line-height:1;margin-top:6px">Sanepa Futsal</div>
+                <div style="font-family:Anton;font-size:17px;letter-spacing:1px;color:#12222B;margin-top:10px;font-variant-numeric:tabular-nums">SAT 4 JUL · 7:00 PM</div>
+                <div style="font-size:13px;color:#5b6d64;margin-top:4px">Court B · 5-a-side</div>
+              </div>
+              <!-- perforation -->
+              <div style="position:relative;height:0;border-top:2px dashed #cfd4cd;margin:0 14px">
+                <div style="position:absolute;top:-11px;left:-25px;width:22px;height:22px;background:#0E3B2E;border-radius:999px"></div>
+                <div style="position:absolute;top:-11px;right:-25px;width:22px;height:22px;background:#0E3B2E;border-radius:999px"></div>
+              </div>
+              <div style="padding:18px 22px 22px;display:flex;align-items:center;gap:18px">
+                <div style="flex:1">
+                  <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#5b6d64;text-transform:uppercase">Booking code</div>
+                  <div style="font-family:Anton;font-size:34px;letter-spacing:2px;color:#0E3B2E;font-variant-numeric:tabular-nums;line-height:1;margin-top:4px">CB-4F7K</div>
+                  <div style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;background:rgba(96,187,70,.14);border:1px solid #60BB46;border-radius:999px;padding:4px 11px"><span style="width:7px;height:7px;border-radius:999px;background:#60BB46"></span><span style="font-size:12px;font-weight:700;color:#2f6b1f">Paid — eSewa</span></div>
+                </div>
+                <div style="width:82px;height:82px;border-radius:10px;flex:none;background:conic-gradient(#12222B 0 25%,#F7F6F2 0 50%,#12222B 0 75%,#F7F6F2 0);background-size:16px 16px;border:2px solid #12222B"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- actions -->
+          <div style="padding:22px 26px 12px">
+            <button style="width:100%;height:54px;background:#FF6A2B;color:#F7F6F2;border:none;border-radius:14px;font-size:16px;font-weight:700;margin-bottom:10px">Add to calendar (.ics)</button>
+            <button style="width:100%;height:52px;background:transparent;color:#F7F6F2;border:1.5px solid #BFD8CE;border-radius:14px;font-size:15px;font-weight:700;margin-bottom:10px">Get directions</button>
+            <button style="width:100%;height:48px;background:transparent;color:#BFD8CE;border:none;font-size:15px;font-weight:700">Invite teammates (share link)</button>
+          </div>
+
+          <p style="text-align:center;font-size:12px;color:#9db6ab;line-height:1.6;padding:6px 30px 26px">Confirmation sent to n***@gmail.com<br>Free cancellation until Fri 7 PM</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== BOOKINGS ===================== -->
+  <div style="max-width:1180px;margin:64px auto 0;border-top:2px solid #375248;padding-top:16px">
+    <div style="font-family:Anton;font-size:22px;letter-spacing:1.5px;color:#F7F6F2;text-transform:uppercase">03 · My bookings</div>
+    <p style="color:#BFD8CE;font-size:14px;margin-top:4px">Upcoming / Past / Cancelled — with cancel flow, empty states and loading.</p>
+  </div>
+
+  <div style="display:flex;gap:44px;flex-wrap:wrap;margin-top:34px">
+
+    <!-- UPCOMING -->
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#BFD8CE;text-transform:uppercase">Upcoming</span><span style="background:#375248;color:#BFD8CE;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">3a</span></div>
+      <div style="width:402px;background:#F7F6F2;border:9px solid #0c0c0c;border-radius:46px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.4)">
+        <div style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:700;color:#12222B"><span>9:41</span><span style="letter-spacing:2px;font-size:9px">●●●</span></div>
+        <div style="padding:6px 20px 14px"><h2 style="font-family:Anton;font-size:26px;letter-spacing:.5px;color:#12222B;text-transform:uppercase">My bookings</h2></div>
+
+        <!-- segmented control -->
+        <div style="margin:0 20px 18px;background:#e7e6e1;border-radius:12px;padding:4px;display:flex;gap:4px">
+          <div style="flex:1;text-align:center;background:#0E3B2E;color:#F7F6F2;border-radius:9px;padding:9px 0;font-size:13px;font-weight:700">Upcoming</div>
+          <div style="flex:1;text-align:center;color:#5b6d64;padding:9px 0;font-size:13px;font-weight:600">Past</div>
+          <div style="flex:1;text-align:center;color:#5b6d64;padding:9px 0;font-size:13px;font-weight:600">Cancelled</div>
+        </div>
+
+        <!-- next match elevated -->
+        <div style="margin:0 20px 16px;position:relative;background:#fff;border-radius:12px;box-shadow:0 12px 30px rgba(14,59,46,.14);border:2px solid #0E3B2E;overflow:hidden">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#FF6A2B"></div>
+          <div style="position:absolute;top:8px;right:10px;width:32px;height:32px;border-top:2px solid #0E3B2E;border-right:2px solid #0E3B2E;border-top-right-radius:32px;opacity:.5"></div>
+          <div style="padding:14px 16px 4px"><span style="font-size:10px;font-weight:700;letter-spacing:2px;color:#0E3B2E;text-transform:uppercase">Next match</span> · <span style="font-size:12px;font-weight:700;color:#FF6A2B">Kicks off in 2 days</span></div>
+          <div style="padding:8px 16px 16px;display:flex;align-items:center;gap:14px">
+            <div style="text-align:center;background:#0E3B2E;border-radius:10px;padding:8px 12px;flex:none"><div style="font-family:Anton;font-size:26px;color:#F7F6F2;line-height:.9;font-variant-numeric:tabular-nums">04</div><div style="font-family:Anton;font-size:12px;letter-spacing:1.5px;color:#BFD8CE">JUL</div></div>
+            <div style="flex:1"><div style="font-family:Anton;font-size:18px;color:#12222B;text-transform:uppercase;line-height:1">Sanepa Futsal</div><div style="font-size:13px;color:#5b6d64;margin-top:4px">Court B · 7:00–8:00 PM</div><div style="display:inline-flex;align-items:center;gap:5px;margin-top:7px;background:rgba(96,187,70,.14);border-radius:999px;padding:3px 9px"><span style="width:6px;height:6px;border-radius:999px;background:#60BB46"></span><span style="font-size:11px;font-weight:700;color:#2f6b1f">Confirmed</span></div></div>
+          </div>
+          <div style="display:flex;gap:8px;padding:0 16px 16px">
+            <button style="flex:1;height:42px;background:transparent;border:1.5px solid #BFD8CE;border-radius:10px;color:#0E3B2E;font-size:13px;font-weight:700">Directions</button>
+            <button style="flex:1;height:42px;background:transparent;border:1.5px solid #BFD8CE;border-radius:10px;color:#5b6d64;font-size:13px;font-weight:700">Cancel</button>
+          </div>
+        </div>
+
+        <!-- regular card -->
+        <div style="margin:0 20px 20px;position:relative;background:#fff;border:1px solid #e0dfd9;border-radius:12px;overflow:hidden">
+          <div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:#60BB46"></div>
+          <div style="padding:16px;display:flex;align-items:center;gap:14px">
+            <div style="text-align:center;background:#e7e6e1;border-radius:10px;padding:8px 12px;flex:none"><div style="font-family:Anton;font-size:26px;color:#12222B;line-height:.9;font-variant-numeric:tabular-nums">11</div><div style="font-family:Anton;font-size:12px;letter-spacing:1.5px;color:#5b6d64">JUL</div></div>
+            <div style="flex:1"><div style="font-family:Anton;font-size:18px;color:#12222B;text-transform:uppercase;line-height:1">Kupondole Arena</div><div style="font-size:13px;color:#5b6d64;margin-top:4px">Court A · 8:00–9:00 PM</div><div style="display:inline-flex;align-items:center;gap:5px;margin-top:7px;background:rgba(96,187,70,.14);border-radius:999px;padding:3px 9px"><span style="width:6px;height:6px;border-radius:999px;background:#60BB46"></span><span style="font-size:11px;font-weight:700;color:#2f6b1f">Confirmed</span></div></div>
+          </div>
+          <div style="display:flex;gap:8px;padding:0 16px 16px">
+            <button style="flex:1;height:42px;background:transparent;border:1.5px solid #BFD8CE;border-radius:10px;color:#0E3B2E;font-size:13px;font-weight:700">Directions</button>
+            <button style="flex:1;height:42px;background:transparent;border:1.5px solid #BFD8CE;border-radius:10px;color:#5b6d64;font-size:13px;font-weight:700">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CANCEL MODAL -->
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#BFD8CE;text-transform:uppercase">Cancel flow</span><span style="background:#375248;color:#BFD8CE;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">3b</span></div>
+      <div style="position:relative;width:402px;background:#F7F6F2;border:9px solid #0c0c0c;border-radius:46px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.4);min-height:760px">
+        <div style="position:absolute;inset:0;background:rgba(9,42,33,.55)"></div>
+        <div style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:700;color:#12222B;position:relative"><span>9:42</span><span style="letter-spacing:2px;font-size:9px">●●●</span></div>
+
+        <!-- bottom sheet -->
+        <div style="position:absolute;left:0;right:0;bottom:0;background:#F7F6F2;border-radius:22px 22px 0 0;padding:22px 22px 26px">
+          <div style="width:44px;height:4px;background:#d8ddd6;border-radius:999px;margin:0 auto 20px"></div>
+          <div style="font-family:Anton;font-size:23px;letter-spacing:.5px;color:#12222B;text-transform:uppercase;line-height:1.05">Cancel Sat 7 PM at<br>Sanepa Futsal?</div>
+          <p style="font-size:15px;color:#3a4a42;line-height:1.55;margin-top:14px">You'll get a <span style="font-weight:700;color:#12222B">50% refund (Rs 750)</span> because it's within 24 hours of kick-off.</p>
+
+          <div style="background:#fff;border:1px solid #e0dfd9;border-radius:12px;padding:14px 16px;margin-top:16px">
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:#5b6d64;margin-bottom:8px"><span>Paid</span><span style="font-variant-numeric:tabular-nums;color:#12222B">Rs 1,500</span></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:#5b6d64;margin-bottom:10px"><span>Cancellation fee (50%)</span><span style="font-variant-numeric:tabular-nums;color:#12222B">– Rs 750</span></div>
+            <div style="height:1px;background:#e7e6e1;margin-bottom:10px"></div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13px;font-weight:700;letter-spacing:.5px;color:#12222B;text-transform:uppercase">Refund</span><span style="font-family:Anton;font-size:24px;color:#0E3B2E;font-variant-numeric:tabular-nums">Rs 750</span></div>
+          </div>
+
+          <button style="width:100%;height:54px;background:#12222B;color:#F7F6F2;border:none;border-radius:14px;font-size:15px;font-weight:700;margin-top:18px">Cancel booking — refund Rs 750</button>
+          <button style="width:100%;height:50px;background:transparent;color:#0E3B2E;border:none;font-size:15px;font-weight:700;margin-top:6px">Keep booking</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#BFD8CE;text-transform:uppercase">Empty states</span><span style="background:#375248;color:#BFD8CE;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">3c</span></div>
+      <div style="width:402px;background:#F7F6F2;border:9px solid #0c0c0c;border-radius:46px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.4);min-height:760px">
+        <div style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:700;color:#12222B"><span>9:41</span><span style="letter-spacing:2px;font-size:9px">●●●</span></div>
+        <div style="padding:6px 20px 14px"><h2 style="font-family:Anton;font-size:26px;letter-spacing:.5px;color:#12222B;text-transform:uppercase">My bookings</h2></div>
+        <div style="margin:0 20px 22px;background:#e7e6e1;border-radius:12px;padding:4px;display:flex;gap:4px">
+          <div style="flex:1;text-align:center;background:#0E3B2E;color:#F7F6F2;border-radius:9px;padding:9px 0;font-size:13px;font-weight:700">Upcoming</div>
+          <div style="flex:1;text-align:center;color:#5b6d64;padding:9px 0;font-size:13px;font-weight:600">Past</div>
+          <div style="flex:1;text-align:center;color:#5b6d64;padding:9px 0;font-size:13px;font-weight:600">Cancelled</div>
+        </div>
+
+        <div style="padding:8px 24px 0;text-align:center">
+          <div style="width:60px;height:60px;margin:0 auto 16px;border:2px solid #BFD8CE;border-radius:999px;position:relative"><div style="position:absolute;top:8px;left:8px;width:20px;height:20px;border-left:2px solid #0E3B2E;border-bottom:2px solid #0E3B2E;border-bottom-left-radius:20px"></div></div>
+          <div style="font-family:Anton;font-size:20px;color:#12222B;text-transform:uppercase;letter-spacing:.5px">No matches booked</div>
+          <p style="font-size:14px;color:#5b6d64;margin-top:8px">Tonight's free courts near you:</p>
+        </div>
+
+        <div style="display:flex;flex-wrap:wrap;gap:9px;justify-content:center;padding:18px 24px 0">
+          <span style="border:1.5px solid #BFD8CE;border-radius:999px;padding:9px 15px;font-size:13px;font-weight:600;color:#0E3B2E">Baneshwor · 9 PM</span>
+          <span style="border:1.5px solid #BFD8CE;border-radius:999px;padding:9px 15px;font-size:13px;font-weight:600;color:#0E3B2E">Chabahil · 8 PM</span>
+          <span style="border:1.5px solid #BFD8CE;border-radius:999px;padding:9px 15px;font-size:13px;font-weight:600;color:#0E3B2E">Satdobato · 10 PM</span>
+        </div>
+
+        <div style="margin:34px 20px 0;border-top:1px dashed #d8ddd6;padding-top:18px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:2px;color:#5b6d64;text-transform:uppercase;margin-bottom:10px">Cancelled tab</div>
+          <p style="font-size:14px;color:#5b6d64">No cancelled bookings.</p>
+        </div>
+
+        <div style="margin:22px 20px 0;border-top:1px dashed #d8ddd6;padding-top:18px 0">
+          <div style="padding-top:18px;font-size:11px;font-weight:700;letter-spacing:2px;color:#5b6d64;text-transform:uppercase;margin-bottom:12px">Past tab · quieter cards</div>
+          <div style="background:#fff;border:1px solid #e0dfd9;border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;opacity:.9;margin-bottom:16px">
+            <div style="text-align:center;background:#e7e6e1;border-radius:10px;padding:8px 12px;flex:none"><div style="font-family:Anton;font-size:24px;color:#5b6d64;line-height:.9">27</div><div style="font-family:Anton;font-size:11px;letter-spacing:1.5px;color:#8b9a90">JUN</div></div>
+            <div style="flex:1"><div style="font-family:Anton;font-size:17px;color:#5b6d64;text-transform:uppercase;line-height:1">Chabahil Arena</div><div style="font-size:13px;color:#8b9a90;margin-top:4px">Court A · 9:00–10:00 PM · Played</div></div>
+            <button style="height:38px;padding:0 14px;background:transparent;border:1.5px solid #BFD8CE;border-radius:999px;color:#0E3B2E;font-size:13px;font-weight:700">Book again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKELETON -->
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px"><span style="font-size:11px;font-weight:700;letter-spacing:1.5px;color:#BFD8CE;text-transform:uppercase">Loading</span><span style="background:#375248;color:#BFD8CE;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px">3d</span></div>
+      <div style="width:402px;background:#F7F6F2;border:9px solid #0c0c0c;border-radius:46px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.4);min-height:760px">
+        <div style="height:38px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;font-size:13px;font-weight:700;color:#12222B"><span>9:41</span><span style="letter-spacing:2px;font-size:9px">●●●</span></div>
+        <div style="padding:6px 20px 14px"><h2 style="font-family:Anton;font-size:26px;letter-spacing:.5px;color:#12222B;text-transform:uppercase">My bookings</h2></div>
+        <div style="margin:0 20px 20px;background:#e7e6e1;border-radius:12px;padding:4px;display:flex;gap:4px">
+          <div style="flex:1;text-align:center;background:#0E3B2E;color:#F7F6F2;border-radius:9px;padding:9px 0;font-size:13px;font-weight:700">Upcoming</div>
+          <div style="flex:1;text-align:center;color:#5b6d64;padding:9px 0;font-size:13px;font-weight:600">Past</div>
+          <div style="flex:1;text-align:center;color:#5b6d64;padding:9px 0;font-size:13px;font-weight:600">Cancelled</div>
+        </div>
+
+        <div style="padding:0 20px;display:flex;flex-direction:column;gap:16px">
+          <div style="border:1px solid #e0dfd9;border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;background:#fff">
+            <div class="cbSkel" style="width:56px;height:56px;border-radius:10px;flex:none"></div>
+            <div style="flex:1"><div class="cbSkel" style="height:16px;width:70%;border-radius:6px;margin-bottom:9px"></div><div class="cbSkel" style="height:12px;width:50%;border-radius:6px;margin-bottom:9px"></div><div class="cbSkel" style="height:18px;width:34%;border-radius:999px"></div></div>
+          </div>
+          <div style="border:1px solid #e0dfd9;border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;background:#fff">
+            <div class="cbSkel" style="width:56px;height:56px;border-radius:10px;flex:none"></div>
+            <div style="flex:1"><div class="cbSkel" style="height:16px;width:60%;border-radius:6px;margin-bottom:9px"></div><div class="cbSkel" style="height:12px;width:45%;border-radius:6px;margin-bottom:9px"></div><div class="cbSkel" style="height:18px;width:34%;border-radius:999px"></div></div>
+          </div>
+          <div style="border:1px solid #e0dfd9;border-radius:12px;padding:16px;display:flex;align-items:center;gap:14px;background:#fff">
+            <div class="cbSkel" style="width:56px;height:56px;border-radius:10px;flex:none"></div>
+            <div style="flex:1"><div class="cbSkel" style="height:16px;width:66%;border-radius:6px;margin-bottom:9px"></div><div class="cbSkel" style="height:12px;width:48%;border-radius:6px;margin-bottom:9px"></div><div class="cbSkel" style="height:18px;width:34%;border-radius:999px"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const pieces = Array.from({ length: 46 }, (_, i) => {
+      const flare = i % 3 !== 0;
+      return React.createElement('div', {
+        key: i,
+        className: 'cbConfetti',
+        style: {
+          position: 'absolute',
+          top: '-30px',
+          left: ((i * 2.17 + (i * 7 % 11)) % 100) + '%',
+          width: (6 + (i % 3) * 3) + 'px',
+          height: (6 + (i % 3) * 3) + 'px',
+          borderRadius: i % 2 ? '2px' : '999px',
+          background: flare ? '#FF6A2B' : '#F7F6F2',
+          opacity: 0,
+          animation: 'cbfall ' + (2.3 + (i % 5) * 0.35) + 's cubic-bezier(.4,.1,.5,1) ' + ((i % 12) * 0.11) + 's forwards',
+        },
+      });
+    });
+    const confettiLayer = React.createElement('div', {
+      style: { position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 1 },
+    }, pieces);
+    return { confettiLayer };
+  }
+}
+</script>
+</body>
+</html>
