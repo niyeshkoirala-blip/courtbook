@@ -28,4 +28,7 @@ Deploy: Render (render.yaml), GitHub Actions CI
 Plan first: before writing code, list the blueprint sections you read and present
 a short implementation plan. Wait for approval on anything ambiguous.
 At the end of a milestone: run the full test suite, then append a summary to
-docs/PROGRESS.md (what was built, decisions, any deviation from blueprint + why).
+docs/PROGRESS.md (what was built, decisions, any deviation from blueprint + why). 
+Before starting a milestone, check the current branch. If we're on main,
+create and switch to feat/mN-<milestone-name> before writing any code.
+Never commit milestone work directly to main.
