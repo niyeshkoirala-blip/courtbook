@@ -44,5 +44,5 @@ security headers, graceful SIGTERM all verified.
    UI milestone (M5) so versions are chosen when actually used.
 
 **DoD check**: all root scripts green locally (lint, typecheck, test, build).
-`docker compose up` not verifiable in the dev sandbox (no docker) — compose file is
-minimal/standard; verify once on a machine with Docker.
+`docker compose up` verified on the dev machine (snap Docker; needs `sudo` until the
+docker-group login refresh): mongo + mailhog up, health endpoint returns `db:"up"`.
