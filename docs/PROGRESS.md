@@ -46,3 +46,6 @@ security headers, graceful SIGTERM all verified.
 **DoD check**: all root scripts green locally (lint, typecheck, test, build).
 `docker compose up` verified on the dev machine (snap Docker; needs `sudo` until the
 docker-group login refresh): mongo + mailhog up, health endpoint returns `db:"up"`.
+GitHub Actions CI green on push to main. **Render deploy deferred**: Render signup
+requires a card. Revisit at M8 — no-card fallback: Cloudflare/GitHub Pages (client),
+Atlas M0 (db), HF Spaces or similar (API). render.yaml stays as the deploy-as-code spec.
