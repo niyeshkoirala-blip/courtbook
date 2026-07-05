@@ -1,0 +1,36 @@
+# Render blueprint (docs/blueprint.md §10): Docker API + static SPA.
+# Secrets (MONGO_URI etc.) are set in the Render dashboard, never here.
+services:
+  - type: web
+    name: courtbook-api
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/v1/health
+    # migrate-mongo lands with the first migration (M1); preDeployCommand then.
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: MONGO_URI
+        sync: false
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: REFRESH_SECRET
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+
+  - type: web
+    name: courtbook-client
+    runtime: static
+    buildCommand: npm ci && npm run build -w @courtbook/client
+    staticPublishPath: client/dist
+    routes:
+      # SPA fallback — client-side router owns all paths
+      - type: rewrite
+        source: /*
+        destination: /index.html
