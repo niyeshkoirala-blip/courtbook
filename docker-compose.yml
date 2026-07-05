@@ -1,0 +1,23 @@
+# Local dev dependencies (blueprint §10): MongoDB + MailHog.
+# ponytail: mongo runs standalone; M3 transactions need --replSet — add single-node rs then.
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ['CMD', 'mongosh', '--quiet', '--eval', "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - '1025:1025' # SMTP — point the email adapter here in dev
+      - '8025:8025' # Web UI — http://localhost:8025
+
+volumes:
+  mongo-data:
