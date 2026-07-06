@@ -7,7 +7,16 @@ import prettier from 'eslint-config-prettier';
 
 export default tseslint.config(
   // .claude/** = Claude Code worktrees nested in the repo — not our code
-  { ignores: ['**/dist/**', '**/node_modules/**', 'design/**', 'coverage/**', '.claude/**'] },
+  {
+    ignores: [
+      '**/dist/**',
+      '**/node_modules/**',
+      'design/**',
+      'coverage/**',
+      '.claude/**',
+      'scripts/**', // k6 scripts use k6 globals (open, __ENV, __VU)
+    ],
+  },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   prettier,

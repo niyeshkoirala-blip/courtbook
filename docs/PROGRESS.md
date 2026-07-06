@@ -139,3 +139,63 @@ signature correctness.
    bookings collection (flagged in code).
 5. Search's "free at date/time" filter deferred to M3 (needs the availability
    engine).
+
+---
+
+## M3 — Booking engine (2026-07-06)
+
+**Built**
+
+- **The sacred index** (§5.2): unique partial on (courtId, date, startMin) where
+  status ∈ {pending_payment, confirmed}. Cancelled/expired bookings fall out →
+  slots reopen with zero extra logic. §7.3 honored: no locks, no check-then-insert
+  — E11000 maps to 409 SLOT_TAKEN with same-day alternatives.
+- `GET /courts/:id/availability` (§4.4): schedule − bookings − blocks, 3 indexed
+  queries + in-memory assembly (§9), ≤14-day window, `Cache-Control: no-store`
+  (§2.5: availability never cached). Slot states: available/taken/blocked/past
+  with §7.2-resolved prices.
+- `POST /bookings`: §7.1 gates (30-min lead time, 14-day window, schedule-grid
+  alignment, block overlap, max 3 pending holds → 429 TOO_MANY_HOLDS), price
+  snapshot (§7.2: dayOfWeek override → generic override → basePrice), 10-min
+  hold with expiresAt, idempotencyKey (§4.5: repeat POST returns the original),
+  10/hour rate tier keyed by userId (§4.3).
+- Cancel (§7.4): 100/50/0% refund tiers, 409 TOO_LATE_TO_CANCEL after slot start,
+  slot reopens instantly, both sides emailed (booking_cancelled /
+  booking_cancelled_owner); refund settlement manual per §6.2.
+- Walk-ins: same atomic path, instantly confirmed, channel walk_in, can lose
+  the race like anyone (§3.4). Blocks: 409 HAS_BOOKINGS with conflict list —
+  never silently kills a booking (§6.4); pending holds count as conflicts too.
+- `GET /me/bookings`: status filter + cursor pagination, court/venue names populated.
+- Expiry sweeper (§2.10): node-cron */5min + boot sweep — stale 10-min holds →
+  `expired`, slot freed, hold_expired email queued.
+- Shared `npt.ts`: the formatNPT util + UTC+5:45 offset math (nowNPT, addDays,
+  dayOfWeek, slotStartUtc) — unit-tested including the 18:15 UTC = midnight NPT edge.
+- k6 race script (`scripts/race-test/`): seed 100 users + `race.k6.js` with
+  count==1 threshold — the §11.5 release gate for a real deployment.
+
+**Tests** (59 passing, 25 new): unit (pricing precedence, refund tiers incl.
+boundary hours, NPT offset math) + integration (availability shape/prices,
+hold creation, SLOT_TAKEN + alternatives, all SLOT_INVALID variants, blocked
+slots, idempotency, holds cap, **40-concurrent race → exactly one 201**,
+cancel/refund/reopen, TOO_LATE, cross-tenant 404s, venue-owner read access,
+sweeper, walk-in races, block conflicts, my-bookings pagination).
+
+**Bugs the suite caught before shipping**
+
+- Compound *sparse* index on (userId, idempotencyKey) indexed key-less bookings
+  as (userId, null) — second booking by any user exploded. Fixed with
+  partialFilterExpression{idempotencyKey:$exists}.
+- Express 5 leaves req.body undefined on body-less POSTs → validate() now
+  defaults to {}.
+
+**Decisions / deviations**
+
+1. No MongoDB transactions in M3 — §7.3 itself makes the unique index the final
+   arbiter and no multi-document invariant exists yet (notification loss ≠ data
+   loss). Replica set + transactions arrive in M4 where payment+booking updates
+   are genuinely multi-document.
+2. Blocks treat pending_payment holds as conflicts (stricter than §6.4's
+   "confirmed" — a paid-in-progress hold shouldn't be silently blocked over).
+3. Walk-ins get no confirmation email (no account/address to send to).
+4. In-suite race test is 40 VUs (vitest/supertest overhead); the full 100-VU k6
+   script ships in scripts/race-test/ for the M8 release checklist.

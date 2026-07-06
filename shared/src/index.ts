@@ -4,6 +4,8 @@
  */
 export * from './auth.js';
 export * from './venues.js';
+export * from './bookings.js';
+export * from './npt.js';
 
 /** Standard API response envelope (blueprint §2.8). */
 export interface ApiSuccess<T> {

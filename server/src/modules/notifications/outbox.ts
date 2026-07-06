@@ -40,6 +40,18 @@ const templates: Record<string, (p: Payload) => { subject: string; text: string 
     subject: `${p.venueName} needs changes before going live`,
     text: `Hi ${p.name},\n\nYour venue "${p.venueName}" wasn't approved yet.\n\nReviewer note: ${p.reason}\n\nUpdate the listing and publish again when ready.`,
   }),
+  booking_cancelled: (p) => ({
+    subject: 'Your booking was cancelled',
+    text: `Hi ${p.name},\n\nYour booking for ${p.slot} is cancelled. Refund: ${p.refundPct}% (settled manually for now — the venue will be in touch).`,
+  }),
+  booking_cancelled_owner: (p) => ({
+    subject: `Booking cancelled at ${p.venueName}`,
+    text: `Hi ${p.name},\n\nA booking at ${p.venueName} for ${p.slot} was cancelled by the player. The slot is open again.`,
+  }),
+  hold_expired: (p) => ({
+    subject: 'Your booking hold expired',
+    text: `Hi ${p.name},\n\nYour unpaid booking for ${p.date} expired after 10 minutes and the slot was released. You can rebook any free slot.`,
+  }),
 };
 
 /** Services call this — never sendMail directly (request path stays fast, §9). */

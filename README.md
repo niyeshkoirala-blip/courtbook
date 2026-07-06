@@ -41,4 +41,7 @@ CI (GitHub Actions) runs all four on every PR. Deploys via [render.yaml](render.
 - ✅ **M2 — Venues & courts**: owner CRUD with schedules/pricing, draft→review→
   approved lifecycle, admin approval queue with audit log, public search with
   filters + cursor pagination, Cloudinary signed uploads
-- ⏳ M3 — Booking engine (next)
+- ✅ **M3 — Booking engine**: derived availability, atomic slot creation (unique
+  partial index — zero double bookings under concurrent load), 10-min holds +
+  expiry sweeper, cancellation with refund tiers, walk-ins, owner blocks
+- ⏳ M4 — Payments (next)

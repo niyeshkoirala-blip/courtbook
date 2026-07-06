@@ -28,6 +28,16 @@ const authTier = () =>
 
 /** Login/register tier: 5 / 15 min keyed by IP + email (§4.3). */
 export const authRateLimiter = authTier();
+
+/** POST /bookings tier: 10 / hour per user (§4.3) — mounted after requireAuth. */
+export const bookingRateLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: config.isTest ? Number.MAX_SAFE_INTEGER : 10,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  keyGenerator: (req) => req.user?.id ?? ipKeyGenerator(req.ip ?? ''),
+  message: fail('RATE_LIMITED', 'Booking limit reached — try again later.'),
+});
 /**
  * Separate bucket for forgot/resend: an attacker who exhausts a victim's
  * login bucket must not also block their password reset.

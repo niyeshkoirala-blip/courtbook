@@ -10,7 +10,8 @@ import { AppError } from '../errors.js';
  */
 export function validate(schema: ZodTypeAny) {
   return (req: Request, _res: Response, next: NextFunction): void => {
-    const result = schema.safeParse(req.body);
+    // Express 5 leaves req.body undefined when no body was sent
+    const result = schema.safeParse(req.body ?? {});
     if (!result.success) {
       next(
         new AppError(

@@ -3,11 +3,13 @@ import { config } from './core/config.js';
 import { connectDb, disconnectDb } from './core/db.js';
 import { logger } from './core/logger.js';
 import { startOutboxWorker } from './modules/notifications/outbox.js';
+import { startExpirySweeper } from './jobs/expiry-sweeper.js';
 
 /** Boot: DB first (fail fast), then HTTP. Graceful shutdown for Render deploys. */
 async function main(): Promise<void> {
   await connectDb();
   startOutboxWorker();
+  startExpirySweeper();
   const server = createApp().listen(config.port, () => {
     logger.info({ port: config.port, env: config.env, version: config.version }, 'api listening');
   });

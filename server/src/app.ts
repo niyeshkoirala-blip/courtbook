@@ -12,6 +12,8 @@ import { healthRouter } from './core/health.js';
 import { authRouter } from './modules/auth/auth.routes.js';
 import { venueRouter } from './modules/venues/venue.routes.js';
 import { adminRouter } from './modules/admin/admin.routes.js';
+import { courtRouter } from './modules/courts/court.routes.js';
+import { bookingRouter } from './modules/bookings/booking.routes.js';
 
 /**
  * App factory (no .listen — supertest mounts it directly).
@@ -44,7 +46,9 @@ export function createApp(): express.Express {
   app.use('/api/v1/auth', authRouter);
   app.use('/api/v1/venues', venueRouter);
   app.use('/api/v1/admin', adminRouter);
-  // Feature module routers mount here: /api/v1/bookings (M3)…
+  app.use('/api/v1/courts', courtRouter);
+  app.use('/api/v1', bookingRouter);
+  // Feature module routers mount here: /api/v1/payments (M4)…
 
   app.use(notFound);
   app.use(errorHandler);
