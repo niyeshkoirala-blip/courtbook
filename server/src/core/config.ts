@@ -14,9 +14,11 @@ const envSchema = z.object({
   /** Comma-separated SPA origins for the CORS allowlist (§4.2). */
   CLIENT_ORIGIN: z.string().min(1).default('http://localhost:5173'),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
-  // M1+ (auth) — validated as required by the milestones that use them.
-  JWT_SECRET: z.string().optional(),
-  REFRESH_SECRET: z.string().optional(),
+  JWT_SECRET: z.string().default('dev-only-secret'),
+  REFRESH_SECRET: z.string().default('dev-only-refresh'),
+  /** SMTP endpoint — mailhog locally, real provider in prod (§2.11). */
+  SMTP_URL: z.string().default('smtp://localhost:1025'),
+  EMAIL_FROM: z.string().default('CourtBook <no-reply@courtbook.local>'),
   SENTRY_DSN: z.string().optional(),
 });
 
@@ -30,8 +32,23 @@ const pkg = JSON.parse(readFileSync(new URL('../../package.json', import.meta.ur
   version: string;
 };
 
+// Refuse to boot prod with placeholder secrets — silent default = breach later.
+if (parsed.data.NODE_ENV === 'production') {
+  for (const key of ['JWT_SECRET', 'REFRESH_SECRET'] as const) {
+    if (parsed.data[key].startsWith('dev-only') || parsed.data[key] === 'change-me') {
+      throw new Error(`${key} must be set to a real secret in production`);
+    }
+  }
+}
+
 export const config = {
   env: parsed.data.NODE_ENV,
+  jwtSecret: parsed.data.JWT_SECRET,
+  refreshSecret: parsed.data.REFRESH_SECRET,
+  smtpUrl: parsed.data.SMTP_URL,
+  emailFrom: parsed.data.EMAIL_FROM,
+  /** bcrypt cost 12 (§8); 4 in tests — pure-JS bcrypt at 12 makes suites crawl. */
+  bcryptRounds: parsed.data.NODE_ENV === 'test' ? 4 : 12,
   port: parsed.data.PORT,
   mongoUri: parsed.data.MONGO_URI,
   corsOrigins: parsed.data.CLIENT_ORIGIN.split(',').map((o) => o.trim()),

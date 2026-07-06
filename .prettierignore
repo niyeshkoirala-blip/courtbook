@@ -4,3 +4,4 @@ coverage/
 design/
 package-lock.json
 *.md
+.claude/

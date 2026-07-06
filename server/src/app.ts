@@ -9,6 +9,7 @@ import { requestId } from './core/middleware/request-id.js';
 import { globalRateLimiter } from './core/middleware/rate-limit.js';
 import { errorHandler, notFound } from './core/middleware/error-handler.js';
 import { healthRouter } from './core/health.js';
+import { authRouter } from './modules/auth/auth.routes.js';
 
 /**
  * App factory (no .listen — supertest mounts it directly).
@@ -36,10 +37,10 @@ export function createApp(): express.Express {
   app.use(globalRateLimiter);
   app.use(cookieParser());
   app.use(express.json({ limit: '100kb' }));
-  // auth(optional) middleware slots in here at M1.
 
   app.use('/api/v1', healthRouter);
-  // Feature module routers mount here: /api/v1/auth (M1), /api/v1/venues (M2)…
+  app.use('/api/v1/auth', authRouter);
+  // Feature module routers mount here: /api/v1/venues (M2)…
 
   app.use(notFound);
   app.use(errorHandler);

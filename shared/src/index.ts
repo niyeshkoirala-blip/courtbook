@@ -1,7 +1,8 @@
 /**
  * @courtbook/shared — single source of truth for types/schemas used by both
- * client and server (blueprint §2.2). Zod feature schemas land here from M1.
+ * client and server (blueprint §2.2).
  */
+export * from './auth.js';
 
 /** Standard API response envelope (blueprint §2.8). */
 export interface ApiSuccess<T> {

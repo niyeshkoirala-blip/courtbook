@@ -36,4 +36,6 @@ CI (GitHub Actions) runs all four on every PR. Deploys via [render.yaml](render.
 
 - ✅ **M0 — Foundations**: monorepo, Express core (middleware chain, error
   envelope, health endpoint), Docker, CI, Render blueprint
-- ⏳ M1 — Auth (next)
+- ✅ **M1 — Auth**: register/verify/login, rotating refresh sessions with reuse
+  detection, lockout, password reset, notification outbox (emails via MailHog in dev)
+- ⏳ M2 — Venue & court domain (next)

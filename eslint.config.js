@@ -6,7 +6,8 @@ import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
 
 export default tseslint.config(
-  { ignores: ['**/dist/**', '**/node_modules/**', 'design/**', 'coverage/**'] },
+  // .claude/** = Claude Code worktrees nested in the repo — not our code
+  { ignores: ['**/dist/**', '**/node_modules/**', 'design/**', 'coverage/**', '.claude/**'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   prettier,
