@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
+import { ZodError } from 'zod';
 import { AppError, fail } from '../errors.js';
 import { config } from '../config.js';
 import { logger } from '../logger.js';
@@ -21,6 +22,18 @@ export function errorHandler(
 ): void {
   if (err instanceof AppError) {
     res.status(err.status).json(fail(err.code, err.message, err.details));
+    return;
+  }
+
+  // Controllers may schema.parse() query/params directly — same 422 envelope
+  if (err instanceof ZodError) {
+    res.status(422).json(
+      fail(
+        'VALIDATION',
+        'Invalid input',
+        err.issues.map((i) => ({ path: i.path.join('.'), message: i.message })),
+      ),
+    );
     return;
   }
 

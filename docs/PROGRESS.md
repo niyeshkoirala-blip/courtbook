@@ -96,3 +96,46 @@ against dev server + MailHog.
    has no replica set until M3; acceptable for emails (at-least-once still holds).
 5. zod pinned to ^3.25 in both shared and server (v4 crept into shared via a
    bare install and broke cross-package types — lockfile now reconciled).
+
+---
+
+## M2 — Venue & court domain (2026-07-06)
+
+**Built**
+
+- `/api/v1/venues` (§4.4): create (draft) / PATCH / publish / public list / slug
+  detail, courts CRUD nested under the venue, Cloudinary signed-upload endpoint.
+- `/api/v1/admin` (M2 slice): venue review queue, approve/reject with reason —
+  every action writes an append-only `audit_logs` entry and queues an owner email
+  (venue_approved / venue_rejected templates).
+- Status machine per §5.2: draft → pending_review → approved | rejected;
+  rejected venues can be fixed and republished; material edits (name,
+  description, area, geo, amenities, photos) on an approved venue re-enter
+  review — payAtVenue toggle does not.
+- Visibility per §7.5: drafts/pending only for owner + admin (404 to everyone
+  else — existence not confirmed); public search shows approved only.
+- Search: area (prefix, case-insensitive), amenities ($all), priceMax (via court
+  basePrice, two indexed queries — no $lookup), `_id`-cursor pagination.
+- Shared Zod schemas (§5.2 validation): 7-day schedule in minutes-from-midnight
+  NPT, openMin<closeMin, price 100–100 000 NPR, overrides inside open hours
+  (service-level — needs the schedule), ≤5 photos.
+- Middleware: `optionalAuth`, `requireRole`; ZodError branch in the global error
+  handler (controllers can parse query strings with shared schemas).
+- Cloudinary signing via stdlib sha1 — no SDK dependency; browser uploads
+  directly, backend never proxies bytes (§2.6). 501 NOT_CONFIGURED until env set.
+
+**Tests** (34 passing, 14 new): ownership/cross-tenant 404s, visibility,
+schedule/price/override 422s, publish gate, full approve + reject flows with
+audit + email assertions, material-edit re-review, search filters + cursor,
+signature correctness.
+
+**Decisions / deviations**
+
+1. First venue creation auto-upgrades player→owner — blueprint never specifies
+   how owners are born; self-service beats admin dependency.
+2. "Material edit" defined as name/description/area/geo/amenities/photos.
+3. Publish requires ≥1 active court (blueprint implies via §6.4 wizard order).
+4. Courts DELETE lacks the HAS_FUTURE_BOOKINGS 409 guard until M3 creates the
+   bookings collection (flagged in code).
+5. Search's "free at date/time" filter deferred to M3 (needs the availability
+   engine).

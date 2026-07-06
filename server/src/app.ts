@@ -10,6 +10,8 @@ import { globalRateLimiter } from './core/middleware/rate-limit.js';
 import { errorHandler, notFound } from './core/middleware/error-handler.js';
 import { healthRouter } from './core/health.js';
 import { authRouter } from './modules/auth/auth.routes.js';
+import { venueRouter } from './modules/venues/venue.routes.js';
+import { adminRouter } from './modules/admin/admin.routes.js';
 
 /**
  * App factory (no .listen — supertest mounts it directly).
@@ -40,7 +42,9 @@ export function createApp(): express.Express {
 
   app.use('/api/v1', healthRouter);
   app.use('/api/v1/auth', authRouter);
-  // Feature module routers mount here: /api/v1/venues (M2)…
+  app.use('/api/v1/venues', venueRouter);
+  app.use('/api/v1/admin', adminRouter);
+  // Feature module routers mount here: /api/v1/bookings (M3)…
 
   app.use(notFound);
   app.use(errorHandler);

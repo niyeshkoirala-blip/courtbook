@@ -19,6 +19,10 @@ const envSchema = z.object({
   /** SMTP endpoint — mailhog locally, real provider in prod (§2.11). */
   SMTP_URL: z.string().default('smtp://localhost:1025'),
   EMAIL_FROM: z.string().default('CourtBook <no-reply@courtbook.local>'),
+  // M2: Cloudinary signed uploads (§2.6) — photo signing 501s until set
+  CLOUDINARY_CLOUD_NAME: z.string().optional(),
+  CLOUDINARY_API_KEY: z.string().optional(),
+  CLOUDINARY_API_SECRET: z.string().optional(),
   SENTRY_DSN: z.string().optional(),
 });
 
@@ -47,6 +51,9 @@ export const config = {
   refreshSecret: parsed.data.REFRESH_SECRET,
   smtpUrl: parsed.data.SMTP_URL,
   emailFrom: parsed.data.EMAIL_FROM,
+  cloudinaryCloudName: parsed.data.CLOUDINARY_CLOUD_NAME,
+  cloudinaryApiKey: parsed.data.CLOUDINARY_API_KEY,
+  cloudinaryApiSecret: parsed.data.CLOUDINARY_API_SECRET,
   /** bcrypt cost 12 (§8); 4 in tests — pure-JS bcrypt at 12 makes suites crawl. */
   bcryptRounds: parsed.data.NODE_ENV === 'test' ? 4 : 12,
   port: parsed.data.PORT,

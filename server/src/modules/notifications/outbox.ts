@@ -32,6 +32,14 @@ const templates: Record<string, (p: Payload) => { subject: string; text: string 
     subject: 'Your CourtBook password was changed',
     text: `Hi ${p.name},\n\nYour password was just changed and all devices were signed out. If this wasn't you, reset your password immediately and contact support.`,
   }),
+  venue_approved: (p) => ({
+    subject: `${p.venueName} is now live on CourtBook`,
+    text: `Hi ${p.name},\n\nGood news — your venue "${p.venueName}" was approved and is now visible to players.`,
+  }),
+  venue_rejected: (p) => ({
+    subject: `${p.venueName} needs changes before going live`,
+    text: `Hi ${p.name},\n\nYour venue "${p.venueName}" wasn't approved yet.\n\nReviewer note: ${p.reason}\n\nUpdate the listing and publish again when ready.`,
+  }),
 };
 
 /** Services call this — never sendMail directly (request path stays fast, §9). */

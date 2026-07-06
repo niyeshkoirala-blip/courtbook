@@ -38,4 +38,7 @@ CI (GitHub Actions) runs all four on every PR. Deploys via [render.yaml](render.
   envelope, health endpoint), Docker, CI, Render blueprint
 - ✅ **M1 — Auth**: register/verify/login, rotating refresh sessions with reuse
   detection, lockout, password reset, notification outbox (emails via MailHog in dev)
-- ⏳ M2 — Venue & court domain (next)
+- ✅ **M2 — Venues & courts**: owner CRUD with schedules/pricing, draft→review→
+  approved lifecycle, admin approval queue with audit log, public search with
+  filters + cursor pagination, Cloudinary signed uploads
+- ⏳ M3 — Booking engine (next)

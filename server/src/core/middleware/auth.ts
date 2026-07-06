@@ -32,3 +32,23 @@ export function requireAuth(req: Request, _res: Response, next: NextFunction): v
     next(new AppError('UNAUTHENTICATED', 401, 'Invalid or expired access token'));
   }
 }
+
+/** For public routes with owner/admin extras (§7.5) — absent token is fine, bad token isn't. */
+export function optionalAuth(req: Request, res: Response, next: NextFunction): void {
+  if (!req.headers.authorization) {
+    next();
+    return;
+  }
+  requireAuth(req, res, next);
+}
+
+/** Role gate on top of requireAuth. Role alone is never sufficient — services still re-check ownership (§2.7). */
+export function requireRole(role: 'owner' | 'admin') {
+  return (req: Request, _res: Response, next: NextFunction): void => {
+    if (req.user?.role !== role) {
+      next(new AppError('FORBIDDEN', 403, 'Insufficient permissions'));
+      return;
+    }
+    next();
+  };
+}

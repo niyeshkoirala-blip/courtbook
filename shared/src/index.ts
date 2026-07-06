@@ -3,6 +3,7 @@
  * client and server (blueprint §2.2).
  */
 export * from './auth.js';
+export * from './venues.js';
 
 /** Standard API response envelope (blueprint §2.8). */
 export interface ApiSuccess<T> {
