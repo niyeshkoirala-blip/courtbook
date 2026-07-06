@@ -3,6 +3,7 @@
 services:
   mongo:
     image: mongo:7
+    restart: unless-stopped # survive reboots & docker-daemon restarts
     ports:
       - '27017:27017'
     volumes:
@@ -15,6 +16,7 @@ services:
 
   mailhog:
     image: mailhog/mailhog:v1.0.1
+    restart: unless-stopped
     ports:
       - '1025:1025' # SMTP — point the email adapter here in dev
       - '8025:8025' # Web UI — http://localhost:8025
