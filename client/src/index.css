@@ -1,0 +1,27 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens extracted from design/00-system-sheet.html (§3.7 — the
+ * mockups are the visual source of truth): pitch greens, paper, mint,
+ * accent orange; Anton display / Figtree body; 12px cards, pill radii.
+ */
+@theme {
+  --color-pitch: #0e3b2e; /* primary surface */
+  --color-pitch-deep: #092a21;
+  --color-ink: #12222b;
+  --color-mint: #bfd8ce; /* light text on green */
+  --color-sage: #5c7a6e;
+  --color-paper: #f7f6f2; /* content background */
+  --color-accent: #ff6a2b; /* CTA orange */
+  --color-accent-deep: #e1551a;
+  --color-danger: #b23a22;
+
+  --font-display: 'Anton', sans-serif;
+  --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-card: 12px;
+}
+
+body {
+  @apply bg-paper font-sans text-ink antialiased;
+}

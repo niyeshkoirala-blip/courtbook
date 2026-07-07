@@ -255,3 +255,53 @@ strings before parsing (fixes the entire class: CLIENT_ORIGIN=, SMTP_URL=, …).
    redirects with ?data=). Trust boundary is the signature/lookup, not the
    transport.
 4. Venue payments stay `initiated` until the owner marks them paid (M6 dashboard).
+
+---
+
+## M5 — Player frontend (2026-07-07)
+
+**Built**
+
+- Frontend foundation (§2.2): Tailwind v4 with tokens extracted from
+  design/00-system-sheet (pitch #0E3B2E, mint #BFD8CE, paper #F7F6F2, accent
+  #FF6A2B, Anton/Figtree, 12px cards) — mockups honored as visual source of
+  truth (§3.7). React Router v6, TanStack Query, Zustand, RHF + shared Zod
+  schemas (same validation as the API), cva component kit (§3.6: Button, Field,
+  Modal on native <dialog> — free focus trap/Esc, Toasts, EmptyState, Skeleton).
+- Session plumbing (§2.7/§6.3): access token in memory only, silent restore via
+  refresh cookie on boot, one-shot refresh-and-replay on 401 (concurrent 401s
+  share one refresh), login redirect preserving ?next=.
+- Pages: landing, venue search (URL-synced debounced filters, skeletons, empty
+  state), **venue detail** (§3.2: 7-day availability grid with
+  available/taken/blocked/past states + prices, arrow-key navigation,
+  aria-labels per cell, court tabs, sticky booking bar, selection stashed in
+  sessionStorage across the login redirect, SLOT_TAKEN toast + refetch,
+  idempotencyKey on every booking POST), **checkout** (§3.3: server-issued
+  10-min countdown, eSewa form auto-POST / Khalti redirect / pay-at-venue,
+  gateway return-leg relay to /payments/callback, confirmed ticket, expired
+  screen), **my bookings** (tabs, cancel modal with §7.4 policy, .ics download
+  via shared slotStartUtc), full auth set (login w/ unverified interstitial,
+  register, verify?token auto-login, forgot, reset, 60s resend cooldown).
+- A11y (§3.0): skip link, landmarks, labels on all inputs, aria-describedby
+  errors, grid keyboard nav, focus rings.
+
+**Verified** by driving the real UI in the preview browser end-to-end:
+landing → search (live API data) → grid (105 cells, real taken/blocked states)
+→ slot select → login redirect + selection restore → book → checkout countdown
+→ pay-at-venue → confirmed → my-bookings → cancel modal → cancelled. All four
+CI gates green (71 tests, client typechecks, prod build 1.1s).
+
+**Bug found**: stale Vite dep-optimizer cache after the dependency install
+produced a duplicate-React "invalid hook call" crash — cleared node_modules/.vite.
+
+**Decisions / deviations**
+
+1. Lighthouse ≥90 (M5 DoD) not yet measured — no headless Chrome CLI on this
+   machine; run at M8 hardening alongside the axe pass. A11y basics are in.
+2. Refund preview: modal shows the §7.4 policy table; the server remains the
+   only refund calculator (no preview endpoint in §4.4).
+3. Playwright E2E deferred to M8 (blueprint lists the journeys as release
+   gates); preview-browser walkthrough covered the critical path today.
+4. Landing is a light hero (design/01's full marketing page can come with M8
+   polish); photo gallery renders venue photos when present, no Cloudinary
+   uploads wired into the UI yet (owner wizard is M6).

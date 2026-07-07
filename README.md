@@ -46,4 +46,7 @@ CI (GitHub Actions) runs all four on every PR. Deploys via [render.yaml](render.
   expiry sweeper, cancellation with refund tiers, walk-ins, owner blocks
 - ✅ **M4 — Payments**: eSewa + Khalti sandbox adapters, signature-verified
   idempotent callbacks with amount re-derivation, pay-at-venue, checkout polling
-- ⏳ M5 — Player UX (frontend foundation + checkout UI) (next)
+- ✅ **M5 — Player frontend**: Tailwind design system from the mockups,
+  availability grid, booking flow with checkout countdown + all payment paths,
+  my-bookings with cancel/.ics, full auth UI
+- ⏳ M6 — Owner dashboard (next)
