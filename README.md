@@ -44,4 +44,6 @@ CI (GitHub Actions) runs all four on every PR. Deploys via [render.yaml](render.
 - ✅ **M3 — Booking engine**: derived availability, atomic slot creation (unique
   partial index — zero double bookings under concurrent load), 10-min holds +
   expiry sweeper, cancellation with refund tiers, walk-ins, owner blocks
-- ⏳ M4 — Payments (next)
+- ✅ **M4 — Payments**: eSewa + Khalti sandbox adapters, signature-verified
+  idempotent callbacks with amount re-derivation, pay-at-venue, checkout polling
+- ⏳ M5 — Player UX (frontend foundation + checkout UI) (next)

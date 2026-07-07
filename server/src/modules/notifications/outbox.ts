@@ -52,6 +52,14 @@ const templates: Record<string, (p: Payload) => { subject: string; text: string 
     subject: 'Your booking hold expired',
     text: `Hi ${p.name},\n\nYour unpaid booking for ${p.date} expired after 10 minutes and the slot was released. You can rebook any free slot.`,
   }),
+  booking_confirmed: (p) => ({
+    subject: `Booking confirmed — ${p.venueName}`,
+    text: `Hi ${p.name},\n\nYou're booked! ${p.venueName}, ${p.slot}.\n\nSee you on the court.`,
+  }),
+  booking_confirmed_owner: (p) => ({
+    subject: `New booking at ${p.venueName}`,
+    text: `Hi ${p.name},\n\nNew confirmed booking at ${p.venueName}: ${p.slot}.`,
+  }),
 };
 
 /** Services call this — never sendMail directly (request path stays fast, §9). */

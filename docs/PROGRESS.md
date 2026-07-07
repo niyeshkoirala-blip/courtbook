@@ -199,3 +199,59 @@ sweeper, walk-in races, block conflicts, my-bookings pagination).
 3. Walk-ins get no confirmation email (no account/address to send to).
 4. In-suite race test is 40 VUs (vitest/supertest overhead); the full 100-VU k6
    script ships in scripts/race-test/ for the M8 release checklist.
+
+**Post-milestone regression note (2026-07-07):** full live sweep passed (28
+checks: gates, CI, all M1–M3 flows, live cron sweeper). One live fix: the dev
+DB still carried the pre-fix *sparse* idempotency index — mongoose autoIndex
+can't replace same-name/different-options indexes — dropped and recreated with
+the partial filter via mongosh. This is precisely why §5.3 wants migrations;
+reaffirms the migrate-mongo item for M8 (any pre-existing prod DB would need
+the same manual step).
+
+---
+
+## M4 — Payments (2026-07-07)
+
+**Built**
+
+- payments module (§5.2): one payment doc per booking (unique), providerTxnId
+  unique-sparse (replay-proof, §8), raw gateway payloads kept for audit.
+- `POST /payments/initiate` (§4.4): eSewa v2 signed form fields (stdlib
+  HMAC-SHA256, no SDK, sandbox rc-epay + public UAT secret as defaults),
+  Khalti ePayment initiate via fetch (501 until KHALTI_SECRET set), pay-at-venue
+  → instant confirm with unpaid note when venue.payAtVenue (§6.1 H2).
+  Re-initiation switches provider in place; paid/expired holds → 409.
+- `POST /payments/callback/:provider` — §8 order: verify (eSewa: HMAC over
+  signed_field_names with timingSafeEqual; Khalti: server-side lookup by a pidx
+  WE initiated) → replay check → amount re-derived from OUR booking snapshot →
+  status-guarded confirm. Idempotent 200 on replays. §6.5 late webhook: payment
+  recorded verified + loud log, expired booking never force-confirmed (slot may
+  be rebooked).
+- `GET /payments/:id` polling for the checkout page; booking-owner only.
+- booking_confirmed / booking_confirmed_owner email templates via the outbox.
+
+**Tests** (71 passing, 12 new): the three DoD gates — sandbox happy, replay,
+amount-tamper — plus forged-signature 400, late-webhook handling, provider
+switch, venue-pay rules (allowed/refused), Khalti paisa conversion + unknown
+pidx 404, polling authz. Also verified live end-to-end against the dev stack:
+real hold → initiate → tampered callback rejected (AMOUNT_MISMATCH) → genuine
+signed callback confirmed the booking → replay idempotent → both emails in
+MailHog.
+
+**Bug found by the live test**: empty-string env vars (e.g. `ESEWA_SECRET=`
+copied from .env.example) passed zod's `.default()` and silently became real
+values — the server was HMAC-signing with "". config.ts now filters empty
+strings before parsing (fixes the entire class: CLIENT_ORIGIN=, SMTP_URL=, …).
+
+**Decisions / deviations**
+
+1. **Checkout UI + countdown deferred to M5** — the client is still a
+   placeholder; the §3.3 page belongs with the frontend foundation. M4's
+   acceptance criteria (sandbox happy/replay/tamper tests) are backend and pass.
+2. Still no MongoDB transactions: callback does ordered idempotent writes
+   (uniqueness-guarded payment insert → status-guarded booking flip) — gateway
+   retries + idempotency give equivalent recovery; replSet+tx at M8.
+3. Gateway callbacks are SPA-relayed (eSewa v2 has no server webhook — it
+   redirects with ?data=). Trust boundary is the signature/lookup, not the
+   transport.
+4. Venue payments stay `initiated` until the owner marks them paid (M6 dashboard).

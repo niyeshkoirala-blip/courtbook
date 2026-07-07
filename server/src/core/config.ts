@@ -23,10 +23,19 @@ const envSchema = z.object({
   CLOUDINARY_CLOUD_NAME: z.string().optional(),
   CLOUDINARY_API_KEY: z.string().optional(),
   CLOUDINARY_API_SECRET: z.string().optional(),
+  // M4: payment gateways — defaults are eSewa's PUBLIC sandbox (UAT) credentials
+  ESEWA_SECRET: z.string().default('8gBm/:&EnhH.1/q'),
+  ESEWA_PRODUCT_CODE: z.string().default('EPAYTEST'),
+  ESEWA_FORM_URL: z.string().default('https://rc-epay.esewa.com.np/api/epay/main/v2/form'),
+  KHALTI_SECRET: z.string().optional(),
+  KHALTI_API_URL: z.string().default('https://dev.khalti.com/api/v2'),
   SENTRY_DSN: z.string().optional(),
 });
 
-const parsed = envSchema.safeParse(process.env);
+// Empty strings (e.g. "ESEWA_SECRET=" from a copied .env.example) must behave
+// as unset — otherwise they silently override defaults with "".
+const definedEnv = Object.fromEntries(Object.entries(process.env).filter(([, v]) => v !== ''));
+const parsed = envSchema.safeParse(definedEnv);
 if (!parsed.success) {
   const issues = parsed.error.issues.map((i) => `${i.path.join('.')}: ${i.message}`).join('; ');
   throw new Error(`Invalid environment configuration — ${issues}`);
@@ -54,6 +63,11 @@ export const config = {
   cloudinaryCloudName: parsed.data.CLOUDINARY_CLOUD_NAME,
   cloudinaryApiKey: parsed.data.CLOUDINARY_API_KEY,
   cloudinaryApiSecret: parsed.data.CLOUDINARY_API_SECRET,
+  esewaSecret: parsed.data.ESEWA_SECRET,
+  esewaProductCode: parsed.data.ESEWA_PRODUCT_CODE,
+  esewaFormUrl: parsed.data.ESEWA_FORM_URL,
+  khaltiSecret: parsed.data.KHALTI_SECRET,
+  khaltiApiUrl: parsed.data.KHALTI_API_URL,
   /** bcrypt cost 12 (§8); 4 in tests — pure-JS bcrypt at 12 makes suites crawl. */
   bcryptRounds: parsed.data.NODE_ENV === 'test' ? 4 : 12,
   port: parsed.data.PORT,

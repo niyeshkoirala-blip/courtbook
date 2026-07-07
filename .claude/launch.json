@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "api",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:server", "--prefix", "/home/niyesh/code/courtbook/courtbook"],
+      "port": 3000
+    },
+    {
+      "name": "client",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev:client", "--prefix", "/home/niyesh/code/courtbook/courtbook"],
+      "port": 5173
+    }
+  ]
+}

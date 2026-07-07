@@ -11,6 +11,7 @@ export default defineConfig({
       CLOUDINARY_CLOUD_NAME: 'test-cloud',
       CLOUDINARY_API_KEY: 'test-key',
       CLOUDINARY_API_SECRET: 'test-secret',
+      KHALTI_SECRET: 'test-khalti-key',
     },
     // mongodb-memory-server may download a binary on first run
     testTimeout: 60_000,
