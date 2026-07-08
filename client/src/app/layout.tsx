@@ -44,6 +44,11 @@ export function Layout() {
                 <NavLink to="/me/bookings" className={navLink}>
                   My bookings
                 </NavLink>
+                {user.role === 'owner' && (
+                  <NavLink to="/owner" className={navLink}>
+                    Owner
+                  </NavLink>
+                )}
                 <span className="hidden px-2 text-sm text-mint/60 sm:inline">{user.name}</span>
                 <button
                   onClick={logout}

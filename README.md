@@ -49,4 +49,6 @@ CI (GitHub Actions) runs all four on every PR. Deploys via [render.yaml](render.
 - ✅ **M5 — Player frontend**: Tailwind design system from the mockups,
   availability grid, booking flow with checkout countdown + all payment paths,
   my-bookings with cancel/.ics, full auth UI
-- ⏳ M6 — Owner dashboard (next)
+- ✅ **M6 — Owner dashboard**: today view with walk-in + block actions, week
+  calendar with occupants, reports with CSV export, lean venue management
+- ⏳ M7 — AI assistant (next)

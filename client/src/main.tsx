@@ -13,6 +13,10 @@ import { VenueDetailPage } from './pages/venue-detail';
 import { CheckoutPage } from './pages/checkout';
 import { MyBookingsPage } from './pages/my-bookings';
 import { LoginPage, RegisterPage, VerifyPage, ForgotPage, ResetPage } from './pages/auth';
+import { OwnerDashboardPage } from './pages/owner/dashboard';
+import { OwnerCalendarPage } from './pages/owner/calendar';
+import { OwnerReportsPage } from './pages/owner/reports';
+import { OwnerVenuesPage } from './pages/owner/venues';
 
 const queryClient = new QueryClient();
 
@@ -63,6 +67,16 @@ function App() {
             </RequireAuth>
           }
         />
+        {(
+          [
+            ['/owner', <OwnerDashboardPage />],
+            ['/owner/calendar', <OwnerCalendarPage />],
+            ['/owner/reports', <OwnerReportsPage />],
+            ['/owner/venues', <OwnerVenuesPage />],
+          ] as const
+        ).map(([path, page]) => (
+          <Route key={path} path={path} element={<RequireAuth>{page}</RequireAuth>} />
+        ))}
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/register" element={<RegisterPage />} />
         <Route path="/auth/verify" element={<VerifyPage />} />

@@ -15,6 +15,7 @@ import { adminRouter } from './modules/admin/admin.routes.js';
 import { courtRouter } from './modules/courts/court.routes.js';
 import { bookingRouter } from './modules/bookings/booking.routes.js';
 import { paymentRouter } from './modules/payments/payment.routes.js';
+import { ownerRouter } from './modules/owner/owner.routes.js';
 
 /**
  * App factory (no .listen — supertest mounts it directly).
@@ -50,6 +51,7 @@ export function createApp(): express.Express {
   app.use('/api/v1/courts', courtRouter);
   app.use('/api/v1', bookingRouter);
   app.use('/api/v1/payments', paymentRouter);
+  app.use('/api/v1/owner', ownerRouter);
   // Feature module routers mount here: /api/v1/assistant (M7)…
 
   app.use(notFound);

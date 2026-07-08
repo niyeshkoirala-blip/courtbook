@@ -305,3 +305,49 @@ produced a duplicate-React "invalid hook call" crash — cleared node_modules/.v
 4. Landing is a light hero (design/01's full marketing page can come with M8
    polish); photo gallery renders venue photos when present, no Cloudinary
    uploads wired into the UI yet (owner wizard is M6).
+
+---
+
+## M6 — Owner dashboard (2026-07-07)
+
+**Built**
+
+- Backend `/api/v1/owner` (new owner module): GET /venues (own, all statuses),
+  GET /venues/:id/bookings?from&to (per-court timeline data incl. walk-in
+  customer name/phone — §7.5 owner-only), GET /venues/:id/stats?from&to
+  (bookings, revenue [confirmed+completed only], occupancy = booked open-hours
+  ÷ available open-hours from court schedules, per-day series). Ownership
+  re-checked in services; range validation 422.
+- **Today view** (§3.4, design/09): stat cards (bookings/revenue/occupancy),
+  per-court timeline with customer details and status badges, empty-state
+  setup checklist for new owners, 60s auto-refresh.
+- **Walk-in modal**: free-slots-only picker from the live availability engine,
+  optional customer name/phone — same atomic booking path.
+- **Block modal**: date + time-range + reason; HAS_BOOKINGS 409 surfaced as a
+  clear "resolve bookings first" error (§6.4 — never silent cancellation).
+- **Week calendar** (§3.5): 7-day matrix per court, occupant names on booked
+  cells (owner-only detail), blocked/free/past states.
+- **Reports** (§3.5, design/12): date-range picker (native inputs), stat cards,
+  per-day revenue bars, client-side CSV export.
+- **Venue management (lean)**: list with status badges + rejection reasons,
+  create-venue modal, add-court modal (one schedule for all 7 days), publish
+  button (NO_COURTS guard surfaced), link to public page when approved.
+- Header gains an "Owner" link for owner-role users.
+
+**Tests** (75 passing, 4 new): own-venue isolation, customer visibility +
+cancelled exclusion, cross-tenant 404, range 422, stats math (revenue/
+occupancy/per-day). Frontend verified live in the preview browser: dashboard
+stats, walk-in modal (correctly showed "no free slots left today" at 21:45
+NPT), calendar with occupant names, reports over a widened range (4 bookings /
+Rs 6500 / per-day bars / CSV), venue list actions.
+
+**Decisions / deviations**
+
+1. CSS bar chart instead of recharts — §3.5 names recharts but the fixed-stack
+   list doesn't; a dependency for one bar chart fails the ladder. Revisit at M8.
+2. Owner-cancel of bookings not implemented — §4.4 defines no such endpoint;
+   §6.4's conflict flow stays manual for MVP (flagged blueprint gap).
+3. The 5-step venue wizard (design/11) compressed into two small modals;
+   per-day schedule editing + photos upload UI deferred to M8 polish.
+4. Court add modal applies one open/close window to all 7 days (API supports
+   per-day; UI simplification only).
