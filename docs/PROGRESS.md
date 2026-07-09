@@ -351,3 +351,47 @@ Rs 6500 / per-day bars / CSV), venue list actions.
    per-day schedule editing + photos upload UI deferred to M8 polish.
 4. Court add modal applies one open/close window to all 7 days (API supports
    per-day; UI simplification only).
+
+---
+
+## M7 — AI assistant (2026-07-08)
+
+**Built (disabled by default — no LLM key on this machine)**
+
+- `POST /api/v1/assistant/chat` (§4.4): manual tool-use loop over the Anthropic
+  Messages API (`@anthropic-ai/sdk`, model `claude-opus-4-8`). Public endpoint;
+  20/hr rate tier (§4.3); returns **501 NOT_CONFIGURED until LLM_API_KEY is set**.
+- Three tools (§7.7), each through the SAME service layer as the REST API —
+  the LLM has no privileged path:
+  - `search_venues` → listVenues (approved only)
+  - `check_availability` → computeAvailability
+  - `create_booking_draft` → createBooking (the atomic engine; SLOT_TAKEN etc.
+    come back as plain text the model relays)
+- **Guardrails (§7.7) enforced in code, not just the prompt:** booking drafts
+  require an authenticated user — the tool is withheld from the tools array for
+  anonymous sessions AND the handler re-checks `ctx.userId` (belt + suspenders);
+  user identity comes from the request JWT, never model input (no acting-as-
+  other-users); history capped at 10 turns; assistant never touches payment.
+- Floating chat widget (design/14) on every page: pitch-green header, bubbles,
+  booking-draft → "Complete checkout" link, disabled-state message when the
+  server returns 501. Session id in sessionStorage.
+
+**Tests** (9 new, 84 total): tool handlers (search/availability/draft), the
+§7.7 auth guardrail (draft refused with no userId — zero bookings created),
+draft via the atomic engine + duplicate-slot error relay, the full chat loop
+with a stubbed Anthropic client (tool result flows back into round 2), tool
+withholding for anonymous vs authenticated, 10-turn history cap, 501 gate,
+422 validation. Widget verified live in the preview browser (opens, sends,
+renders the disabled-state message).
+
+**Decisions / deviations**
+
+1. **Built but disabled** (user has no Claude API key). All plumbing, tools,
+   guardrails, tests and UI are complete and exercised via a stubbed client;
+   flip on by setting LLM_API_KEY. The blueprint's 70%-task-success eval
+   (Phase 14 M7 DoD) needs a live key — deferred until one exists.
+2. Streaming (§4.4 "streamed reply") not implemented — the widget shows a
+   spinner then the full reply. Non-streaming keeps the manual tool loop
+   simple; swap to `.stream()` when the assistant is turned on.
+3. In-process session store (Map, 30-min TTL) — single instance; Redis at
+   scale (D-6), same as the other in-process stores.

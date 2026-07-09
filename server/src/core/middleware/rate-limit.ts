@@ -29,6 +29,16 @@ const authTier = () =>
 /** Login/register tier: 5 / 15 min keyed by IP + email (§4.3). */
 export const authRateLimiter = authTier();
 
+/** Assistant tier: 20 msgs / hour keyed by userId or IP (§4.3). */
+export const assistantRateLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  limit: config.isTest ? Number.MAX_SAFE_INTEGER : 20,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  keyGenerator: (req) => req.user?.id ?? ipKeyGenerator(req.ip ?? ''),
+  message: fail('RATE_LIMITED', 'Assistant limit reached — try again later.'),
+});
+
 /** POST /bookings tier: 10 / hour per user (§4.3) — mounted after requireAuth. */
 export const bookingRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,

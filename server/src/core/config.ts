@@ -29,6 +29,9 @@ const envSchema = z.object({
   ESEWA_FORM_URL: z.string().default('https://rc-epay.esewa.com.np/api/epay/main/v2/form'),
   KHALTI_SECRET: z.string().optional(),
   KHALTI_API_URL: z.string().default('https://dev.khalti.com/api/v2'),
+  // M7: assistant — chat returns 501 until this is set
+  LLM_API_KEY: z.string().optional(),
+  LLM_MODEL: z.string().default('claude-opus-4-8'),
   SENTRY_DSN: z.string().optional(),
 });
 
@@ -68,6 +71,8 @@ export const config = {
   esewaFormUrl: parsed.data.ESEWA_FORM_URL,
   khaltiSecret: parsed.data.KHALTI_SECRET,
   khaltiApiUrl: parsed.data.KHALTI_API_URL,
+  llmApiKey: parsed.data.LLM_API_KEY,
+  llmModel: parsed.data.LLM_MODEL,
   /** bcrypt cost 12 (§8); 4 in tests — pure-JS bcrypt at 12 makes suites crawl. */
   bcryptRounds: parsed.data.NODE_ENV === 'test' ? 4 : 12,
   port: parsed.data.PORT,

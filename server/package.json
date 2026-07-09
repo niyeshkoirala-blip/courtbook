@@ -11,6 +11,7 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.110.0",
     "@courtbook/shared": "*",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",

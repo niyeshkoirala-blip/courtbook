@@ -2,6 +2,7 @@ import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAuth } from '../lib/auth';
 import { post } from '../lib/api';
 import { Toasts } from '../components/ui';
+import { AssistantWidget } from '../components/assistant';
 
 export function Layout() {
   const { user, clear } = useAuth();
@@ -82,6 +83,7 @@ export function Layout() {
         CourtBook — futsal courts in Kathmandu · times in Nepal Time (UTC+5:45)
       </footer>
       <Toasts />
+      <AssistantWidget />
     </div>
   );
 }

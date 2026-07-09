@@ -7,6 +7,7 @@ export * from './venues.js';
 export * from './bookings.js';
 export * from './npt.js';
 export * from './payments.js';
+export * from './assistant.js';
 
 /** Standard API response envelope (blueprint §2.8). */
 export interface ApiSuccess<T> {

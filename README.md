@@ -51,4 +51,6 @@ CI (GitHub Actions) runs all four on every PR. Deploys via [render.yaml](render.
   my-bookings with cancel/.ics, full auth UI
 - ✅ **M6 — Owner dashboard**: today view with walk-in + block actions, week
   calendar with occupants, reports with CSV export, lean venue management
-- ⏳ M7 — AI assistant (next)
+- ✅ **M7 — AI assistant**: chat endpoint with 3 tools + §7.7 guardrails and
+  floating widget (built but disabled — set LLM_API_KEY to enable)
+- ⏳ M8 — Hardening & launch (next)
