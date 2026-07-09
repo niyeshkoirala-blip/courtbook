@@ -15,7 +15,9 @@
     "test": "npm run build -w @courtbook/shared && npm run test --workspaces --if-present",
     "build": "npm run build -w @courtbook/shared && npm run build -w @courtbook/server && npm run build -w @courtbook/client",
     "dev:server": "npm run dev -w @courtbook/server",
-    "dev:client": "npm run dev -w @courtbook/client"
+    "dev:client": "npm run dev -w @courtbook/client",
+    "seed": "node --env-file=server/.env --import tsx server/src/scripts/seed.ts",
+    "e2e": "playwright test --config e2e/playwright.config.ts"
   },
   "devDependencies": {
     "@types/node": "^20.17.0",

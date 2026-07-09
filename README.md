@@ -53,4 +53,7 @@ CI (GitHub Actions) runs all four on every PR. Deploys via [render.yaml](render.
   calendar with occupants, reports with CSV export, lean venue management
 - ✅ **M7 — AI assistant**: chat endpoint with 3 tools + §7.7 guardrails and
   floating widget (built but disabled — set LLM_API_KEY to enable)
-- ⏳ M8 — Hardening & launch (next)
+- ✅ **M8 — Hardening & launch**: security checklist, CI audit+gitleaks, demo
+  seeder, runbooks, Playwright E2E, and the k6 §11.5 race gate (100 VU → 1×201/99×409)
+
+**MVP feature-complete (M0–M8).** Remaining: deploy (needs a hosting account) + Phase 13 roadmap.

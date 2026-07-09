@@ -395,3 +395,61 @@ renders the disabled-state message).
    simple; swap to `.stream()` when the assistant is turned on.
 3. In-process session store (Map, 30-min TTL) — single instance; Redis at
    scale (D-6), same as the other in-process stores.
+
+---
+
+## M8 — Hardening & launch (2026-07-08)
+
+**Built**
+
+- **Security checklist** (`docs/security-checklist.md`): every §8 threat-table
+  row mapped to where it's enforced + tested, plus OWASP Top 10 coverage and a
+  per-release gate list.
+- **CI security job** (§10): `npm audit --audit-level=high` (0 vulnerabilities)
+  + gitleaks secret scan, added alongside the lint/type/test/build job.
+- **Demo seeder** (`server/src/scripts/seed.ts`, `npm run seed`): idempotent
+  upserts — demo admin/owner/player (password `demo-password-1`), two approved
+  Kathmandu venues with courts + real geo points, confirmed bookings so
+  dashboards/reports render. Satisfies M8 DoD "demo account live".
+- **Runbooks**: `docs/runbooks/restore.md` (§2.14 backup/restore incl. the
+  sacred-index recreation check + the same-name-index gotcha) and `launch.md`
+  (pre-launch gates, deploy steps for when hosting exists, no-card fallback).
+- **Playwright E2E** (`e2e/`, `npm run e2e`): 3 real-browser journeys, all
+  green — player books a slot → pay-at-venue → confirmed → cancel; owner
+  dashboard + walk-in modal; assistant disabled-state. Local/manual gate (no
+  mongo in GitHub CI), documented in launch.md.
+
+**The release blocker — §11.5, run for real**
+
+k6, 100 concurrent VUs on one slot against the live API:
+**exactly 1×201, 99×409**, both k6 thresholds (`booked==1`, `conflicts==99`)
+green, 100% checks pass. Zero double bookings under real concurrent load — the
+hard release gate, proven against the running server (not just the 40-VU
+in-suite test). Reproduce: `node scripts/race-test/seed.mjs "$MONGO_URI" 100`
+then `k6 run scripts/race-test/race.k6.js`.
+
+**Verified**: full gate green (lint, typecheck, 84 tests, build); npm audit
+clean; seed idempotent; 3 Playwright journeys pass; k6 gate passes.
+
+**Decisions / deviations (deferred — need external accounts)**
+
+1. **Render deploy** — still blocked on a card (logged since M0). render.yaml
+   is the deploy-as-code spec; launch.md has the full steps + no-card fallback
+   (Cloudflare/GitHub Pages · Atlas M0 · HF Spaces).
+2. **ZAP baseline scan** — needs a deployed staging URL; command in launch.md,
+   run pre-launch.
+3. **Lighthouse ≥90** (M5 DoD) — needs the built client served + a Lighthouse
+   run; deferred with the deploy. A11y basics verified (Playwright role-based
+   selectors rely on the semantic markup).
+4. **Live LLM assistant eval** (70% task success, Phase 14 M7) — needs an API
+   key; assistant ships disabled.
+5. **migrate-mongo, MongoDB transactions, full Phase 12 admin panel** — carried
+   as documented post-MVP items (security-checklist.md + earlier entries).
+
+---
+
+## Status: MVP feature-complete (M0–M8)
+
+All eight milestones built, tested, and verified locally. 84 automated tests +
+3 E2E journeys + the k6 race gate. Remaining work is deployment (blocked on a
+hosting account) and the post-MVP roadmap (Phase 13).

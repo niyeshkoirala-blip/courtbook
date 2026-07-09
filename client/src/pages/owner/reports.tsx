@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { addDays, nowNPT, type VenueDto } from '@courtbook/shared';
+import { addDays, nowNPT } from '@courtbook/shared';
 import { api } from '../../lib/api';
 import { Button, Skeleton } from '../../components/ui';
 import { OwnerNav, VenuePicker, useOwnerVenues } from './common';
