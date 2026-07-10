@@ -39,10 +39,15 @@ export const assistantRateLimiter = rateLimit({
   message: fail('RATE_LIMITED', 'Assistant limit reached — try again later.'),
 });
 
-/** POST /bookings tier: 10 / hour per user (§4.3) — mounted after requireAuth. */
+/**
+ * POST /bookings tier, per user (§4.3). Raised from the blueprint's 10/hr to
+ * 30/hr: multi-slot booking (a tournament organizer grabbing several courts
+ * across days) legitimately spends many bookings per action — 10 was too tight.
+ * Still a firm anti-spam guard.
+ */
 export const bookingRateLimiter = rateLimit({
   windowMs: 60 * 60 * 1000,
-  limit: config.isTest ? Number.MAX_SAFE_INTEGER : 10,
+  limit: config.isTest ? Number.MAX_SAFE_INTEGER : 30,
   standardHeaders: 'draft-8',
   legacyHeaders: false,
   keyGenerator: (req) => req.user?.id ?? ipKeyGenerator(req.ip ?? ''),

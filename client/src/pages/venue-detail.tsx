@@ -18,19 +18,23 @@ import { Button, Skeleton } from '../components/ui';
 
 interface Selection {
   courtId: string;
+  courtName: string;
   date: string;
   startMin: number;
   price: number;
 }
 
 const SELECTION_KEY = 'courtbook:pending-selection';
+const selKey = (s: { courtId: string; date: string; startMin: number }) =>
+  `${s.courtId}:${s.date}:${s.startMin}`;
 
 export function VenueDetailPage() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const user = useAuth((s) => s.user);
   const [courtId, setCourtId] = useState<string>();
-  const [selection, setSelection] = useState<Selection | null>(null);
+  // multi-select: several slots (across courts) can be held then booked together
+  const [selections, setSelections] = useState<Selection[]>([]);
   const [booking, setBooking] = useState(false);
 
   const { data, isPending } = useQuery({
@@ -51,46 +55,97 @@ export function VenueDetailPage() {
     refetchInterval: 60_000, // §3.2: 60s polling — the server is the only truth
   });
 
-  // restore a selection stashed before a login redirect (§3.2)
+  // restore selections stashed before a login redirect (§3.2)
   useEffect(() => {
     const raw = sessionStorage.getItem(SELECTION_KEY);
     if (raw && user && data) {
       sessionStorage.removeItem(SELECTION_KEY);
-      setSelection(JSON.parse(raw) as Selection);
+      setSelections(JSON.parse(raw) as Selection[]);
     }
   }, [user, data]);
 
+  function toggle(slot: { date: string; startMin: number; price: number }) {
+    if (!court) return;
+    const next: Selection = {
+      courtId: court.id,
+      courtName: court.name,
+      date: slot.date,
+      startMin: slot.startMin,
+      price: slot.price,
+    };
+    setSelections((cur) =>
+      cur.some((s) => selKey(s) === selKey(next))
+        ? cur.filter((s) => selKey(s) !== selKey(next))
+        : [...cur, next],
+    );
+  }
+
+  const total = selections.reduce((sum, s) => sum + s.price, 0);
+
   async function book() {
-    if (!selection) return;
+    if (selections.length === 0) return;
     if (!user) {
-      sessionStorage.setItem(SELECTION_KEY, JSON.stringify(selection));
+      sessionStorage.setItem(SELECTION_KEY, JSON.stringify(selections));
       navigate(`/auth/login?next=${encodeURIComponent(`/venues/${slug}`)}`);
       return;
     }
-    setBooking(true); // §3.2: button disables on first click
+    setBooking(true);
+    const bookedIds: string[] = [];
+    let taken = 0;
+    let stopMsg: string | null = null; // hold-cap or rate-limit — stop and inform
     try {
-      const created = await post<{ id: string }>('/bookings', {
-        courtId: selection.courtId,
-        date: selection.date,
-        startMin: selection.startMin,
-        idempotencyKey: crypto.randomUUID(), // network-retry-proof (§4.5)
-      });
-      navigate(`/book/${created.id}`);
-    } catch (err) {
-      if (err instanceof ApiError && err.code === 'SLOT_TAKEN') {
-        toast.error('Just missed it — that slot was taken. Pick another free slot.');
-        setSelection(null);
-        void refetch();
-      } else {
-        toast.error(err instanceof ApiError ? err.message : 'Booking failed — try again');
+      for (const s of selections) {
+        try {
+          const created = await post<{ id: string }>('/bookings', {
+            courtId: s.courtId,
+            date: s.date,
+            startMin: s.startMin,
+            idempotencyKey: crypto.randomUUID(), // network-retry-proof (§4.5)
+          });
+          bookedIds.push(created.id);
+        } catch (err) {
+          if (err instanceof ApiError && err.code === 'SLOT_TAKEN') taken += 1;
+          else if (
+            err instanceof ApiError &&
+            (err.code === 'TOO_MANY_HOLDS' || err.code === 'RATE_LIMITED')
+          ) {
+            stopMsg = err.message; // no point trying the rest
+            break;
+          } else throw err;
+        }
       }
-    } finally {
+    } catch (err) {
+      toast.error(err instanceof ApiError ? err.message : 'Booking failed — try again');
       setBooking(false);
+      void refetch();
+      return;
+    }
+    setBooking(false);
+    void refetch();
+
+    // single-slot → straight to checkout (unchanged smooth path)
+    if (selections.length === 1 && bookedIds.length === 1) {
+      navigate(`/book/${bookedIds[0]}`);
+      return;
+    }
+    if (taken > 0) toast.error(`${taken} slot${taken > 1 ? 's were' : ' was'} just taken.`);
+    if (stopMsg) toast.error(stopMsg);
+    if (bookedIds.length > 0) {
+      toast.success(
+        `Booked ${bookedIds.length} slot${bookedIds.length > 1 ? 's' : ''} — pay for each in My Bookings.`,
+      );
+      setSelections([]);
+      navigate('/me/bookings');
     }
   }
 
   if (isPending) return <Skeleton className="h-96" />;
   if (!data) return null;
+
+  // keys of the currently-viewed court's selections, for the ring highlight
+  const selectedKeys = new Set(
+    selections.filter((s) => s.courtId === court?.id).map((s) => `${s.date}:${s.startMin}`),
+  );
 
   return (
     <div className="space-y-6 pb-24">
@@ -114,6 +169,9 @@ export function VenueDetailPage() {
         {data.venue.description && (
           <p className="mt-3 max-w-2xl text-sm">{data.venue.description}</p>
         )}
+        <p className="mt-2 text-xs text-sage">
+          Tap slots to select — you can pick several and book them together.
+        </p>
       </header>
 
       {data.courts.length > 1 && (
@@ -123,10 +181,7 @@ export function VenueDetailPage() {
               key={c.id}
               role="tab"
               aria-selected={c.id === court?.id}
-              onClick={() => {
-                setCourtId(c.id);
-                setSelection(null);
-              }}
+              onClick={() => setCourtId(c.id)} // selections persist across courts
               className={`rounded-full px-4 py-1.5 text-sm font-semibold ${
                 c.id === court?.id ? 'bg-pitch text-mint' : 'bg-white text-pitch hover:bg-pitch/10'
               }`}
@@ -142,26 +197,27 @@ export function VenueDetailPage() {
       ) : gridPending || !days ? (
         <Skeleton className="h-80" />
       ) : (
-        <AvailabilityGrid
-          days={days}
-          selection={selection}
-          onSelect={(date, startMin, price) =>
-            setSelection({ courtId: court.id, date, startMin, price })
-          }
-        />
+        <AvailabilityGrid days={days} selectedKeys={selectedKeys} onToggle={toggle} />
       )}
 
       {/* sticky booking bar (§3.2) */}
-      {selection && court && (
+      {selections.length > 0 && (
         <div className="fixed inset-x-0 bottom-0 z-40 border-t border-pitch/10 bg-white/95 backdrop-blur">
-          <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-            <p className="text-sm">
-              <strong className="font-display uppercase text-pitch">{court.name}</strong> ·{' '}
-              {selection.date} {formatNPT(selection.startMin)} ·{' '}
-              <strong>Rs {selection.price}</strong>
-            </p>
+          <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
+            <div className="text-sm">
+              <strong className="font-display uppercase text-pitch">
+                {selections.length} slot{selections.length > 1 ? 's' : ''}
+              </strong>{' '}
+              selected · total <strong>Rs {total}</strong>
+              <button
+                onClick={() => setSelections([])}
+                className="ml-3 text-xs text-sage underline hover:text-pitch"
+              >
+                clear
+              </button>
+            </div>
             <Button onClick={book} loading={booking} size="lg">
-              Book this slot
+              {selections.length > 1 ? `Book ${selections.length} slots` : 'Book this slot'}
             </Button>
           </div>
         </div>
@@ -173,15 +229,16 @@ export function VenueDetailPage() {
 /**
  * The grid (§3.2/§3.6): columns = next 7 days, rows = slots. Cell states:
  * available (price) / taken / blocked / past / selected. Arrow-key navigable.
+ * Multi-select: `selectedKeys` are the "date:startMin" of ringed cells.
  */
 function AvailabilityGrid({
   days,
-  selection,
-  onSelect,
+  selectedKeys,
+  onToggle,
 }: {
   days: AvailabilityDay[];
-  selection: Selection | null;
-  onSelect: (date: string, startMin: number, price: number) => void;
+  selectedKeys: Set<string>;
+  onToggle: (slot: { date: string; startMin: number; price: number }) => void;
 }) {
   const today = nowNPT().date;
   const dayLabel = (date: string) => {
@@ -231,10 +288,11 @@ function AvailabilityGrid({
                 <p className="pt-4 text-center text-xs text-sage">Closed</p>
               ) : (
                 day.slots.map((slot, row) => {
-                  const isSelected =
-                    selection?.date === day.date && selection?.startMin === slot.startMin;
+                  const isSelected = selectedKeys.has(`${day.date}:${slot.startMin}`);
                   const label = `${dayLabel(day.date)} ${formatNPT(slot.startMin)}, ${
-                    slot.state === 'available' ? `Rs ${slot.price}, available` : slot.state
+                    slot.state === 'available'
+                      ? `Rs ${slot.price}, available${isSelected ? ', selected' : ''}`
+                      : slot.state
                   }`;
                   return (
                     <button
@@ -243,12 +301,17 @@ function AvailabilityGrid({
                       data-col={col}
                       data-row={row}
                       aria-label={label}
+                      aria-pressed={slot.state === 'available' ? isSelected : undefined}
                       aria-disabled={slot.state !== 'available'}
                       disabled={slot.state === 'past' || slot.state === 'taken'}
                       tabIndex={slot.state === 'available' ? 0 : -1}
                       onClick={() =>
                         slot.state === 'available' &&
-                        onSelect(day.date, slot.startMin, slot.price ?? 0)
+                        onToggle({
+                          date: day.date,
+                          startMin: slot.startMin,
+                          price: slot.price ?? 0,
+                        })
                       }
                       className={`block w-full rounded-md px-1 py-1.5 text-center text-xs font-semibold transition-colors ${
                         isSelected
@@ -274,10 +337,14 @@ function AvailabilityGrid({
           ))}
         </div>
       </div>
-      <p className="mt-2 flex gap-4 text-xs text-sage" aria-hidden>
+      <p className="mt-2 flex flex-wrap gap-4 text-xs text-sage" aria-hidden>
         <span>
           <span className="mr-1 inline-block size-3 rounded-sm bg-mint/40 align-middle" />
           available
+        </span>
+        <span>
+          <span className="mr-1 inline-block size-3 rounded-sm bg-accent align-middle" />
+          selected
         </span>
         <span>
           <span className="mr-1 inline-block size-3 rounded-sm bg-ink/10 align-middle" />
