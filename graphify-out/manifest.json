@@ -1,0 +1,647 @@
+{
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/.claude/launch.json": {
+    "mtime": 1783692378.833376,
+    "ast_hash": "ca3a4f825b7da9fc598b3ca8b364d694",
+    "semantic_hash": "ca3a4f825b7da9fc598b3ca8b364d694"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/.prettierrc.json": {
+    "mtime": 1783692378.8603764,
+    "ast_hash": "4caf313700301927e89cfb1134a86494",
+    "semantic_hash": "4caf313700301927e89cfb1134a86494"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/package.json": {
+    "mtime": 1783692378.8616424,
+    "ast_hash": "5d5adf6d6d21751154db89f2e8043217",
+    "semantic_hash": "5d5adf6d6d21751154db89f2e8043217"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/app/layout.tsx": {
+    "mtime": 1783692378.861796,
+    "ast_hash": "8dbbdbc618ed8240c698868a6b54f49c",
+    "semantic_hash": "8dbbdbc618ed8240c698868a6b54f49c"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/components/assistant.tsx": {
+    "mtime": 1783692378.861796,
+    "ast_hash": "974886b746c8dc80082dc4c59d186b73",
+    "semantic_hash": "974886b746c8dc80082dc4c59d186b73"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/components/modal.tsx": {
+    "mtime": 1783692378.862209,
+    "ast_hash": "69d8e23a99118cddbead6e5113e4ff7d",
+    "semantic_hash": "69d8e23a99118cddbead6e5113e4ff7d"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/components/ui.tsx": {
+    "mtime": 1783692378.862209,
+    "ast_hash": "3f768442008fd12bcdf616fe5358749a",
+    "semantic_hash": "3f768442008fd12bcdf616fe5358749a"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/lib/api.ts": {
+    "mtime": 1783692378.8623765,
+    "ast_hash": "23c809825233e66a5793381dc47a70eb",
+    "semantic_hash": "23c809825233e66a5793381dc47a70eb"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/lib/auth.ts": {
+    "mtime": 1783692378.8623765,
+    "ast_hash": "029cc621f04452741b3ccab0b354b98f",
+    "semantic_hash": "029cc621f04452741b3ccab0b354b98f"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/lib/toast.ts": {
+    "mtime": 1783692378.8623765,
+    "ast_hash": "f78ca9436a70a237a46919b9a436c985",
+    "semantic_hash": "f78ca9436a70a237a46919b9a436c985"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/main.tsx": {
+    "mtime": 1783692378.8623765,
+    "ast_hash": "7716c826edda79c7abfcadefb0786400",
+    "semantic_hash": "7716c826edda79c7abfcadefb0786400"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/auth.tsx": {
+    "mtime": 1783692378.8633764,
+    "ast_hash": "0339798e9253903fd8f638e06267fbe7",
+    "semantic_hash": "0339798e9253903fd8f638e06267fbe7"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/checkout.tsx": {
+    "mtime": 1783692378.8640418,
+    "ast_hash": "ea76b4d2d3219e3f27a8dd33adc53cfd",
+    "semantic_hash": "ea76b4d2d3219e3f27a8dd33adc53cfd"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/landing.tsx": {
+    "mtime": 1783692378.8640418,
+    "ast_hash": "504870dcceeefaf43b3a85a0814159c6",
+    "semantic_hash": "504870dcceeefaf43b3a85a0814159c6"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/my-bookings.tsx": {
+    "mtime": 1783692378.8640418,
+    "ast_hash": "01ffeb58a63e828af47452a199e979a0",
+    "semantic_hash": "01ffeb58a63e828af47452a199e979a0"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/owner/calendar.tsx": {
+    "mtime": 1783692378.8643763,
+    "ast_hash": "ff5836bbc8b535d3a506b7cd9a0832d8",
+    "semantic_hash": "ff5836bbc8b535d3a506b7cd9a0832d8"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/owner/common.tsx": {
+    "mtime": 1783692378.8643763,
+    "ast_hash": "cfcc3e2ac4694ec959c2766ff24a58ad",
+    "semantic_hash": "cfcc3e2ac4694ec959c2766ff24a58ad"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/owner/dashboard.tsx": {
+    "mtime": 1783692378.8643763,
+    "ast_hash": "127f2c2db44c75255be6223d2fdb0d92",
+    "semantic_hash": "127f2c2db44c75255be6223d2fdb0d92"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/owner/reports.tsx": {
+    "mtime": 1783692378.8643763,
+    "ast_hash": "0b2c140fa3fa1230c6ec2874ce52ccee",
+    "semantic_hash": "0b2c140fa3fa1230c6ec2874ce52ccee"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/owner/venues.tsx": {
+    "mtime": 1783692378.8653765,
+    "ast_hash": "35f792f3fb3a3ae89dbc9dbbdb518119",
+    "semantic_hash": "35f792f3fb3a3ae89dbc9dbbdb518119"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/venue-detail.tsx": {
+    "mtime": 1783692378.8653765,
+    "ast_hash": "50f6a3edaff6fa65edfc09bdffcd2776",
+    "semantic_hash": "50f6a3edaff6fa65edfc09bdffcd2776"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/src/pages/venues.tsx": {
+    "mtime": 1783692378.8653765,
+    "ast_hash": "fdeb871fc0b780b7b4b0bf771c7bed59",
+    "semantic_hash": "fdeb871fc0b780b7b4b0bf771c7bed59"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/tsconfig.json": {
+    "mtime": 1783692378.8653765,
+    "ast_hash": "9c8e22cd463903261848008118e3b415",
+    "semantic_hash": "9c8e22cd463903261848008118e3b415"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/vite.config.ts": {
+    "mtime": 1783692378.8653765,
+    "ast_hash": "26f672043e8fe07b9711ae33bf8bd12d",
+    "semantic_hash": "26f672043e8fe07b9711ae33bf8bd12d"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/support.js": {
+    "mtime": 1783692378.892377,
+    "ast_hash": "843c817ed1abf0fa4deacf7162814833",
+    "semantic_hash": "843c817ed1abf0fa4deacf7162814833"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/e2e/journeys.spec.ts": {
+    "mtime": 1783692378.895377,
+    "ast_hash": "55102747c5ebf51937635b105971f8ff",
+    "semantic_hash": "55102747c5ebf51937635b105971f8ff"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/e2e/playwright.config.ts": {
+    "mtime": 1783692378.89618,
+    "ast_hash": "9b88c7ce33ae0b5a5578111d686ad653",
+    "semantic_hash": "9b88c7ce33ae0b5a5578111d686ad653"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/eslint.config.js": {
+    "mtime": 1783692378.89618,
+    "ast_hash": "2b66cc6849fc3a25cada658f91da4e89",
+    "semantic_hash": "2b66cc6849fc3a25cada658f91da4e89"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/package.json": {
+    "mtime": 1783692378.898377,
+    "ast_hash": "6f4d563013dec4582e8b172d4b5c4afa",
+    "semantic_hash": "6f4d563013dec4582e8b172d4b5c4afa"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/scripts/race-test/race.k6.js": {
+    "mtime": 1783692378.9002054,
+    "ast_hash": "73224a50958c6d38a555d1e79b766d87",
+    "semantic_hash": "73224a50958c6d38a555d1e79b766d87"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/scripts/race-test/seed.mjs": {
+    "mtime": 1783692378.900441,
+    "ast_hash": "ea145f7a8d12dd1b61efa9a03164467a",
+    "semantic_hash": "ea145f7a8d12dd1b61efa9a03164467a"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/package.json": {
+    "mtime": 1783692378.900441,
+    "ast_hash": "258ac38feb26c87660a71fb2ef85765e",
+    "semantic_hash": "258ac38feb26c87660a71fb2ef85765e"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/app.ts": {
+    "mtime": 1783692378.9010165,
+    "ast_hash": "5f332f5cc829071f971aa123ea9bc9d4",
+    "semantic_hash": "5f332f5cc829071f971aa123ea9bc9d4"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/config.ts": {
+    "mtime": 1783692378.9012773,
+    "ast_hash": "160759fa911d75a733a5b252ee271d33",
+    "semantic_hash": "160759fa911d75a733a5b252ee271d33"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/db.ts": {
+    "mtime": 1783692378.9016662,
+    "ast_hash": "244775cccff2259f31698958a16a647f",
+    "semantic_hash": "244775cccff2259f31698958a16a647f"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/errors.ts": {
+    "mtime": 1783692378.9016662,
+    "ast_hash": "6d0aa74f430ad90d0a648b6a9153b36b",
+    "semantic_hash": "6d0aa74f430ad90d0a648b6a9153b36b"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/health.test.ts": {
+    "mtime": 1783692378.9016662,
+    "ast_hash": "a3a6e7b022d0506cabbfceeafffa55ec",
+    "semantic_hash": "a3a6e7b022d0506cabbfceeafffa55ec"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/health.ts": {
+    "mtime": 1783692378.9016662,
+    "ast_hash": "de0e66d315f28f740b313adb8ef1a422",
+    "semantic_hash": "de0e66d315f28f740b313adb8ef1a422"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/logger.ts": {
+    "mtime": 1783692378.9016662,
+    "ast_hash": "45e32a8aa7a362585a5c320e36e7e1e6",
+    "semantic_hash": "45e32a8aa7a362585a5c320e36e7e1e6"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/middleware/auth.ts": {
+    "mtime": 1783692378.9023771,
+    "ast_hash": "76da7e0f731beda0bd46bb4349bbc961",
+    "semantic_hash": "76da7e0f731beda0bd46bb4349bbc961"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/middleware/error-handler.test.ts": {
+    "mtime": 1783692378.9030921,
+    "ast_hash": "0bbb2a62b5944c79ea2cb4793c0d96f4",
+    "semantic_hash": "0bbb2a62b5944c79ea2cb4793c0d96f4"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/middleware/error-handler.ts": {
+    "mtime": 1783692378.9030921,
+    "ast_hash": "a896aabf3b2741587ba393e5fb1e853f",
+    "semantic_hash": "a896aabf3b2741587ba393e5fb1e853f"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/middleware/rate-limit.ts": {
+    "mtime": 1783692378.9030921,
+    "ast_hash": "b6b47a71797e56cb514526aa52a9d652",
+    "semantic_hash": "b6b47a71797e56cb514526aa52a9d652"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/middleware/request-id.ts": {
+    "mtime": 1783692378.903377,
+    "ast_hash": "f3c7063b2bad292db8d5c4db27454c89",
+    "semantic_hash": "f3c7063b2bad292db8d5c4db27454c89"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/core/middleware/validate.ts": {
+    "mtime": 1783692378.903377,
+    "ast_hash": "7b5be67bcbccf8bf92be6f63d28b646d",
+    "semantic_hash": "7b5be67bcbccf8bf92be6f63d28b646d"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/index.ts": {
+    "mtime": 1783692378.903377,
+    "ast_hash": "f1d89a1004a1515d6639c5ad8d60bc80",
+    "semantic_hash": "f1d89a1004a1515d6639c5ad8d60bc80"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/jobs/expiry-sweeper.ts": {
+    "mtime": 1783692378.903377,
+    "ast_hash": "938b1d39da94832a630f802dd7f51683",
+    "semantic_hash": "938b1d39da94832a630f802dd7f51683"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/admin/admin.routes.ts": {
+    "mtime": 1783692378.9047303,
+    "ast_hash": "26aab2d9929c7f0ff7afc16bd8d6a825",
+    "semantic_hash": "26aab2d9929c7f0ff7afc16bd8d6a825"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/admin/admin.service.ts": {
+    "mtime": 1783692378.9050808,
+    "ast_hash": "5a1b7982f795b618bb6de034dd4a8eb1",
+    "semantic_hash": "5a1b7982f795b618bb6de034dd4a8eb1"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/admin/audit.model.ts": {
+    "mtime": 1783692378.9050808,
+    "ast_hash": "2e25ec9fb6113b2d49c9184f004f250a",
+    "semantic_hash": "2e25ec9fb6113b2d49c9184f004f250a"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/assistant/assistant.routes.ts": {
+    "mtime": 1783692378.9053771,
+    "ast_hash": "ce79a8d826de97e4a3165a173f29e62f",
+    "semantic_hash": "ce79a8d826de97e4a3165a173f29e62f"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/assistant/assistant.service.ts": {
+    "mtime": 1783692378.9053771,
+    "ast_hash": "6570aeb7490f5a82658afc8b473e05f1",
+    "semantic_hash": "6570aeb7490f5a82658afc8b473e05f1"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/assistant/assistant.test.ts": {
+    "mtime": 1783692378.9053771,
+    "ast_hash": "1bd178d2a344cd1eb598e31eaad13675",
+    "semantic_hash": "1bd178d2a344cd1eb598e31eaad13675"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/assistant/tools.ts": {
+    "mtime": 1783692378.9053771,
+    "ast_hash": "12be2189e1a981c152ccd910ab205fac",
+    "semantic_hash": "12be2189e1a981c152ccd910ab205fac"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/auth/auth.controller.ts": {
+    "mtime": 1783692378.906377,
+    "ast_hash": "70ec51ea3f67d40863e663d8d45b43fa",
+    "semantic_hash": "70ec51ea3f67d40863e663d8d45b43fa"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/auth/auth.routes.ts": {
+    "mtime": 1783692378.9071915,
+    "ast_hash": "b243f62a3076e574d6ec674fbf41a9e7",
+    "semantic_hash": "b243f62a3076e574d6ec674fbf41a9e7"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/auth/auth.service.ts": {
+    "mtime": 1783692378.9071915,
+    "ast_hash": "80a537e6db3d4835565c53cc6c6fb14e",
+    "semantic_hash": "80a537e6db3d4835565c53cc6c6fb14e"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/auth/auth.test.ts": {
+    "mtime": 1783692378.9073772,
+    "ast_hash": "2e7d3d5100e6994a18f6bca7b8cde033",
+    "semantic_hash": "2e7d3d5100e6994a18f6bca7b8cde033"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/auth/session.model.ts": {
+    "mtime": 1783692378.9073772,
+    "ast_hash": "f0d61baf33ff8f4b0601e1a427e46e42",
+    "semantic_hash": "f0d61baf33ff8f4b0601e1a427e46e42"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/bookings/availability.ts": {
+    "mtime": 1783692378.9073772,
+    "ast_hash": "f28e1a86a32bda0deed514d23cdef03c",
+    "semantic_hash": "f28e1a86a32bda0deed514d23cdef03c"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/bookings/block.model.ts": {
+    "mtime": 1783692378.9083772,
+    "ast_hash": "c4ee23993ffff4ed10f92cf5fbf3e778",
+    "semantic_hash": "c4ee23993ffff4ed10f92cf5fbf3e778"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/bookings/booking.controller.ts": {
+    "mtime": 1783692378.9083772,
+    "ast_hash": "f79b7d0fd066aea30c773064cde0c573",
+    "semantic_hash": "f79b7d0fd066aea30c773064cde0c573"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/bookings/booking.model.ts": {
+    "mtime": 1783692378.9083772,
+    "ast_hash": "5c31963ec4240354a36fab74ddfd65f8",
+    "semantic_hash": "5c31963ec4240354a36fab74ddfd65f8"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/bookings/booking.routes.ts": {
+    "mtime": 1783692378.909377,
+    "ast_hash": "891d3473ebe37a340d92762a4e72268b",
+    "semantic_hash": "891d3473ebe37a340d92762a4e72268b"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/bookings/booking.service.ts": {
+    "mtime": 1783692378.909377,
+    "ast_hash": "ad19937225ff9fd54c35beed972da48d",
+    "semantic_hash": "ad19937225ff9fd54c35beed972da48d"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/bookings/bookings.test.ts": {
+    "mtime": 1783692378.909377,
+    "ast_hash": "521b74afdf9bf29dcb9008b437f8835c",
+    "semantic_hash": "521b74afdf9bf29dcb9008b437f8835c"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/bookings/engine.test.ts": {
+    "mtime": 1783692378.9103773,
+    "ast_hash": "b913727947937af65e55d032b8dbbd12",
+    "semantic_hash": "b913727947937af65e55d032b8dbbd12"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/bookings/pricing.ts": {
+    "mtime": 1783692378.9103773,
+    "ast_hash": "766f29f9d12839c4e8cc6c2b40303047",
+    "semantic_hash": "766f29f9d12839c4e8cc6c2b40303047"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/courts/court.controller.ts": {
+    "mtime": 1783692378.9103773,
+    "ast_hash": "a48db99e434a29943eb339279876734f",
+    "semantic_hash": "a48db99e434a29943eb339279876734f"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/courts/court.model.ts": {
+    "mtime": 1783692378.9116583,
+    "ast_hash": "225b3ea7339b3bf0820268216913c3d0",
+    "semantic_hash": "225b3ea7339b3bf0820268216913c3d0"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/courts/court.routes.ts": {
+    "mtime": 1783692378.9116583,
+    "ast_hash": "4b8f974f94e9b1bdb1136e2e35cee642",
+    "semantic_hash": "4b8f974f94e9b1bdb1136e2e35cee642"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/courts/court.service.ts": {
+    "mtime": 1783692378.9116583,
+    "ast_hash": "9a847ee92859a02551409b6e2dc1507e",
+    "semantic_hash": "9a847ee92859a02551409b6e2dc1507e"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/notifications/notification.model.ts": {
+    "mtime": 1783692378.9116583,
+    "ast_hash": "abeda491320610a756dd7ebd7dd5d5ff",
+    "semantic_hash": "abeda491320610a756dd7ebd7dd5d5ff"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/notifications/outbox.ts": {
+    "mtime": 1783692378.912652,
+    "ast_hash": "96947134f7c89175464db1f730665254",
+    "semantic_hash": "96947134f7c89175464db1f730665254"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/owner/owner.routes.ts": {
+    "mtime": 1783692378.912652,
+    "ast_hash": "c0f0c7f9862db4f67b732aac25342dab",
+    "semantic_hash": "c0f0c7f9862db4f67b732aac25342dab"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/owner/owner.service.ts": {
+    "mtime": 1783692378.9133625,
+    "ast_hash": "cb80de56097fb65914b2508772bee98a",
+    "semantic_hash": "cb80de56097fb65914b2508772bee98a"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/owner/owner.test.ts": {
+    "mtime": 1783692378.9133773,
+    "ast_hash": "f38fc3380e7a3ef88965bf03c0593570",
+    "semantic_hash": "f38fc3380e7a3ef88965bf03c0593570"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/payments/esewa.ts": {
+    "mtime": 1783692378.9133773,
+    "ast_hash": "0872137a660b232dd7458683139d5185",
+    "semantic_hash": "0872137a660b232dd7458683139d5185"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/payments/khalti.ts": {
+    "mtime": 1783692378.9141903,
+    "ast_hash": "9d47ab5063967e6bf97c7313178fa913",
+    "semantic_hash": "9d47ab5063967e6bf97c7313178fa913"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/payments/payment.model.ts": {
+    "mtime": 1783692378.9141903,
+    "ast_hash": "c4bf55ffac568b5f9d053b2e818ed041",
+    "semantic_hash": "c4bf55ffac568b5f9d053b2e818ed041"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/payments/payment.routes.ts": {
+    "mtime": 1783692378.9143772,
+    "ast_hash": "096ea96dcd6b804865f5462aca1e6029",
+    "semantic_hash": "096ea96dcd6b804865f5462aca1e6029"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/payments/payment.service.ts": {
+    "mtime": 1783692378.9143772,
+    "ast_hash": "a26b65af68f8e7313bcfaaa47e390cbf",
+    "semantic_hash": "a26b65af68f8e7313bcfaaa47e390cbf"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/payments/payments.test.ts": {
+    "mtime": 1783692378.9143772,
+    "ast_hash": "27e74429ea410c93a4272da6abf14b8f",
+    "semantic_hash": "27e74429ea410c93a4272da6abf14b8f"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/users/user.model.ts": {
+    "mtime": 1783692378.9153774,
+    "ast_hash": "faaa52f2b6f2cf43e275cfa6b38d0afc",
+    "semantic_hash": "faaa52f2b6f2cf43e275cfa6b38d0afc"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/venues/venue.controller.ts": {
+    "mtime": 1783692378.9153774,
+    "ast_hash": "c14f64f94a8692317a9c35fb6a454d17",
+    "semantic_hash": "c14f64f94a8692317a9c35fb6a454d17"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/venues/venue.model.ts": {
+    "mtime": 1783692378.9161468,
+    "ast_hash": "5af525656e03623b6518b04011cf81a0",
+    "semantic_hash": "5af525656e03623b6518b04011cf81a0"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/venues/venue.routes.ts": {
+    "mtime": 1783692378.9161468,
+    "ast_hash": "43ec2f272595e9fd08b79ea41b030218",
+    "semantic_hash": "43ec2f272595e9fd08b79ea41b030218"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/venues/venue.service.ts": {
+    "mtime": 1783692378.9163773,
+    "ast_hash": "58b0fee61db715abd9be40ce84d96ff4",
+    "semantic_hash": "58b0fee61db715abd9be40ce84d96ff4"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/modules/venues/venues.test.ts": {
+    "mtime": 1783692378.9163773,
+    "ast_hash": "eb82ed45d9e0f0b20e3b8604308f9bb8",
+    "semantic_hash": "eb82ed45d9e0f0b20e3b8604308f9bb8"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/scripts/seed-venues.ts": {
+    "mtime": 1783692378.9163773,
+    "ast_hash": "1c6429f6307f984a1a5a43282ba558b0",
+    "semantic_hash": "1c6429f6307f984a1a5a43282ba558b0"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/src/scripts/seed.ts": {
+    "mtime": 1783692378.917538,
+    "ast_hash": "85598858b49c564b28453ef8945910aa",
+    "semantic_hash": "85598858b49c564b28453ef8945910aa"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/tsconfig.json": {
+    "mtime": 1783692378.917538,
+    "ast_hash": "9cddda84c615349ade09d37a18a49b96",
+    "semantic_hash": "9cddda84c615349ade09d37a18a49b96"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/server/vitest.config.ts": {
+    "mtime": 1783692378.917538,
+    "ast_hash": "7eb42e9525f8a6051f0ba44eba8c6fe4",
+    "semantic_hash": "7eb42e9525f8a6051f0ba44eba8c6fe4"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/shared/package.json": {
+    "mtime": 1783692378.917538,
+    "ast_hash": "9ef6bc742a31d07df847fcb51f876307",
+    "semantic_hash": "9ef6bc742a31d07df847fcb51f876307"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/shared/src/assistant.ts": {
+    "mtime": 1783692378.918277,
+    "ast_hash": "c197246c1424c2ff618dc55391285a49",
+    "semantic_hash": "c197246c1424c2ff618dc55391285a49"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/shared/src/auth.ts": {
+    "mtime": 1783692378.9184482,
+    "ast_hash": "0271f9238eeabbba63ca869995fd2400",
+    "semantic_hash": "0271f9238eeabbba63ca869995fd2400"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/shared/src/bookings.ts": {
+    "mtime": 1783692378.9184482,
+    "ast_hash": "bc3739b45c8214c2c4c4142c9631a5b7",
+    "semantic_hash": "bc3739b45c8214c2c4c4142c9631a5b7"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/shared/src/index.ts": {
+    "mtime": 1783692378.9184482,
+    "ast_hash": "4a48b9664dfc4ae2fef3cd5aa38fd9c6",
+    "semantic_hash": "4a48b9664dfc4ae2fef3cd5aa38fd9c6"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/shared/src/npt.ts": {
+    "mtime": 1783692378.9184482,
+    "ast_hash": "962e115b2e2afe08e6cc8a8ab608c01e",
+    "semantic_hash": "962e115b2e2afe08e6cc8a8ab608c01e"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/shared/src/payments.ts": {
+    "mtime": 1783692378.9184482,
+    "ast_hash": "6fba489d954400fd888a08e59914ddc3",
+    "semantic_hash": "6fba489d954400fd888a08e59914ddc3"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/shared/src/venues.ts": {
+    "mtime": 1783692378.9184482,
+    "ast_hash": "446eafe20d645ec2c2fdf81464cce7e7",
+    "semantic_hash": "446eafe20d645ec2c2fdf81464cce7e7"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/shared/tsconfig.json": {
+    "mtime": 1783692378.9184482,
+    "ast_hash": "c17762528c8b9602b7e071f6afad5913",
+    "semantic_hash": "c17762528c8b9602b7e071f6afad5913"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/tsconfig.base.json": {
+    "mtime": 1783692378.9193773,
+    "ast_hash": "8c6a201fbba39be36720bfdc7d423aea",
+    "semantic_hash": "8c6a201fbba39be36720bfdc7d423aea"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/.github/workflows/ci.yml": {
+    "mtime": 1783692378.8601856,
+    "ast_hash": "826b30f06b24ca33ba1aeab3743bd0e6",
+    "semantic_hash": "826b30f06b24ca33ba1aeab3743bd0e6"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/CLAUDE.md": {
+    "mtime": 1783692378.833376,
+    "ast_hash": "a357bbaf20669baed6618b78a0e8048e",
+    "semantic_hash": "a357bbaf20669baed6618b78a0e8048e"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/README.md": {
+    "mtime": 1783692378.8603764,
+    "ast_hash": "f2da77b8a4f8ac7e32bc6c2cc43ba7c1",
+    "semantic_hash": "f2da77b8a4f8ac7e32bc6c2cc43ba7c1"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/client/index.html": {
+    "mtime": 1783692378.8603764,
+    "ast_hash": "8199780bb5165801702c80930bc96c67",
+    "semantic_hash": "8199780bb5165801702c80930bc96c67"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/00-system-sheet.html": {
+    "mtime": 1783692378.8683765,
+    "ast_hash": "baef50170dd238122e251ed7c120474e",
+    "semantic_hash": "baef50170dd238122e251ed7c120474e"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/00b-brand-panel.dc.html": {
+    "mtime": 1783692378.8693764,
+    "ast_hash": "b785916b34683cec3792e35d0424a655",
+    "semantic_hash": "b785916b34683cec3792e35d0424a655"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/01-landing.dc.html": {
+    "mtime": 1783692378.8703766,
+    "ast_hash": "a5ed11e4568ff17d9a2587c50388ff94",
+    "semantic_hash": "a5ed11e4568ff17d9a2587c50388ff94"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/02-search-standalone.html": {
+    "mtime": 1783692378.8783767,
+    "ast_hash": "70c72585d28e350b80722c861e982d02",
+    "semantic_hash": "70c72585d28e350b80722c861e982d02"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/02-search.dc.html": {
+    "mtime": 1783692378.8793766,
+    "ast_hash": "5fcadbf56fd620f111f5244f2df71538",
+    "semantic_hash": "5fcadbf56fd620f111f5244f2df71538"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/03-venue-detail.html": {
+    "mtime": 1783692378.8823767,
+    "ast_hash": "3e9237e8c4ad7eecdab185198d4ae9e5",
+    "semantic_hash": "3e9237e8c4ad7eecdab185198d4ae9e5"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/04-06-booking-flow.dc.html": {
+    "mtime": 1783692378.8833768,
+    "ast_hash": "501e61c3df7747d54a4f6391fa1f729e",
+    "semantic_hash": "501e61c3df7747d54a4f6391fa1f729e"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/07-08-auth-settings.dc.html": {
+    "mtime": 1783692378.8833768,
+    "ast_hash": "29cc36b9e8600e1903c63ba57fd5362d",
+    "semantic_hash": "29cc36b9e8600e1903c63ba57fd5362d"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/09-10-owner-ops.dc.html": {
+    "mtime": 1783692378.8863769,
+    "ast_hash": "9dc98fa63a49c66f5f39b5caa3bacd9c",
+    "semantic_hash": "9dc98fa63a49c66f5f39b5caa3bacd9c"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/11-venue-wizard.dc.html": {
+    "mtime": 1783692378.8863769,
+    "ast_hash": "6c2ae4704e0b9815c8a6718dcd81d0ec",
+    "semantic_hash": "6c2ae4704e0b9815c8a6718dcd81d0ec"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/12-reports.dc.html": {
+    "mtime": 1783692378.8873768,
+    "ast_hash": "11b58e6696c153a209afe31102ded1cb",
+    "semantic_hash": "11b58e6696c153a209afe31102ded1cb"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/13-admin.dc.html": {
+    "mtime": 1783692378.8883767,
+    "ast_hash": "a9618d19050b7e97cb5454e2f3c3e979",
+    "semantic_hash": "a9618d19050b7e97cb5454e2f3c3e979"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/14-assistant.dc.html": {
+    "mtime": 1783692378.8893769,
+    "ast_hash": "4c10ed15ebf4efe2de51d50f633c8b69",
+    "semantic_hash": "4c10ed15ebf4efe2de51d50f633c8b69"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/README.md": {
+    "mtime": 1783692378.8893769,
+    "ast_hash": "2204b0d0feeb40c82e460d9ee1cc5e20",
+    "semantic_hash": "2204b0d0feeb40c82e460d9ee1cc5e20"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/docker-compose.yml": {
+    "mtime": 1783692378.892377,
+    "ast_hash": "e56182ee4a97b9bda67d4a6e0d2b070f",
+    "semantic_hash": "e56182ee4a97b9bda67d4a6e0d2b070f"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/docs/PROGRESS.md": {
+    "mtime": 1783692378.8933768,
+    "ast_hash": "a184dada861375d0a3c283cfd45fc8b2",
+    "semantic_hash": "a184dada861375d0a3c283cfd45fc8b2"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/docs/blueprint.md": {
+    "mtime": 1783692378.894377,
+    "ast_hash": "dbfba357e1f1636652b5f4a1a8306fc2",
+    "semantic_hash": "dbfba357e1f1636652b5f4a1a8306fc2"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/docs/runbooks/launch.md": {
+    "mtime": 1783692378.894377,
+    "ast_hash": "848186b95edac61ca9e67c4113ab5354",
+    "semantic_hash": "848186b95edac61ca9e67c4113ab5354"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/docs/runbooks/restore.md": {
+    "mtime": 1783692378.8953629,
+    "ast_hash": "2468d8626f754527769396f0ddfc8f5d",
+    "semantic_hash": "2468d8626f754527769396f0ddfc8f5d"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/docs/security-checklist.md": {
+    "mtime": 1783692378.8953629,
+    "ast_hash": "e747943372a77cd08b6282a1c7ec73d8",
+    "semantic_hash": "e747943372a77cd08b6282a1c7ec73d8"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/render.yaml": {
+    "mtime": 1783692378.899377,
+    "ast_hash": "499fe5b34d6a3ffefae1cc92fbd78163",
+    "semantic_hash": "499fe5b34d6a3ffefae1cc92fbd78163"
+  },
+  "/home/niyesh/code/courtbook/courtbook/.claude/worktrees/wizardly-chebyshev-79d35c/design/screenshots/12-reports-lower.png": {
+    "mtime": 1783692378.8903768,
+    "ast_hash": "fcac3e38746dd9396ede7d93dc65254f",
+    "semantic_hash": "fcac3e38746dd9396ede7d93dc65254f"
+  }
+}
