@@ -73,13 +73,28 @@ describe('POST /auth/register', () => {
     expect(queued?.status).toBe('queued');
   });
 
-  it('409 EMAIL_EXISTS on duplicate (case-insensitive)', async () => {
-    await request(app).post('/api/v1/auth/register').send(userInput('dup@test.com')).expect(201);
+  it('409 EMAIL_EXISTS only when the existing account is VERIFIED (case-insensitive)', async () => {
+    await registerAndVerify('dup@test.com');
     const res = await request(app)
       .post('/api/v1/auth/register')
       .send(userInput('DUP@test.com'))
       .expect(409);
     expect(res.body.error.code).toBe('EMAIL_EXISTS');
+  });
+
+  it('re-registering an UNVERIFIED account resets it and resends the link', async () => {
+    await request(app)
+      .post('/api/v1/auth/register')
+      .send(userInput('pending@test.com'))
+      .expect(201);
+    // second attempt with the same (still unverified) email is allowed
+    const res = await request(app)
+      .post('/api/v1/auth/register')
+      .send({ ...userInput('pending@test.com'), name: 'Renamed' })
+      .expect(201);
+    expect(res.body.data.user).toMatchObject({ name: 'Renamed', emailVerifiedAt: null });
+    // a fresh verify email was queued (one per attempt)
+    expect(await Notification.countDocuments({ to: 'pending@test.com' })).toBe(2);
   });
 
   it('422 VALIDATION with issue details on bad input', async () => {

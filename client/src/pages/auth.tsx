@@ -155,7 +155,7 @@ export function RegisterPage() {
         <Field
           label="Phone (optional)"
           inputMode="numeric"
-          placeholder="98XXXXXXXX"
+          placeholder="9XXXXXXXXX"
           error={errors.phone?.message}
           {...register('phone', { setValueAs: (v: string) => (v === '' ? undefined : v) })}
         />

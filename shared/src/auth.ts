@@ -7,10 +7,10 @@ import { z } from 'zod';
 export const registerSchema = z.object({
   name: z.string().trim().min(2).max(60),
   email: z.string().trim().email().max(254),
-  /** Nepali mobile, e.g. 9812345678 (blueprint §5.2) — optional. */
+  /** Nepali mobile: 10 digits starting with 9 (98/97/96…), §5.2 — optional. */
   phone: z
     .string()
-    .regex(/^98\d{8}$/, 'Expected a Nepali mobile number (98XXXXXXXX)')
+    .regex(/^9\d{9}$/, 'Expected a 10-digit Nepali mobile number (9XXXXXXXXX)')
     .optional(),
   // min 8 per §3.5; max 72 = bcrypt input limit
   password: z.string().min(8).max(72),
