@@ -1,4 +1,4 @@
-import type Anthropic from '@anthropic-ai/sdk';
+import type OpenAI from 'openai';
 import { formatNPT, nowNPT } from '@courtbook/shared';
 import { AppError } from '../../core/errors.js';
 import { Venue } from '../venues/venue.model.js';
@@ -14,47 +14,57 @@ import { createBooking } from '../bookings/booking.service.js';
  * the model cannot act as someone else no matter what the prompt says.
  */
 
-export const ASSISTANT_TOOLS: Anthropic.Tool[] = [
+// OpenAI/Groq function-calling format (Groq is OpenAI-compatible).
+export const ASSISTANT_TOOLS: OpenAI.ChatCompletionTool[] = [
   {
-    name: 'search_venues',
-    description:
-      'Search published futsal venues in Kathmandu. Call this when the user asks where they can play or mentions an area of the city.',
-    input_schema: {
-      type: 'object',
-      properties: {
-        area: { type: 'string', description: 'Area/neighbourhood, e.g. "Baneshwor". Optional.' },
-        priceMax: { type: 'number', description: 'Maximum price per hour in NPR. Optional.' },
+    type: 'function',
+    function: {
+      name: 'search_venues',
+      description:
+        'Search published futsal venues in Kathmandu. Call this when the user asks where they can play or mentions an area of the city.',
+      parameters: {
+        type: 'object',
+        properties: {
+          area: { type: 'string', description: 'Area/neighbourhood, e.g. "Baneshwor". Optional.' },
+          priceMax: { type: 'number', description: 'Maximum price per hour in NPR. Optional.' },
+        },
+        additionalProperties: false,
       },
-      additionalProperties: false,
     },
   },
   {
-    name: 'check_availability',
-    description:
-      'Get free slots for a venue on a date. Call this when the user asks whether a court is free at some time. Dates are YYYY-MM-DD in Nepal Time.',
-    input_schema: {
-      type: 'object',
-      properties: {
-        venueSlug: { type: 'string', description: 'Venue slug from search_venues results' },
-        date: { type: 'string', description: 'YYYY-MM-DD (Nepal Time)' },
+    type: 'function',
+    function: {
+      name: 'check_availability',
+      description:
+        'Get free slots for a venue on a date. Call this when the user asks whether a court is free at some time. Dates are YYYY-MM-DD in Nepal Time.',
+      parameters: {
+        type: 'object',
+        properties: {
+          venueSlug: { type: 'string', description: 'Venue slug from search_venues results' },
+          date: { type: 'string', description: 'YYYY-MM-DD (Nepal Time)' },
+        },
+        required: ['venueSlug', 'date'],
+        additionalProperties: false,
       },
-      required: ['venueSlug', 'date'],
-      additionalProperties: false,
     },
   },
   {
-    name: 'create_booking_draft',
-    description:
-      'Create a 10-minute booking hold for the logged-in user. Only call after the user explicitly confirms a specific slot. Payment happens at checkout — never collect payment details.',
-    input_schema: {
-      type: 'object',
-      properties: {
-        courtId: { type: 'string' },
-        date: { type: 'string', description: 'YYYY-MM-DD (Nepal Time)' },
-        startMin: { type: 'number', description: 'Slot start, minutes from midnight NPT' },
+    type: 'function',
+    function: {
+      name: 'create_booking_draft',
+      description:
+        'Create a 10-minute booking hold for the logged-in user. Only call after the user explicitly confirms a specific slot. Payment happens at checkout — never collect payment details.',
+      parameters: {
+        type: 'object',
+        properties: {
+          courtId: { type: 'string' },
+          date: { type: 'string', description: 'YYYY-MM-DD (Nepal Time)' },
+          startMin: { type: 'number', description: 'Slot start, minutes from midnight NPT' },
+        },
+        required: ['courtId', 'date', 'startMin'],
+        additionalProperties: false,
       },
-      required: ['courtId', 'date', 'startMin'],
-      additionalProperties: false,
     },
   },
 ];

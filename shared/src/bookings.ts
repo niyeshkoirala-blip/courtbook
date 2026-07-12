@@ -32,7 +32,7 @@ export const walkinCreateSchema = z.object({
       name: z.string().trim().min(1).max(60),
       phone: z
         .string()
-        .regex(/^98\d{8}$/)
+        .regex(/^9\d{9}$/)
         .optional(),
     })
     .optional(),

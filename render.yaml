@@ -27,8 +27,14 @@ services:
   - type: web
     name: courtbook-client
     runtime: static
-    buildCommand: npm ci && npm run build -w @courtbook/client
+    # shared must build first — the client imports its types from shared/dist
+    buildCommand: npm ci && npm run build -w @courtbook/shared && npm run build -w @courtbook/client
     staticPublishPath: client/dist
+    envVars:
+      # SPA and API are separate origins in prod — point the client at the API.
+      # Set to the courtbook-api URL, e.g. https://courtbook-api.onrender.com/api/v1
+      - key: VITE_API_BASE
+        sync: false
     routes:
       # SPA fallback — client-side router owns all paths
       - type: rewrite

@@ -29,9 +29,9 @@ const envSchema = z.object({
   ESEWA_FORM_URL: z.string().default('https://rc-epay.esewa.com.np/api/epay/main/v2/form'),
   KHALTI_SECRET: z.string().optional(),
   KHALTI_API_URL: z.string().default('https://dev.khalti.com/api/v2'),
-  // M7: assistant — chat returns 501 until this is set
+  // M7: assistant — Groq (OpenAI-compatible). Chat returns 501 until this is set
   LLM_API_KEY: z.string().optional(),
-  LLM_MODEL: z.string().default('claude-opus-4-8'),
+  LLM_MODEL: z.string().default('llama-3.3-70b-versatile'),
   SENTRY_DSN: z.string().optional(),
 });
 

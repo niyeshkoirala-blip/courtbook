@@ -248,7 +248,7 @@ function WalkinModal({
         <Field
           label="Phone (optional)"
           inputMode="numeric"
-          placeholder="98XXXXXXXX"
+          placeholder="9XXXXXXXXX"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
         />

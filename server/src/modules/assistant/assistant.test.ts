@@ -130,17 +130,36 @@ describe('POST /assistant/chat', () => {
       .fn()
       // round 1: model asks for a venue search
       .mockResolvedValueOnce({
-        stop_reason: 'tool_use',
-        content: [
-          { type: 'tool_use', id: 'toolu_1', name: 'search_venues', input: { area: 'Baneshwor' } },
+        choices: [
+          {
+            finish_reason: 'tool_calls',
+            message: {
+              role: 'assistant',
+              content: null,
+              tool_calls: [
+                {
+                  id: 'call_1',
+                  type: 'function',
+                  function: { name: 'search_venues', arguments: '{"area":"Baneshwor"}' },
+                },
+              ],
+            },
+          },
         ],
       })
       // round 2: model answers
       .mockResolvedValueOnce({
-        stop_reason: 'end_turn',
-        content: [{ type: 'text', text: 'Bot Arena in Baneshwor has courts — want a slot?' }],
+        choices: [
+          {
+            finish_reason: 'stop',
+            message: {
+              role: 'assistant',
+              content: 'Bot Arena in Baneshwor has courts — want a slot?',
+            },
+          },
+        ],
       });
-    _setClientForTests({ messages: { create } });
+    _setClientForTests({ chat: { completions: { create } } });
 
     const res = await request(app)
       .post('/api/v1/assistant/chat')
@@ -152,25 +171,24 @@ describe('POST /assistant/chat', () => {
     const secondCallMessages = create.mock.calls[1]![0].messages;
     const toolResultMsg = JSON.stringify(secondCallMessages.at(-1));
     expect(toolResultMsg).toContain('bot-arena');
+    expect(secondCallMessages.at(-1).role).toBe('tool');
     _setClientForTests(null);
   });
 
   it('withholds create_booking_draft from anonymous users (§7.7)', async () => {
     const create = vi.fn().mockResolvedValue({
-      stop_reason: 'end_turn',
-      content: [{ type: 'text', text: 'ok' }],
+      choices: [{ finish_reason: 'stop', message: { role: 'assistant', content: 'ok' } }],
     });
-    _setClientForTests({ messages: { create } });
+    _setClientForTests({ chat: { completions: { create } } });
 
     // anonymous → 2 tools
     await request(app)
       .post('/api/v1/assistant/chat')
       .send({ sessionId: 'session-abc-3', message: 'hi' })
       .expect(200);
-    expect(create.mock.calls[0]![0].tools.map((t: { name: string }) => t.name)).toEqual([
-      'search_venues',
-      'check_availability',
-    ]);
+    expect(
+      create.mock.calls[0]![0].tools.map((t: { function: { name: string } }) => t.function.name),
+    ).toEqual(['search_venues', 'check_availability']);
 
     // authenticated → all 3
     await request(app)
@@ -184,10 +202,9 @@ describe('POST /assistant/chat', () => {
 
   it('caps session history at 10 turns (§7.7)', async () => {
     const create = vi.fn().mockResolvedValue({
-      stop_reason: 'end_turn',
-      content: [{ type: 'text', text: 'ok' }],
+      choices: [{ finish_reason: 'stop', message: { role: 'assistant', content: 'ok' } }],
     });
-    _setClientForTests({ messages: { create } });
+    _setClientForTests({ chat: { completions: { create } } });
 
     for (let i = 0; i < 12; i += 1) {
       await request(app)
@@ -196,7 +213,9 @@ describe('POST /assistant/chat', () => {
         .expect(200);
     }
     const lastCall = create.mock.calls.at(-1)![0];
-    expect(lastCall.messages.length).toBeLessThanOrEqual(10);
+    // history is capped at 10; the system prompt rides on top and doesn't count
+    const history = lastCall.messages.filter((m: { role: string }) => m.role !== 'system');
+    expect(history.length).toBeLessThanOrEqual(10);
     _setClientForTests(null);
   });
 

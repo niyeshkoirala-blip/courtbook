@@ -1,4 +1,4 @@
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 import { nowNPT, type AssistantReply } from '@courtbook/shared';
 import { AppError } from '../../core/errors.js';
 import { config } from '../../core/config.js';
@@ -7,9 +7,14 @@ import { ASSISTANT_TOOLS, runTool, type ToolContext } from './tools.js';
 
 /**
  * Assistant chat (blueprint §4.4, guardrails §7.7). Manual tool loop over the
- * Messages API. Returns 501 NOT_CONFIGURED until LLM_API_KEY is set — the
- * whole module is inert without it.
+ * OpenAI-compatible Chat Completions API — we run it against Groq (free tier).
+ * Returns 501 NOT_CONFIGURED until LLM_API_KEY is set — the whole module is
+ * inert without it.
  */
+
+// Groq speaks the OpenAI wire format at this base URL.
+// ponytail: hardcoded — one const to change if we ever swap providers.
+const GROQ_BASE_URL = 'https://api.groq.com/openai/v1';
 
 const SYSTEM_PROMPT = `You are CourtBook's booking assistant for futsal courts in Kathmandu.
 
@@ -24,7 +29,7 @@ Rules you must always follow:
 - Keep replies short and friendly; this is a chat widget.`;
 
 interface Session {
-  messages: Anthropic.MessageParam[];
+  messages: OpenAI.ChatCompletionMessageParam[];
   touchedAt: number;
 }
 
@@ -48,14 +53,26 @@ function getSession(id: string): Session {
   return session;
 }
 
-let client: Anthropic | null = null;
-function getClient(): Anthropic {
+let client: OpenAI | null = null;
+function getClient(): OpenAI {
   if (client) return client; // includes the test-injected fake
   if (!config.llmApiKey) {
     throw new AppError('NOT_CONFIGURED', 501, 'The assistant is not configured on this server');
   }
-  client = new Anthropic({ apiKey: config.llmApiKey });
+  client = new OpenAI({ apiKey: config.llmApiKey, baseURL: GROQ_BASE_URL });
   return client;
+}
+
+/**
+ * Keep the last MAX_TURNS messages, but never start on an orphan `tool` message
+ * (its parent assistant tool_calls got sliced off) — Groq/OpenAI 400s on that.
+ */
+function capHistory(
+  messages: OpenAI.ChatCompletionMessageParam[],
+): OpenAI.ChatCompletionMessageParam[] {
+  const capped = messages.slice(-MAX_TURNS);
+  while (capped[0]?.role === 'tool') capped.shift();
+  return capped;
 }
 
 export async function chat(
@@ -63,53 +80,62 @@ export async function chat(
   message: string,
   ctx: ToolContext,
 ): Promise<AssistantReply> {
-  const anthropic = getClient();
+  const openai = getClient();
   const session = getSession(sessionId);
 
   session.messages.push({ role: 'user', content: message });
   // cap history (§7.7) — keep the most recent turns only
-  session.messages = session.messages.slice(-MAX_TURNS);
+  session.messages = capHistory(session.messages);
+
+  // OpenAI puts the system prompt in the messages array (not a top-level param).
+  const system: OpenAI.ChatCompletionMessageParam = {
+    role: 'system',
+    content:
+      `${SYSTEM_PROMPT}\n\nToday is ${nowNPT().date} (Nepal Time).` +
+      (ctx.userId ? '\nThe user IS logged in.' : '\nThe user is NOT logged in.'),
+  };
 
   let bookingId: string | undefined;
 
   // manual tool loop (§7.7: all tool calls via the same service layer)
   for (let round = 0; round <= MAX_TOOL_ROUNDS; round += 1) {
-    const response = await anthropic.messages.create({
+    const response = await openai.chat.completions.create({
       model: config.llmModel,
       max_tokens: 1024,
-      system:
-        `${SYSTEM_PROMPT}\n\nToday is ${nowNPT().date} (Nepal Time).` +
-        (ctx.userId ? '\nThe user IS logged in.' : '\nThe user is NOT logged in.'),
       // create_booking_draft is only offered to authenticated users (§7.7)
       tools: ctx.userId ? ASSISTANT_TOOLS : ASSISTANT_TOOLS.slice(0, 2),
-      messages: [...session.messages], // snapshot — the session array keeps mutating
+      messages: [system, ...session.messages], // snapshot — session keeps mutating
     });
 
-    session.messages.push({ role: 'assistant', content: response.content });
+    const msg = response.choices[0]?.message;
+    if (!msg) throw new AppError('LLM_ERROR', 502, 'The assistant returned an empty response');
+    session.messages.push(msg);
 
-    if (response.stop_reason !== 'tool_use') {
-      const reply = response.content
-        .filter((b): b is Anthropic.TextBlock => b.type === 'text')
-        .map((b) => b.text)
-        .join('');
+    if (!msg.tool_calls?.length) {
       return {
-        reply: reply || 'Sorry, I have no answer for that.',
+        reply: msg.content || 'Sorry, I have no answer for that.',
         ...(bookingId && { bookingId }),
       };
     }
 
-    const toolResults: Anthropic.ToolResultBlockParam[] = [];
-    for (const block of response.content) {
-      if (block.type !== 'tool_use') continue;
-      const outcome = await runTool(block.name, block.input as Record<string, unknown>, ctx);
+    for (const call of msg.tool_calls) {
+      // Groq only emits function tool calls (not OpenAI's "custom" variety).
+      if (call.type !== 'function') continue;
+      // parse args defensively.
+      let input: Record<string, unknown> = {};
+      try {
+        input = JSON.parse(call.function.arguments || '{}') as Record<string, unknown>;
+      } catch {
+        input = {};
+      }
+      const outcome = await runTool(call.function.name, input, ctx);
       if (outcome.bookingId) bookingId = outcome.bookingId;
-      toolResults.push({
-        type: 'tool_result',
-        tool_use_id: block.id,
+      session.messages.push({
+        role: 'tool',
+        tool_call_id: call.id,
         content: outcome.result,
       });
     }
-    session.messages.push({ role: 'user', content: toolResults });
   }
 
   logger.warn({ sessionId }, 'assistant hit tool-round cap');
@@ -119,7 +145,7 @@ export async function chat(
   };
 }
 
-/** Test hook: swap the Anthropic client (never used in production code paths). */
+/** Test hook: swap the OpenAI client (never used in production code paths). */
 export function _setClientForTests(fake: unknown): void {
-  client = fake as Anthropic;
+  client = fake as OpenAI;
 }

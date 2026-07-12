@@ -1,6 +1,8 @@
 node_modules
 **/node_modules
 **/dist
+# Stale incremental-build info tricks `tsc -b` into skipping emit → no dist in image
+**/*.tsbuildinfo
 .git
 .env
 .env.*

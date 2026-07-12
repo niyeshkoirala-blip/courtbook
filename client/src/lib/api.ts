@@ -13,7 +13,9 @@ export class ApiError extends Error {
   }
 }
 
-const BASE = '/api/v1';
+// Relative in dev (Vite proxies /api → :3000); set VITE_API_BASE to the API's
+// full URL in prod, where the SPA and API are separate origins.
+const BASE = import.meta.env.VITE_API_BASE ?? '/api/v1';
 
 async function rawRequest<T>(path: string, init: RequestInit = {}): Promise<T> {
   const token = useAuth.getState().accessToken;

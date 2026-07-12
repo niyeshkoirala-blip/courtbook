@@ -87,6 +87,23 @@ export async function register(input: RegisterInput): Promise<UserDto> {
   } catch (err) {
     // unique index on email is the arbiter — no check-then-insert race
     if (err instanceof Error && 'code' in err && err.code === 11000) {
+      // An UNVERIFIED account proves no ownership of the email, so let the
+      // signup be retried: reset its credentials + resend the link. A VERIFIED
+      // account is a real owner — that still blocks with 409.
+      const existing = await User.findOne({ email: input.email.toLowerCase(), deletedAt: null });
+      if (existing && !existing.emailVerifiedAt) {
+        existing.name = input.name;
+        existing.passwordHash = passwordHash;
+        if (input.phone) existing.phone = input.phone;
+        existing.verifyTokenHash = hashToken(rawVerifyToken);
+        existing.verifyTokenExpires = new Date(Date.now() + VERIFY_TTL_MS);
+        await existing.save();
+        await queueEmail(existing.email, 'verify_email', {
+          name: existing.name,
+          link: `${config.corsOrigins[0]}/auth/verify?token=${rawVerifyToken}`,
+        });
+        return toUserDto(existing);
+      }
       throw new AppError('EMAIL_EXISTS', 409, 'An account with this email already exists');
     }
     throw err;
