@@ -30,5 +30,8 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "dependencies": {
+    "mongodb": "^7.5.0"
   }
 }
