@@ -16,9 +16,11 @@ const envSchema = z.object({
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']).default('info'),
   JWT_SECRET: z.string().default('dev-only-secret'),
   REFRESH_SECRET: z.string().default('dev-only-refresh'),
-  /** SMTP endpoint — mailhog locally, real provider in prod (§2.11). */
+  /** SMTP endpoint — mailhog locally (§2.11). Used when BREVO_API_KEY is unset. */
   SMTP_URL: z.string().default('smtp://localhost:1025'),
   EMAIL_FROM: z.string().default('CourtBook <no-reply@courtbook.local>'),
+  /** Brevo HTTP email API — set in prod where SMTP egress is blocked (e.g. Render). */
+  BREVO_API_KEY: z.string().optional(),
   // M2: Cloudinary signed uploads (§2.6) — photo signing 501s until set
   CLOUDINARY_CLOUD_NAME: z.string().optional(),
   CLOUDINARY_API_KEY: z.string().optional(),
@@ -63,6 +65,7 @@ export const config = {
   refreshSecret: parsed.data.REFRESH_SECRET,
   smtpUrl: parsed.data.SMTP_URL,
   emailFrom: parsed.data.EMAIL_FROM,
+  brevoApiKey: parsed.data.BREVO_API_KEY,
   cloudinaryCloudName: parsed.data.CLOUDINARY_CLOUD_NAME,
   cloudinaryApiKey: parsed.data.CLOUDINARY_API_KEY,
   cloudinaryApiSecret: parsed.data.CLOUDINARY_API_SECRET,

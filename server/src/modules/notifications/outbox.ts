@@ -16,6 +16,39 @@ const transport = config.isTest
   ? nodemailer.createTransport({ jsonTransport: true })
   : nodemailer.createTransport(config.smtpUrl);
 
+/** Split `EMAIL_FROM` ("CourtBook <a@b.com>") into Brevo's {name,email} shape. */
+function parseFrom(from: string): { name: string; email: string } {
+  const m = /^\s*(.*?)\s*<(.+)>\s*$/.exec(from);
+  return m ? { name: m[1] ?? '', email: m[2] ?? from.trim() } : { name: '', email: from.trim() };
+}
+
+/**
+ * One send. Prefers Brevo's HTTP API when configured — hosts like Render block
+ * outbound SMTP, so port-443 HTTP is the only path that works there. Falls back
+ * to SMTP (MailHog locally, jsonTransport in tests) otherwise.
+ */
+async function deliver(to: string, subject: string, text: string): Promise<void> {
+  if (config.brevoApiKey && !config.isTest) {
+    const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+      method: 'POST',
+      headers: {
+        'api-key': config.brevoApiKey,
+        'content-type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify({
+        sender: parseFrom(config.emailFrom),
+        to: [{ email: to }],
+        subject,
+        textContent: text,
+      }),
+    });
+    if (!res.ok) throw new Error(`Brevo send failed (${res.status}): ${await res.text()}`);
+    return;
+  }
+  await transport.sendMail({ from: config.emailFrom, to, subject, text });
+}
+
 type Payload = Record<string, string>;
 
 /** Plain-text templates (§2.11). HTML versions are an M8 polish item. */
@@ -83,7 +116,7 @@ export async function sendPending(): Promise<void> {
     try {
       if (!render) throw new Error(`unknown template ${n.templateId}`);
       const { subject, text } = render(payload);
-      await transport.sendMail({ from: config.emailFrom, to: n.to, subject, text });
+      await deliver(n.to, subject, text);
       n.status = 'sent';
       n.sentAt = new Date();
     } catch (err) {
