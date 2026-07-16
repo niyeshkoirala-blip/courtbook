@@ -7,6 +7,7 @@ import { AssistantWidget } from '../components/assistant';
 export function Layout() {
   const { user, clear } = useAuth();
   const navigate = useNavigate();
+  const isOperator = user?.role === 'owner' || user?.role === 'admin';
 
   async function logout() {
     try {
@@ -37,17 +38,27 @@ export function Layout() {
             Court<span className="text-accent">Book</span>
           </Link>
           <div className="ml-auto flex items-center gap-1">
-            <NavLink to="/venues" className={navLink}>
-              Find courts
-            </NavLink>
+            {/* Operators (owner/admin) run the platform — they don't get the player booking panel. */}
+            {!isOperator && (
+              <NavLink to="/venues" className={navLink}>
+                Find courts
+              </NavLink>
+            )}
             {user ? (
               <>
-                <NavLink to="/me/bookings" className={navLink}>
-                  My bookings
-                </NavLink>
+                {!isOperator && (
+                  <NavLink to="/me/bookings" className={navLink}>
+                    My bookings
+                  </NavLink>
+                )}
                 {user.role === 'owner' && (
                   <NavLink to="/owner" className={navLink}>
                     Owner
+                  </NavLink>
+                )}
+                {user.role === 'admin' && (
+                  <NavLink to="/admin" className={navLink}>
+                    Admin
                   </NavLink>
                 )}
                 <span className="hidden px-2 text-sm text-mint/60 sm:inline">{user.name}</span>

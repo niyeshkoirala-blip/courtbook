@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { formatNPT, type VenueDto } from '@courtbook/shared';
-import { post, ApiError } from '../../lib/api';
+import { AMENITIES, formatNPT, type VenueDto } from '@courtbook/shared';
+import { api, post, ApiError } from '../../lib/api';
 import { useAuth } from '../../lib/auth';
 import { toast } from '../../lib/toast';
 import { Button, Field, Skeleton } from '../../components/ui';
@@ -18,6 +18,7 @@ export function OwnerVenuesPage() {
   const { data: venues, isPending } = useOwnerVenues();
   const [creating, setCreating] = useState(false);
   const [courtFor, setCourtFor] = useState<VenueDto | null>(null);
+  const [editing, setEditing] = useState<VenueDto | null>(null);
   const queryClient = useQueryClient();
   const refreshUser = useAuth((s) => s.user);
 
@@ -76,6 +77,9 @@ export function OwnerVenuesPage() {
                 </p>
               </div>
               <div className="flex gap-2">
+                <Button size="sm" variant="ghost" onClick={() => setEditing(v)}>
+                  Edit details
+                </Button>
                 <Button size="sm" variant="ghost" onClick={() => setCourtFor(v)}>
                   Add court
                 </Button>
@@ -109,7 +113,95 @@ export function OwnerVenuesPage() {
 
       <CreateVenueModal open={creating} onClose={() => setCreating(false)} />
       <AddCourtModal venue={courtFor} onClose={() => setCourtFor(null)} />
+      <EditVenueModal venue={editing} onClose={() => setEditing(null)} />
     </div>
+  );
+}
+
+/** Edit an existing venue's details (PATCH /venues/:id). */
+function EditVenueModal({ venue, onClose }: { venue: VenueDto | null; onClose: () => void }) {
+  const queryClient = useQueryClient();
+  const [name, setName] = useState('');
+  const [area, setArea] = useState('');
+  const [description, setDescription] = useState('');
+  const [payAtVenue, setPayAtVenue] = useState(false);
+  const [amenities, setAmenities] = useState<string[]>([]);
+
+  // Re-seed the form each time a venue is opened.
+  useEffect(() => {
+    if (!venue) return;
+    setName(venue.name);
+    setArea(venue.area);
+    setDescription(venue.description);
+    setPayAtVenue(venue.payAtVenue);
+    setAmenities(venue.amenities);
+  }, [venue]);
+
+  const save = useMutation({
+    mutationFn: () =>
+      api(`/venues/${venue!.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ name, area, description, payAtVenue, amenities }),
+      }),
+    onSuccess: () => {
+      toast.success('Venue details updated');
+      void queryClient.invalidateQueries({ queryKey: ['owner-venues'] });
+      onClose();
+    },
+    onError: (err) => toast.error(err instanceof ApiError ? err.message : 'Could not save changes'),
+  });
+
+  const toggle = (a: string) =>
+    setAmenities((cur) => (cur.includes(a) ? cur.filter((x) => x !== a) : [...cur, a]));
+
+  return (
+    <Modal open={!!venue} title={`Edit — ${venue?.name ?? ''}`} onClose={onClose}>
+      <div className="space-y-4">
+        <Field label="Venue name" value={name} onChange={(e) => setName(e.target.value)} />
+        <Field label="Area" value={area} onChange={(e) => setArea(e.target.value)} />
+        <Field
+          label="Description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <fieldset>
+          <legend className="text-sm font-semibold text-ink">Amenities</legend>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            {AMENITIES.map((a) => (
+              <label key={a} className="flex items-center gap-2 text-sm capitalize">
+                <input type="checkbox" checked={amenities.includes(a)} onChange={() => toggle(a)} />
+                {a.replace(/_/g, ' ')}
+              </label>
+            ))}
+          </div>
+        </fieldset>
+        <label className="flex items-center gap-2 text-sm font-semibold">
+          <input
+            type="checkbox"
+            checked={payAtVenue}
+            onChange={(e) => setPayAtVenue(e.target.checked)}
+          />
+          Allow pay-at-venue
+        </label>
+        {venue?.status === 'approved' && (
+          <p className="text-xs text-accent-deep">
+            Heads up: editing an approved venue sends it back for admin review.
+          </p>
+        )}
+        <div className="flex justify-end gap-2">
+          <Button variant="ghost" onClick={onClose}>
+            Close
+          </Button>
+          <Button
+            disabled={name.length < 3 || area.length < 2}
+            loading={save.isPending}
+            onClick={() => save.mutate()}
+          >
+            Save changes
+          </Button>
+        </div>
+      </div>
+    </Modal>
   );
 }
 

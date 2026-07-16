@@ -21,6 +21,28 @@ npm run dev:client          # SPA on http://localhost:5173 (proxies /api)
 
 Health check: `GET http://localhost:3000/api/v1/health`
 
+## Account types
+
+Three roles: **player**, **owner**, **admin**.
+
+- **Player** — the default for anyone who signs up. Verify email → log in → book.
+- **Owner** — choose "Court owner" at signup. The account lands in an admin
+  approval queue (no email-verify step) and **cannot log in until an admin
+  approves it**; approval or rejection is emailed. Once approved, the owner runs
+  the venue-onboarding flow (`/owner`).
+- **Admin** — never self-registered. An existing admin creates new admins from
+  `/admin` (name/email/temp password, active immediately), reviews/approves
+  owner requests, **manages/removes futsals**, and sees **platform totals
+  (bookings + revenue)**. Every admin action is written to the audit log.
+
+Operators (owner & admin) don't get the player booking panel — `Find courts` /
+`My bookings` are hidden for them; they only see their own dashboard. Owners
+manage their venues/schedules, view revenue reports, and **block time periods
+("close for a slot")** from `/owner`.
+
+Bootstrap the first admin with the seeder (`npm run seed` →
+`demo-admin@courtbook.local` / `demo-password-1`).
+
 ## Scripts (root)
 
 | Script              | What it does                                        |

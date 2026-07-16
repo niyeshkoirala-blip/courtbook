@@ -73,6 +73,14 @@ const templates: Record<string, (p: Payload) => { subject: string; text: string 
     subject: `${p.venueName} needs changes before going live`,
     text: `Hi ${p.name},\n\nYour venue "${p.venueName}" wasn't approved yet.\n\nReviewer note: ${p.reason}\n\nUpdate the listing and publish again when ready.`,
   }),
+  owner_approved: (p) => ({
+    subject: 'Your CourtBook owner account is approved',
+    text: `Hi ${p.name},\n\nYour owner account has been approved. You can now log in and start onboarding your venue:\n${p.link}`,
+  }),
+  owner_rejected: (p) => ({
+    subject: 'About your CourtBook owner application',
+    text: `Hi ${p.name},\n\nWe couldn't approve your owner account at this time.\n\nReviewer note: ${p.reason}`,
+  }),
   booking_cancelled: (p) => ({
     subject: 'Your booking was cancelled',
     text: `Hi ${p.name},\n\nYour booking for ${p.slot} is cancelled. Refund: ${p.refundPct}% (settled manually for now — the venue will be in touch).`,

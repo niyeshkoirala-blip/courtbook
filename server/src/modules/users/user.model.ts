@@ -14,6 +14,9 @@ const userSchema = new Schema(
     // select:false — even a sloppy query can't drag the hash into a response
     passwordHash: { type: String, required: true, select: false },
     role: { type: String, enum: ['player', 'owner', 'admin'], default: 'player' },
+    // Owner signups sit here until an admin approves (→ role owner, field cleared)
+    // or rejects. Absent for players/admins and approved owners.
+    ownerRequest: { type: String, enum: ['pending', 'rejected'] },
     emailVerifiedAt: { type: Date },
     // brute-force lockout (§8): 5 fails → 15 min lock
     failedLogins: { type: Number, default: 0 },
@@ -39,6 +42,7 @@ export function toUserDto(user: UserDoc): UserDto {
     email: user.email,
     ...(user.phone && { phone: user.phone }),
     role: user.role,
+    ...(user.ownerRequest && { ownerRequest: user.ownerRequest }),
     emailVerifiedAt: user.emailVerifiedAt?.toISOString() ?? null,
   };
 }

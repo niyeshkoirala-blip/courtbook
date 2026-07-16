@@ -119,26 +119,73 @@ function ResendPanel({ email }: { email: string }) {
 
 export function RegisterPage() {
   const [sentTo, setSentTo] = useState<string | null>(null);
+  const [ownerPending, setOwnerPending] = useState(false);
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterInput>({ resolver: zodResolver(registerSchema) });
+  } = useForm<RegisterInput>({
+    resolver: zodResolver(registerSchema),
+    defaultValues: { accountType: 'player' },
+  });
+  const isOwner = watch('accountType') === 'owner';
 
   async function onSubmit(input: RegisterInput) {
     try {
       await post('/auth/register', { ...input, phone: input.phone || undefined });
-      setSentTo(input.email);
+      // Owners get no verify email — they wait for admin approval instead.
+      if (input.accountType === 'owner') setOwnerPending(true);
+      else setSentTo(input.email);
     } catch (err) {
       toast.error(err instanceof ApiError ? err.message : 'Registration failed');
     }
   }
 
+  if (ownerPending)
+    return (
+      <AuthCard title="Application received">
+        <p className="text-sm text-sage">
+          Thanks for applying to list your venue on CourtBook. An admin will review your account —
+          you'll get an email once it's approved, and then you can log in and start onboarding.
+        </p>
+        <Link to="/auth/login" className="mt-6 block text-sm text-pitch underline">
+          Back to login
+        </Link>
+      </AuthCard>
+    );
   if (sentTo) return <ResendPanel email={sentTo} />;
 
   return (
     <AuthCard title="Create account">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+        <fieldset className="space-y-2">
+          <legend className="mb-1 text-sm font-medium text-ink">I want to</legend>
+          <div className="grid grid-cols-2 gap-2">
+            {(
+              [
+                ['player', 'Book courts', 'Player'],
+                ['owner', 'List my venue', 'Court owner'],
+              ] as const
+            ).map(([value, hint, title]) => (
+              <label
+                key={value}
+                className="flex cursor-pointer flex-col rounded-card border border-mist p-3 text-sm has-[:checked]:border-pitch has-[:checked]:bg-pitch/5"
+              >
+                <span className="flex items-center gap-2 font-medium text-ink">
+                  <input type="radio" value={value} {...register('accountType')} />
+                  {title}
+                </span>
+                <span className="mt-1 pl-6 text-xs text-sage">{hint}</span>
+              </label>
+            ))}
+          </div>
+          {isOwner && (
+            <p className="text-xs text-sage">
+              Owner accounts are reviewed by an admin before you can log in.
+            </p>
+          )}
+        </fieldset>
         <Field
           label="Name"
           autoComplete="name"

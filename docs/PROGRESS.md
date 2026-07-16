@@ -448,6 +448,73 @@ clean; seed idempotent; 3 Playwright journeys pass; k6 gate passes.
 
 ---
 
+## Post-MVP — Owner self-signup & admin account management (2026-07-14)
+
+**Built**: owner accounts can now self-register (account-type toggle on the
+register page) instead of only being upgraded via venue creation. Owner signups
+land in an admin approval queue and are gated: they get no email-verify link and
+**cannot log in until an admin approves** (`OWNER_PENDING`/`OWNER_REJECTED` on
+login, revealed only after a correct password — no enumeration). Approval flips
+role→owner, sets `emailVerifiedAt`, and emails them; rejection emails a reason.
+Admins are minted only by other admins via a new "Create admin" form (active
+immediately, no verify step). New client `/admin` page (admin-role-guarded) hosts
+the owner queue + create-admin form; `Admin` nav link for admins.
+
+- **API**: `GET /admin/owner-requests`, `POST /admin/owner-requests/:id/approve`,
+  `POST /admin/owner-requests/:id/reject`, `POST /admin/users` (create admin).
+  All admin-gated + audited (`user.owner_approve|owner_reject|create_admin`).
+- **Data**: one new user field `ownerRequest: 'pending'|'rejected'` (absent
+  otherwise); `UserDto` exposes it; `registerSchema` gains optional `accountType`.
+- **Tests**: `server/src/modules/admin/users.test.ts` — 6-case acceptance suite
+  (signup→gated→approve→login, reject, admin-creates-admin, non-admin barred).
+  Full server suite green (91 tests); client + server `tsc` clean.
+
+**Deviation from blueprint (flagged, intentional)**: the blueprint has no
+self-serve owner signup — it assigns the owner role via admin *role-change*
+(`PATCH /admin/users`) and gates *venues* through `pending_review`, not
+accounts. This adds an account-level owner-approval queue on top of that, per an
+explicit product decision. Admin creation is "create from scratch" rather than
+the blueprint's role-promotion. A generic role-change endpoint and the full §3.5
+user table / audit viewer / flags editor remain unbuilt (YAGNI for this ask).
+
+## Post-MVP — Role-appropriate panels (2026-07-14)
+
+**Built**: operators no longer see the player booking panel — `Find courts` /
+`My bookings` are hidden in the nav for `owner` and `admin` (layout gates on an
+`isOperator` flag). Admin panel gained:
+- **Platform overview** — total futsals, owners, bookings, and revenue
+  (`GET /admin/stats`; revenue = confirmed+completed only, same rule as owner
+  reports, via a Booking aggregation).
+- **Manage futsals** — every venue with status + a **Remove** (soft-delete,
+  audited `venue.remove`) action (`GET /admin/venues/all`, `DELETE /admin/venues/:id`).
+
+Owner side needed no new features: schedule/court management (`/owner/venues`),
+revenue (`/owner/reports`), and **block-a-slot = close a time period**
+(`POST /owner/blocks`) already existed — the only owner-facing fix was the nav
+gating above.
+
+- **Tests**: extended `admin/users.test.ts` — stats totals, list-all, and
+  remove (list + count reflect the soft-delete). Full server suite green (92).
+  Verified live in-browser: admin nav shows only `Admin`; panel renders the
+  overview cards (Rs 18,000 / 10 bookings) + futsal list; owner nav shows only
+  `Owner` with block/schedule/report actions.
+
+## Post-MVP — Venue detail views + owner edit (2026-07-14)
+
+**Built**: every role can now open a futsal's details, and owners can edit theirs.
+- **Admin** — clicking a row in Manage futsals opens a read-only detail modal
+  (area, status, description, amenities, pay-at-venue, photos) built straight
+  from the list DTO, so no extra fetch/endpoint.
+- **Customer** — unchanged: the `/venues` cards already link to `/venues/:slug`
+  (verified still working).
+- **Owner** — new **Edit details** action on `/owner/venues` → modal pre-filled
+  from the venue, saving via the existing `PATCH /venues/:id` (`venueUpdateSchema`).
+  No server change needed. Confirmed live: editing an **approved** venue correctly
+  drops it back to `pending_review` (the §4.4 material-edit re-review rule).
+
+Client-only change; server suite unaffected (92 green). Verified in-browser for
+all three roles.
+
 ## Status: MVP feature-complete (M0–M8)
 
 All eight milestones built, tested, and verified locally. 84 automated tests +

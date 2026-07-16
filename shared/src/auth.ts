@@ -14,6 +14,12 @@ export const registerSchema = z.object({
     .optional(),
   // min 8 per §3.5; max 72 = bcrypt input limit
   password: z.string().min(8).max(72),
+  /**
+   * Self-service account type; absent = player. `admin` is deliberately NOT
+   * selectable here — admins are minted only by other admins (§8
+   * priv-escalation). Owner signups land in an admin approval queue first.
+   */
+  accountType: z.enum(['player', 'owner']).optional(),
 });
 export type RegisterInput = z.infer<typeof registerSchema>;
 
@@ -42,4 +48,6 @@ export interface UserDto {
   phone?: string;
   role: 'player' | 'owner' | 'admin';
   emailVerifiedAt: string | null;
+  /** Present only while an owner signup is awaiting (or was denied) approval. */
+  ownerRequest?: 'pending' | 'rejected';
 }

@@ -69,39 +69,60 @@ async function issueSession(
 
 export async function register(input: RegisterInput): Promise<UserDto> {
   const passwordHash = await bcrypt.hash(input.password, config.bcryptRounds);
+  const isOwner = input.accountType === 'owner';
   const rawVerifyToken = randomBytes(32).toString('hex');
+  // Owner applicants are gated by admin approval, not email — so they carry an
+  // `ownerRequest` flag and get no verify token. Players get the email path.
+  const gateFields = isOwner
+    ? { ownerRequest: 'pending' as const }
+    : {
+        verifyTokenHash: hashToken(rawVerifyToken),
+        verifyTokenExpires: new Date(Date.now() + VERIFY_TTL_MS),
+      };
   try {
     const user = await User.create({
       name: input.name,
       email: input.email,
       ...(input.phone && { phone: input.phone }),
       passwordHash,
-      verifyTokenHash: hashToken(rawVerifyToken),
-      verifyTokenExpires: new Date(Date.now() + VERIFY_TTL_MS),
+      ...gateFields,
     });
-    await queueEmail(user.email, 'verify_email', {
-      name: user.name,
-      link: `${config.corsOrigins[0]}/auth/verify?token=${rawVerifyToken}`,
-    });
+    if (!isOwner) {
+      await queueEmail(user.email, 'verify_email', {
+        name: user.name,
+        link: `${config.corsOrigins[0]}/auth/verify?token=${rawVerifyToken}`,
+      });
+    }
     return toUserDto(user);
   } catch (err) {
     // unique index on email is the arbiter — no check-then-insert race
     if (err instanceof Error && 'code' in err && err.code === 11000) {
       // An UNVERIFIED account proves no ownership of the email, so let the
       // signup be retried: reset its credentials + resend the link. A VERIFIED
-      // account is a real owner — that still blocks with 409.
+      // account (or a REJECTED owner applicant) is a real claim on the email —
+      // that still blocks with 409.
       const existing = await User.findOne({ email: input.email.toLowerCase(), deletedAt: null });
-      if (existing && !existing.emailVerifiedAt) {
+      if (existing && !existing.emailVerifiedAt && existing.ownerRequest !== 'rejected') {
         existing.name = input.name;
         existing.passwordHash = passwordHash;
         if (input.phone) existing.phone = input.phone;
-        existing.verifyTokenHash = hashToken(rawVerifyToken);
-        existing.verifyTokenExpires = new Date(Date.now() + VERIFY_TTL_MS);
+        existing.role = 'player';
+        if (isOwner) {
+          existing.ownerRequest = 'pending';
+          existing.verifyTokenHash = null;
+          existing.verifyTokenExpires = null;
+        } else {
+          existing.ownerRequest = null;
+          existing.verifyTokenHash = hashToken(rawVerifyToken);
+          existing.verifyTokenExpires = new Date(Date.now() + VERIFY_TTL_MS);
+        }
         await existing.save();
-        await queueEmail(existing.email, 'verify_email', {
-          name: existing.name,
-          link: `${config.corsOrigins[0]}/auth/verify?token=${rawVerifyToken}`,
-        });
+        if (!isOwner) {
+          await queueEmail(existing.email, 'verify_email', {
+            name: existing.name,
+            link: `${config.corsOrigins[0]}/auth/verify?token=${rawVerifyToken}`,
+          });
+        }
         return toUserDto(existing);
       }
       throw new AppError('EMAIL_EXISTS', 409, 'An account with this email already exists');
@@ -161,6 +182,14 @@ export async function login(input: LoginInput, meta: SessionMeta): Promise<AuthR
     await user.save();
     // identical message to the unknown-email branch (§8)
     throw new AppError('INVALID_CREDENTIALS', 401, 'Incorrect email or password');
+  }
+
+  // Owner-approval gate — only revealed after a correct password (no enumeration).
+  if (user.ownerRequest === 'pending') {
+    throw new AppError('OWNER_PENDING', 403, 'Your owner account is awaiting admin approval');
+  }
+  if (user.ownerRequest === 'rejected') {
+    throw new AppError('OWNER_REJECTED', 403, 'Your owner application was not approved');
   }
 
   if (!user.emailVerifiedAt) {

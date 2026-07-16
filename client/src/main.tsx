@@ -17,6 +17,7 @@ import { OwnerDashboardPage } from './pages/owner/dashboard';
 import { OwnerCalendarPage } from './pages/owner/calendar';
 import { OwnerReportsPage } from './pages/owner/reports';
 import { OwnerVenuesPage } from './pages/owner/venues';
+import { AdminPage } from './pages/admin';
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,14 @@ function RequireAuth({ children }: { children: React.ReactElement }) {
     return <Navigate to={`/auth/login?next=${next}`} replace />;
   }
   return children;
+}
+
+/** Admin-only routes: auth-gated, then role-gated (server re-checks on every call). */
+function RequireAdmin({ children }: { children: React.ReactElement }) {
+  const { user } = useAuth();
+  return (
+    <RequireAuth>{user?.role === 'admin' ? children : <Navigate to="/" replace />}</RequireAuth>
+  );
 }
 
 function App() {
@@ -77,6 +86,14 @@ function App() {
         ).map(([path, page]) => (
           <Route key={path} path={path} element={<RequireAuth>{page}</RequireAuth>} />
         ))}
+        <Route
+          path="/admin"
+          element={
+            <RequireAdmin>
+              <AdminPage />
+            </RequireAdmin>
+          }
+        />
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/register" element={<RegisterPage />} />
         <Route path="/auth/verify" element={<VerifyPage />} />
