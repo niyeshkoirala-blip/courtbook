@@ -25,3 +25,68 @@
 body {
   @apply bg-paper font-sans text-ink antialiased;
 }
+
+/*
+ * Landing animations (§3.5). Kept as plain CSS keyframes — no animation
+ * library. Scroll reveals are driven by an IntersectionObserver in
+ * landing.tsx that adds `.is-in`; everything degrades gracefully and is
+ * disabled under prefers-reduced-motion.
+ */
+@keyframes cb-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+@keyframes cb-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes cb-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.cb-pulse {
+  animation: cb-pulse 1.8s ease-in-out infinite;
+}
+
+/* Scroll reveal: hidden until observer flips .is-in, then rises into place. */
+.cb-reveal {
+  opacity: 0;
+}
+.cb-reveal.is-in {
+  animation: cb-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Availability bars sweep in left-to-right, staggered by inline delay. */
+.cb-bar {
+  transform-origin: left;
+}
+.is-in .cb-bar {
+  animation: cb-grow 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-pulse,
+  .cb-reveal.is-in,
+  .is-in .cb-bar {
+    animation: none;
+  }
+  .cb-reveal {
+    opacity: 1;
+  }
+}
