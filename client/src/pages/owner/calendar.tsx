@@ -25,7 +25,7 @@ export function OwnerCalendarPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-3xl uppercase tracking-wide text-pitch">Calendar</h1>
+        <h1 className="font-display text-3xl uppercase tracking-wide text-ink">Calendar</h1>
         {venues && venue && <VenuePicker venues={venues} value={venue.id} onChange={setVenueId} />}
       </div>
       <OwnerNav />
@@ -76,7 +76,7 @@ function WeekMatrix({ venue }: { venue: VenueDto }) {
               onClick={() => setCourtId(c.id)}
               aria-pressed={c.id === court.id}
               className={`rounded-full px-4 py-1.5 text-sm font-semibold ${
-                c.id === court.id ? 'bg-pitch text-mint' : 'bg-white text-pitch hover:bg-pitch/10'
+                c.id === court.id ? 'bg-turf text-paper' : 'bg-white/5 text-mint hover:bg-white/10'
               }`}
             >
               {c.name}
@@ -85,7 +85,7 @@ function WeekMatrix({ venue }: { venue: VenueDto }) {
         </div>
       )}
 
-      <div className="overflow-x-auto rounded-card bg-white p-4">
+      <div className="cb-glass overflow-x-auto rounded-card p-4">
         <div className="flex gap-2" style={{ minWidth: 640 }}>
           {days.map((day) => (
             <div key={day.date} className="min-w-[84px] flex-1 space-y-1">
@@ -111,7 +111,7 @@ function WeekMatrix({ venue }: { venue: VenueDto }) {
                         slot.state === 'taken'
                           ? 'bg-accent/20 text-accent-deep'
                           : slot.state === 'blocked'
-                            ? 'bg-[repeating-linear-gradient(45deg,#e8e8e4,#e8e8e4_4px,#f7f6f2_4px,#f7f6f2_8px)] text-ink/50'
+                            ? 'bg-[repeating-linear-gradient(45deg,#2a2c22,#2a2c22_4px,#1b1d16_4px,#1b1d16_8px)] text-ink/50'
                             : slot.state === 'past'
                               ? 'text-ink/20'
                               : 'bg-mint/20 text-pitch/60'

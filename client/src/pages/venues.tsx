@@ -34,7 +34,7 @@ export function VenuesPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-3xl uppercase tracking-wide text-pitch">Find a court</h1>
+      <h1 className="font-display text-3xl uppercase tracking-wide text-ink">Find a court</h1>
 
       <div className="flex flex-wrap gap-3">
         <input
@@ -42,7 +42,7 @@ export function VenuesPage() {
           placeholder="Area, e.g. Baneshwor"
           value={area}
           onChange={(e) => setArea(e.target.value)}
-          className="w-56 rounded-full border border-sage/40 bg-white px-4 py-2 text-sm outline-none focus:border-pitch"
+          className="w-56 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-ink outline-none transition-colors placeholder:text-sage/60 focus:border-turf/60"
         />
         <input
           aria-label="Max price per hour"
@@ -50,7 +50,7 @@ export function VenuesPage() {
           inputMode="numeric"
           value={priceMax}
           onChange={(e) => setPriceMax(e.target.value.replace(/\D/g, ''))}
-          className="w-40 rounded-full border border-sage/40 bg-white px-4 py-2 text-sm outline-none focus:border-pitch"
+          className="w-40 rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm text-ink outline-none transition-colors placeholder:text-sage/60 focus:border-turf/60"
         />
       </div>
 
@@ -71,9 +71,9 @@ export function VenuesPage() {
             <li key={v.id}>
               <Link
                 to={`/venues/${v.slug}`}
-                className="block rounded-card bg-white p-5 transition-shadow hover:shadow-md focus-visible:outline-2 focus-visible:outline-accent"
+                className="cb-glass cb-lift block rounded-card p-5 focus-visible:outline-2 focus-visible:outline-accent"
               >
-                <div className="flex h-28 items-center justify-center rounded-lg bg-pitch/10 font-display text-3xl text-pitch/40">
+                <div className="flex h-28 items-center justify-center overflow-hidden rounded-lg bg-white/5 font-display text-3xl text-sage">
                   {v.photos[0] ? (
                     <img
                       src={v.photos[0].url}
@@ -84,7 +84,7 @@ export function VenuesPage() {
                     '⚽'
                   )}
                 </div>
-                <h2 className="mt-3 font-display text-lg uppercase tracking-wide text-pitch">
+                <h2 className="mt-3 font-display text-lg uppercase tracking-wide text-ink">
                   {v.name}
                 </h2>
                 <p className="text-sm text-sage">{v.area}</p>
@@ -93,7 +93,7 @@ export function VenuesPage() {
                     {v.amenities.slice(0, 3).map((a) => (
                       <span
                         key={a}
-                        className="rounded-full bg-mint/30 px-2 py-0.5 text-xs font-medium text-pitch"
+                        className="rounded-full bg-turf/12 px-2 py-0.5 text-xs font-medium text-turf ring-1 ring-inset ring-turf/25"
                       >
                         {a.replace(/_/g, ' ')}
                       </span>

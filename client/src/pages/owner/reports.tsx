@@ -47,7 +47,7 @@ export function OwnerReportsPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-3xl uppercase tracking-wide text-pitch">Reports</h1>
+        <h1 className="font-display text-3xl uppercase tracking-wide text-ink">Reports</h1>
         {venues && venue && <VenuePicker venues={venues} value={venue.id} onChange={setVenueId} />}
       </div>
       <OwnerNav />
@@ -66,7 +66,7 @@ export function OwnerReportsPage() {
                 value={from}
                 max={to}
                 onChange={(e) => setFrom(e.target.value)}
-                className="mt-1 block rounded-lg border border-sage/40 bg-white px-3 py-2 text-sm"
+                className="mt-1 block rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink"
               />
             </label>
             <label className="text-sm font-semibold">
@@ -76,7 +76,7 @@ export function OwnerReportsPage() {
                 value={to}
                 min={from}
                 onChange={(e) => setTo(e.target.value)}
-                className="mt-1 block rounded-lg border border-sage/40 bg-white px-3 py-2 text-sm"
+                className="mt-1 block rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink"
               />
             </label>
             <Button variant="secondary" onClick={exportCsv} disabled={!stats}>
@@ -95,7 +95,7 @@ export function OwnerReportsPage() {
               </div>
 
               {/* ponytail: CSS bar chart — recharts only if M8 wants fancier */}
-              <div className="rounded-card bg-white p-5">
+              <div className="cb-glass rounded-card p-5">
                 <h2 className="mb-3 text-sm font-bold uppercase text-sage">Revenue per day</h2>
                 <ol className="space-y-1">
                   {stats.perDay.map((d) => (
@@ -124,9 +124,9 @@ export function OwnerReportsPage() {
 
 function ReportCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-card bg-white p-5">
+    <div className="cb-glass rounded-card p-5">
       <p className="text-xs font-bold uppercase tracking-wide text-sage">{label}</p>
-      <p className="mt-1 font-display text-3xl text-pitch">{value}</p>
+      <p className="mt-1 font-display text-3xl text-ink">{value}</p>
     </div>
   );
 }

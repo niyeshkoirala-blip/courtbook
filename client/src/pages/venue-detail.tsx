@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   addDays,
   formatNPT,
   nowNPT,
   type AvailabilityDay,
   type CourtDto,
+  type ReviewDto,
   type VenueDto,
 } from '@courtbook/shared';
 import { api, post, ApiError } from '../lib/api';
@@ -150,7 +151,7 @@ export function VenueDetailPage() {
   return (
     <div className="space-y-6 pb-24">
       <header>
-        <h1 className="font-display text-3xl uppercase tracking-wide text-pitch">
+        <h1 className="font-display text-3xl uppercase tracking-wide text-ink">
           {data.venue.name}
         </h1>
         <p className="text-sage">{data.venue.area}</p>
@@ -159,7 +160,7 @@ export function VenueDetailPage() {
             {data.venue.amenities.map((a) => (
               <span
                 key={a}
-                className="rounded-full bg-mint/30 px-2 py-0.5 text-xs font-medium text-pitch"
+                className="rounded-full bg-turf/12 px-2 py-0.5 text-xs font-medium text-turf ring-1 ring-inset ring-turf/25"
               >
                 {a.replace(/_/g, ' ')}
               </span>
@@ -169,10 +170,54 @@ export function VenueDetailPage() {
         {data.venue.description && (
           <p className="mt-3 max-w-2xl text-sm">{data.venue.description}</p>
         )}
+        {data.venue.ratingCount > 0 && (
+          <p className="mt-2 text-sm text-ink">
+            <Stars value={data.venue.ratingAvg} />{' '}
+            <span className="text-sage">
+              {data.venue.ratingAvg.toFixed(1)} · {data.venue.ratingCount} review
+              {data.venue.ratingCount > 1 ? 's' : ''}
+            </span>
+          </p>
+        )}
         <p className="mt-2 text-xs text-sage">
           Tap slots to select — you can pick several and book them together.
         </p>
       </header>
+
+      {/* image gallery (§2.6: up to 5 photos) */}
+      {data.venue.photos.length > 0 && (
+        <div className="flex gap-3 overflow-x-auto pb-1">
+          {data.venue.photos.map((p) => (
+            <img
+              key={p.publicId || p.url}
+              src={p.url}
+              alt={data.venue.name}
+              loading="lazy"
+              className="h-44 w-64 flex-none rounded-card object-cover"
+            />
+          ))}
+        </div>
+      )}
+
+      {/* location — embedded map when the venue has coordinates (§3.5) */}
+      {data.venue.geo && (
+        <div className="space-y-2">
+          <iframe
+            title={`Map of ${data.venue.name}`}
+            loading="lazy"
+            className="h-64 w-full rounded-card border-0"
+            src={`https://www.google.com/maps?q=${data.venue.geo.lat},${data.venue.geo.lng}&z=15&output=embed`}
+          />
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${data.venue.geo.lat},${data.venue.geo.lng}`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1 text-sm font-medium text-accent-deep hover:underline"
+          >
+            <span aria-hidden>📍</span> Open in Google Maps
+          </a>
+        </div>
+      )}
 
       {data.courts.length > 1 && (
         <div role="tablist" aria-label="Courts" className="flex gap-2">
@@ -182,8 +227,8 @@ export function VenueDetailPage() {
               role="tab"
               aria-selected={c.id === court?.id}
               onClick={() => setCourtId(c.id)} // selections persist across courts
-              className={`rounded-full px-4 py-1.5 text-sm font-semibold ${
-                c.id === court?.id ? 'bg-pitch text-mint' : 'bg-white text-pitch hover:bg-pitch/10'
+              className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition-colors ${
+                c.id === court?.id ? 'bg-turf text-paper' : 'bg-white/5 text-mint hover:bg-white/10'
               }`}
             >
               {c.name} · {c.size}
@@ -200,18 +245,20 @@ export function VenueDetailPage() {
         <AvailabilityGrid days={days} selectedKeys={selectedKeys} onToggle={toggle} />
       )}
 
+      <ReviewsSection venueId={data.venue.id} canReview={!!user} />
+
       {/* sticky booking bar (§3.2) */}
       {selections.length > 0 && (
-        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-pitch/10 bg-white/95 backdrop-blur">
+        <div className="fixed inset-x-0 bottom-0 z-40 border-t border-white/10 bg-paper/90 backdrop-blur">
           <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3">
-            <div className="text-sm">
-              <strong className="font-display uppercase text-pitch">
+            <div className="text-sm text-mint">
+              <strong className="font-display uppercase text-ink">
                 {selections.length} slot{selections.length > 1 ? 's' : ''}
               </strong>{' '}
-              selected · total <strong>Rs {total}</strong>
+              selected · total <strong className="text-ink">Rs {total}</strong>
               <button
                 onClick={() => setSelections([])}
-                className="ml-3 text-xs text-sage underline hover:text-pitch"
+                className="ml-3 text-xs text-sage underline hover:text-ink"
               >
                 clear
               </button>
@@ -223,6 +270,105 @@ export function VenueDetailPage() {
         </div>
       )}
     </div>
+  );
+}
+
+/** Read-only star row (rounds to nearest whole star for the summary line). */
+function Stars({ value }: { value: number }) {
+  const full = Math.round(value);
+  return (
+    <span className="text-accent-deep" aria-label={`${value.toFixed(1)} out of 5`}>
+      {'★'.repeat(full)}
+      <span className="text-ink/20">{'★'.repeat(5 - full)}</span>
+    </span>
+  );
+}
+
+/**
+ * Venue reviews (§ reviews): public list + a submit form. The API only lets
+ * players who actually booked here post, so a 403 is shown as guidance.
+ */
+function ReviewsSection({ venueId, canReview }: { venueId: string; canReview: boolean }) {
+  const qc = useQueryClient();
+  const [stars, setStars] = useState(5);
+  const [comment, setComment] = useState('');
+
+  const { data: reviews, isPending } = useQuery({
+    queryKey: ['reviews', venueId],
+    queryFn: () => api<ReviewDto[]>(`/venues/${venueId}/reviews`),
+  });
+
+  const submit = useMutation({
+    mutationFn: () =>
+      post<ReviewDto>(`/venues/${venueId}/reviews`, { stars, comment: comment || undefined }),
+    onSuccess: () => {
+      toast.success('Thanks for your review!');
+      setComment('');
+      void qc.invalidateQueries({ queryKey: ['reviews', venueId] });
+      void qc.invalidateQueries({ queryKey: ['venue'] });
+    },
+    onError: (err) => toast.error(err instanceof ApiError ? err.message : 'Could not post review'),
+  });
+
+  return (
+    <section className="space-y-4">
+      <h2 className="font-display text-xl uppercase tracking-wide text-ink">Reviews</h2>
+
+      {canReview && (
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            submit.mutate();
+          }}
+          className="cb-glass space-y-2 rounded-card p-4"
+        >
+          <div className="flex items-center gap-1" role="radiogroup" aria-label="Your rating">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <button
+                key={n}
+                type="button"
+                role="radio"
+                aria-checked={n === stars}
+                aria-label={`${n} star${n > 1 ? 's' : ''}`}
+                onClick={() => setStars(n)}
+                className={`text-2xl ${n <= stars ? 'text-accent-deep' : 'text-ink/20'}`}
+              >
+                ★
+              </button>
+            ))}
+          </div>
+          <textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            maxLength={500}
+            rows={2}
+            placeholder="How was your game? (optional)"
+            className="w-full rounded-md border border-white/10 bg-white/5 p-2 text-sm text-ink outline-none transition-colors placeholder:text-sage/60 focus:border-turf/60"
+          />
+          <Button type="submit" loading={submit.isPending} size="sm">
+            Post review
+          </Button>
+        </form>
+      )}
+
+      {isPending ? (
+        <Skeleton className="h-24" />
+      ) : !reviews || reviews.length === 0 ? (
+        <p className="text-sm text-sage">No reviews yet — be the first after you play here.</p>
+      ) : (
+        <ul className="space-y-3">
+          {reviews.map((r) => (
+            <li key={r.id} className="cb-glass rounded-card p-4">
+              <div className="flex items-center justify-between">
+                <strong className="text-sm text-ink">{r.userName}</strong>
+                <Stars value={r.stars} />
+              </div>
+              {r.comment && <p className="mt-1 text-sm text-ink/80">{r.comment}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </section>
   );
 }
 
@@ -275,7 +421,7 @@ function AvailabilityGrid({
         role="grid"
         aria-label="Availability for the next 7 days"
         onKeyDown={onKeyDown}
-        className="overflow-x-auto rounded-card bg-white p-4"
+        className="cb-glass overflow-x-auto rounded-card p-4"
       >
         <div className="flex gap-2" style={{ minWidth: 560 }}>
           {days.map((day, col) => (
@@ -321,7 +467,7 @@ function AvailabilityGrid({
                             : slot.state === 'taken'
                               ? 'bg-ink/10 text-ink/40'
                               : slot.state === 'blocked'
-                                ? 'bg-[repeating-linear-gradient(45deg,#e8e8e4,#e8e8e4_4px,#f7f6f2_4px,#f7f6f2_8px)] text-ink/40'
+                                ? 'bg-[repeating-linear-gradient(45deg,#2a2c22,#2a2c22_4px,#1b1d16_4px,#1b1d16_8px)] text-ink/40'
                                 : 'bg-transparent text-ink/25' // past
                       }`}
                     >
@@ -351,7 +497,7 @@ function AvailabilityGrid({
           taken
         </span>
         <span>
-          <span className="mr-1 inline-block size-3 rounded-sm bg-[repeating-linear-gradient(45deg,#e8e8e4,#e8e8e4_2px,#f7f6f2_2px,#f7f6f2_4px)] align-middle" />
+          <span className="mr-1 inline-block size-3 rounded-sm bg-[repeating-linear-gradient(45deg,#2a2c22,#2a2c22_2px,#1b1d16_2px,#1b1d16_4px)] align-middle" />
           blocked
         </span>
       </p>

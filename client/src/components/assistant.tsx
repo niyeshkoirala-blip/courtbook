@@ -80,11 +80,11 @@ export function AssistantWidget() {
         <div
           role="dialog"
           aria-label="Booking assistant"
-          className="fixed bottom-24 right-5 z-50 flex h-[28rem] w-[22rem] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-card bg-white shadow-2xl"
+          className="fixed bottom-24 right-5 z-50 flex h-[28rem] w-[22rem] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-card border border-white/10 bg-card shadow-2xl"
         >
-          <header className="bg-pitch px-4 py-3">
-            <p className="font-display uppercase tracking-wide text-paper">Court assistant</p>
-            <p className="text-xs text-mint/70">
+          <header className="border-b border-white/10 bg-white/5 px-4 py-3">
+            <p className="font-display uppercase tracking-wide text-turf">Court assistant</p>
+            <p className="text-xs text-sage">
               Finds venues & free slots — payment stays at checkout
             </p>
           </header>
@@ -94,7 +94,7 @@ export function AssistantWidget() {
               <div key={i} className={m.from === 'user' ? 'flex justify-end' : 'flex'}>
                 <div
                   className={`max-w-[85%] whitespace-pre-wrap rounded-xl px-3 py-2 text-sm ${
-                    m.from === 'user' ? 'bg-pitch text-mint' : 'bg-paper text-ink'
+                    m.from === 'user' ? 'bg-turf text-paper' : 'bg-white/5 text-ink'
                   }`}
                 >
                   {m.text}
@@ -113,7 +113,7 @@ export function AssistantWidget() {
           </div>
 
           <form
-            className="flex gap-2 border-t border-pitch/10 p-2"
+            className="flex gap-2 border-t border-white/10 p-2"
             onSubmit={(e) => {
               e.preventDefault();
               void send();
@@ -124,7 +124,7 @@ export function AssistantWidget() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="e.g. free courts saturday 7pm"
-              className="flex-1 rounded-full border border-sage/40 px-3 py-2 text-sm outline-none focus:border-pitch"
+              className="flex-1 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink outline-none transition-colors placeholder:text-sage/60 focus:border-turf/60"
             />
             <Button type="submit" size="sm" disabled={busy || !input.trim()}>
               Send

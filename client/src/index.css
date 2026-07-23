@@ -1,37 +1,65 @@
 @import 'tailwindcss';
 
 /*
- * Design tokens extracted from design/00-system-sheet.html (§3.7 — the
- * mockups are the visual source of truth): pitch greens, paper, mint,
- * accent orange; Anton display / Figtree body; 12px cards, pill radii.
+ * "Kickoff" design system — a warm, high-energy sports-poster dark theme.
+ * Where the old theme was a cool, calm indigo/cyan register, this one is loud
+ * and physical: a warm near-black base, a heavy condensed display face (Anton)
+ * paired with Figtree body text, an electric lime brand (the color of floodlit
+ * turf — it unifies with the 3D pitch behind every page) and a hot orange CTA.
+ * Token NAMES are kept so the whole app recolors through the same utilities
+ * (`turf` = lime brand, `accent` = orange CTA, `mint` = soft warm text).
  */
 @theme {
-  --color-pitch: #0e3b2e; /* primary surface */
-  --color-pitch-deep: #092a21;
-  --color-ink: #12222b;
-  --color-mint: #bfd8ce; /* light text on green */
-  --color-sage: #5c7a6e;
-  --color-paper: #f7f6f2; /* content background */
-  --color-accent: #ff6a2b; /* CTA orange */
-  --color-accent-deep: #e1551a;
-  --color-danger: #b23a22;
+  --color-paper: #0a0b0a; /* page background — warm near-black */
+  --color-ink: #f2f4ea; /* primary text — warm off-white */
+  --color-pitch: #181a17; /* elevated surface */
+  --color-pitch-deep: #101210; /* deeper surface */
+  --color-card: #141613; /* card surface */
+  --color-mint: #d3dac6; /* soft warm light text */
+  --color-sage: #8a9382; /* muted warm gray-green text */
+  --color-turf: #bef264; /* electric lime — brand accent */
+  --color-accent: #ff6a3d; /* hot orange — CTA */
+  --color-accent-deep: #ff855c; /* hover = brighter orange */
+  --color-danger: #ff5b5b;
 
-  --font-display: 'Anton', sans-serif;
+  --font-display: 'Anton', ui-sans-serif, sans-serif;
   --font-sans: 'Figtree', ui-sans-serif, system-ui, sans-serif;
 
-  --radius-card: 12px;
-}
-
-body {
-  @apply bg-paper font-sans text-ink antialiased;
+  --radius-card: 14px;
 }
 
 /*
- * Landing animations (§3.5). Kept as plain CSS keyframes — no animation
- * library. Scroll reveals are driven by an IntersectionObserver in
- * landing.tsx that adds `.is-in`; everything degrades gracefully and is
- * disabled under prefers-reduced-motion.
+ * The page background lives on <html>, NOT <body>: the fixed 3D canvas sits
+ * at z-index -1, which paints above the root background but would be hidden
+ * behind an opaque body background.
  */
+body {
+  @apply font-sans text-ink antialiased;
+}
+
+/*
+ * Anton is a single-weight (400) heavy condensed poster face — the display
+ * voice of the theme. Don't force 700 (that triggers ugly faux-bold synthesis);
+ * a touch of letter-spacing is all it needs to read as a headline.
+ */
+.font-display {
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+::selection {
+  background: rgba(190, 242, 100, 0.3);
+}
+
+/* Native controls (selects, date pickers, scrollbars) render dark. */
+html {
+  background: var(--color-paper);
+  color-scheme: dark;
+  scrollbar-color: #2a2e24 var(--color-paper);
+}
+
+/* ---------------------------------------------------------------- motion */
+
 @keyframes cb-pulse {
   0%,
   100% {
@@ -44,7 +72,7 @@ body {
 @keyframes cb-rise {
   from {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(28px);
   }
   to {
     opacity: 1;
@@ -59,17 +87,57 @@ body {
     transform: scaleX(1);
   }
 }
+@keyframes cb-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+@keyframes cb-pan {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+@keyframes cb-aurora {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(60px, -40px) scale(1.15);
+  }
+  66% {
+    transform: translate(-50px, 30px) scale(0.9);
+  }
+}
+@keyframes cb-spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 .cb-pulse {
   animation: cb-pulse 1.8s ease-in-out infinite;
 }
+.cb-float {
+  animation: cb-float 7s ease-in-out infinite;
+}
+.cb-spin-slow {
+  animation: cb-spin-slow 40s linear infinite;
+}
 
-/* Scroll reveal: hidden until observer flips .is-in, then rises into place. */
+/* Scroll reveal: hidden until an IntersectionObserver flips `.is-in`. */
 .cb-reveal {
   opacity: 0;
 }
 .cb-reveal.is-in {
-  animation: cb-rise 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: cb-rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Availability bars sweep in left-to-right, staggered by inline delay. */
@@ -80,13 +148,121 @@ body {
   animation: cb-grow 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+/* ---------------------------------------------------------------- surfaces */
+
+/* Frosted glass card — the default elevated surface on the dark theme. */
+.cb-glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Hoverable card: lifts and picks up a turf glow. */
+.cb-lift {
+  transition:
+    transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s,
+    box-shadow 0.35s;
+}
+.cb-lift:hover {
+  transform: translateY(-4px);
+  border-color: rgba(190, 242, 100, 0.35);
+  box-shadow: 0 12px 40px -12px rgba(190, 242, 100, 0.3);
+}
+
+/* Animated gradient headline text — lime → orange → white sweep. */
+.cb-gradient-text {
+  background: linear-gradient(90deg, #bef264, #ff6a3d, #f2f4ea, #bef264);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: cb-pan 6s linear infinite;
+}
+
+/*
+ * Cursor spotlight: a soft radial highlight that tracks the pointer across a
+ * glass surface (--mx/--my are written by useSpotlight). The signature card
+ * interaction on Vercel/Linear/GitHub — reads premium, not gimmicky.
+ */
+.cb-spot {
+  position: relative;
+}
+.cb-spot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 0%),
+    rgba(190, 242, 100, 0.16),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.35s;
+  pointer-events: none;
+}
+.cb-spot:hover::before {
+  opacity: 1;
+}
+
+/*
+ * Sheen sweep: a diagonal light streak that crosses a primary CTA on hover.
+ * Clip to the button; the streak lives in ::after and slides on hover.
+ */
+.cb-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.cb-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  transform: skewX(-20deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.cb-sheen:hover::after {
+  left: 125%;
+}
+
+/* Aurora glow blobs behind the 3D canvas (transform-only animation). */
+.cb-aurora {
+  animation: cb-aurora 26s ease-in-out infinite;
+  filter: blur(90px);
+  will-change: transform;
+}
+
+/* Film-grain overlay (SVG turbulence) — adds depth to flat dark areas. */
+.cb-noise {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  opacity: 0.035;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .cb-pulse,
+  .cb-float,
+  .cb-spin-slow,
+  .cb-aurora,
+  .cb-gradient-text,
   .cb-reveal.is-in,
   .is-in .cb-bar {
     animation: none;
   }
   .cb-reveal {
     opacity: 1;
+  }
+  .cb-lift,
+  .cb-lift:hover {
+    transform: none;
+  }
+  .cb-spot::before,
+  .cb-sheen::after {
+    display: none;
   }
 }

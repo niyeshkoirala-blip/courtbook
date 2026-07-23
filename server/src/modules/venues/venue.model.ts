@@ -24,6 +24,9 @@ const venueSchema = new Schema(
       index: true,
     },
     rejectionReason: { type: String },
+    // Denormalized review aggregate — kept fresh by review.service on each upsert.
+    ratingAvg: { type: Number, default: 0 },
+    ratingCount: { type: Number, default: 0 },
     deletedAt: { type: Date },
   },
   { timestamps: true },
@@ -47,5 +50,7 @@ export function toVenueDto(v: VenueDoc): VenueDto {
     payAtVenue: v.payAtVenue,
     status: v.status,
     ...(v.rejectionReason && { rejectionReason: v.rejectionReason }),
+    ratingAvg: v.ratingAvg ?? 0,
+    ratingCount: v.ratingCount ?? 0,
   };
 }

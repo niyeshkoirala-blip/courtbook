@@ -21,8 +21,8 @@ type SessionPayload = { accessToken: string; user: UserDto };
 function AuthCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="mx-auto max-w-md">
-      <div className="rounded-card bg-white p-8 shadow-sm">
-        <h1 className="mb-6 font-display text-2xl uppercase tracking-wide text-pitch">{title}</h1>
+      <div className="cb-glass rounded-card p-8">
+        <h1 className="mb-6 font-display text-2xl uppercase tracking-wide text-ink">{title}</h1>
         {children}
       </div>
     </div>
@@ -78,10 +78,10 @@ export function LoginPage() {
         </Button>
       </form>
       <div className="mt-4 flex justify-between text-sm">
-        <Link className="text-pitch underline" to="/auth/forgot">
+        <Link className="text-turf underline" to="/auth/forgot">
           Forgot password?
         </Link>
-        <Link className="text-pitch underline" to="/auth/register">
+        <Link className="text-turf underline" to="/auth/register">
           Create account
         </Link>
       </div>
@@ -149,7 +149,7 @@ export function RegisterPage() {
           Thanks for applying to list your venue on CourtBook. An admin will review your account —
           you'll get an email once it's approved, and then you can log in and start onboarding.
         </p>
-        <Link to="/auth/login" className="mt-6 block text-sm text-pitch underline">
+        <Link to="/auth/login" className="mt-6 block text-sm text-turf underline">
           Back to login
         </Link>
       </AuthCard>
@@ -170,7 +170,7 @@ export function RegisterPage() {
             ).map(([value, hint, title]) => (
               <label
                 key={value}
-                className="flex cursor-pointer flex-col rounded-card border border-mist p-3 text-sm has-[:checked]:border-pitch has-[:checked]:bg-pitch/5"
+                className="flex cursor-pointer flex-col rounded-card border border-white/10 p-3 text-sm transition-colors has-[:checked]:border-turf has-[:checked]:bg-turf/10"
               >
                 <span className="flex items-center gap-2 font-medium text-ink">
                   <input type="radio" value={value} {...register('accountType')} />
@@ -220,7 +220,7 @@ export function RegisterPage() {
       </form>
       <p className="mt-4 text-sm">
         Already have an account?{' '}
-        <Link className="text-pitch underline" to="/auth/login">
+        <Link className="text-turf underline" to="/auth/login">
           Log in
         </Link>
       </p>
@@ -255,7 +255,7 @@ export function VerifyPage() {
       {error ? (
         <>
           <p className="text-sm text-danger">{error}</p>
-          <Link to="/auth/login" className="mt-4 block text-sm text-pitch underline">
+          <Link to="/auth/login" className="mt-4 block text-sm text-turf underline">
             Back to login
           </Link>
         </>

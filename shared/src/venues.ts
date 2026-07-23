@@ -99,6 +99,9 @@ export interface VenueDto {
   payAtVenue: boolean;
   status: VenueStatus;
   rejectionReason?: string;
+  /** Denormalized review aggregate (§ reviews) — 0/0 until first review. */
+  ratingAvg: number;
+  ratingCount: number;
 }
 
 export interface CourtDto {

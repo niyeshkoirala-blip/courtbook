@@ -17,6 +17,7 @@ import { bookingRouter } from './modules/bookings/booking.routes.js';
 import { paymentRouter } from './modules/payments/payment.routes.js';
 import { ownerRouter } from './modules/owner/owner.routes.js';
 import { assistantRouter } from './modules/assistant/assistant.routes.js';
+import { homeRouter } from './modules/home/home.routes.js';
 
 /**
  * App factory (no .listen — supertest mounts it directly).
@@ -54,6 +55,7 @@ export function createApp(): express.Express {
   app.use('/api/v1/payments', paymentRouter);
   app.use('/api/v1/owner', ownerRouter);
   app.use('/api/v1/assistant', assistantRouter);
+  app.use('/api/v1/home', homeRouter);
 
   app.use(notFound);
   app.use(errorHandler);

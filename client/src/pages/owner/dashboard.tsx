@@ -28,7 +28,7 @@ export function OwnerDashboardPage() {
         title="Set up your venue"
         body="Add your venue, list a court with its schedule, then publish it for review — takes about 15 minutes."
         cta={
-          <Link to="/owner/venues" className="text-sm font-semibold text-pitch underline">
+          <Link to="/owner/venues" className="text-sm font-semibold text-turf underline">
             Add a venue
           </Link>
         }
@@ -39,7 +39,7 @@ export function OwnerDashboardPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-3xl uppercase tracking-wide text-pitch">Today</h1>
+        <h1 className="font-display text-3xl uppercase tracking-wide text-ink">Today</h1>
         <VenuePicker venues={venues} value={venue!.id} onChange={setVenueId} />
       </div>
       <OwnerNav />
@@ -105,8 +105,8 @@ function TodayBoard({ venue }: { venue: VenueDto }) {
       ) : (
         <div className="grid gap-4 lg:grid-cols-2">
           {[...byCourt.entries()].map(([courtName, list]) => (
-            <section key={courtName} className="rounded-card bg-white p-5">
-              <h2 className="mb-3 font-display uppercase tracking-wide text-pitch">{courtName}</h2>
+            <section key={courtName} className="cb-glass rounded-card p-5">
+              <h2 className="mb-3 font-display uppercase tracking-wide text-ink">{courtName}</h2>
               <ol className="space-y-2">
                 {list.map((b) => (
                   <li
@@ -155,9 +155,9 @@ function TodayBoard({ venue }: { venue: VenueDto }) {
 
 function StatCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-card bg-pitch p-5">
-      <p className="text-xs font-bold uppercase tracking-wide text-mint/70">{label}</p>
-      <p className="mt-1 font-display text-3xl text-paper">{value}</p>
+    <div className="cb-glass rounded-card p-5 ring-1 ring-turf/15">
+      <p className="text-xs font-bold uppercase tracking-wide text-sage">{label}</p>
+      <p className="mt-1 font-display text-3xl text-turf">{value}</p>
     </div>
   );
 }
@@ -211,7 +211,7 @@ function WalkinModal({
           <label className="block text-sm font-semibold">
             Court
             <select
-              className="mt-1 w-full rounded-lg border border-sage/40 px-3 py-2 text-sm"
+              className="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink"
               value={court?.id}
               onChange={(e) => setCourtId(e.target.value)}
             >
@@ -226,7 +226,7 @@ function WalkinModal({
         <label className="block text-sm font-semibold">
           Slot (today)
           <select
-            className="mt-1 w-full rounded-lg border border-sage/40 px-3 py-2 text-sm"
+            className="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink"
             value={startMin ?? ''}
             onChange={(e) => setStartMin(Number(e.target.value))}
           >
@@ -310,7 +310,7 @@ function BlockModal({
     <label className="block text-sm font-semibold">
       {label}
       <select
-        className="mt-1 w-full rounded-lg border border-sage/40 px-3 py-2 text-sm"
+        className="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink"
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
       >
@@ -330,7 +330,7 @@ function BlockModal({
           <label className="block text-sm font-semibold">
             Court
             <select
-              className="mt-1 w-full rounded-lg border border-sage/40 px-3 py-2 text-sm"
+              className="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink"
               value={court?.id}
               onChange={(e) => setCourtId(e.target.value)}
             >

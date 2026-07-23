@@ -102,6 +102,14 @@ export async function register(input: RegisterInput): Promise<UserDto> {
       // account (or a REJECTED owner applicant) is a real claim on the email —
       // that still blocks with 409.
       const existing = await User.findOne({ email: input.email.toLowerCase(), deletedAt: null });
+      // One email = one account type. If the email is already tied to the other
+      // track (player vs owner), reject outright — even unverified — so a single
+      // email can never straddle both account types.
+      const existingIsOwner =
+        !!existing && (existing.role === 'owner' || existing.ownerRequest != null);
+      if (existing && existingIsOwner !== isOwner) {
+        throw new AppError('EMAIL_EXISTS', 409, 'An account with this email already exists');
+      }
       if (existing && !existing.emailVerifiedAt && existing.ownerRequest !== 'rejected') {
         existing.name = input.name;
         existing.passwordHash = passwordHash;

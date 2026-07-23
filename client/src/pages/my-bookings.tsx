@@ -43,7 +43,7 @@ export function MyBookingsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-display text-3xl uppercase tracking-wide text-pitch">My bookings</h1>
+      <h1 className="font-display text-3xl uppercase tracking-wide text-ink">My bookings</h1>
 
       <div role="tablist" aria-label="Booking status" className="flex gap-2">
         {TABS.map((t) => (
@@ -52,8 +52,8 @@ export function MyBookingsPage() {
             role="tab"
             aria-selected={t === tab}
             onClick={() => setTab(t)}
-            className={`rounded-full px-4 py-1.5 text-sm font-semibold ${
-              t === tab ? 'bg-pitch text-mint' : 'bg-white text-pitch hover:bg-pitch/10'
+            className={`rounded-lg px-4 py-1.5 text-sm font-semibold transition-colors ${
+              t === tab ? 'bg-turf text-paper' : 'bg-white/5 text-mint hover:bg-white/10'
             }`}
           >
             {t}
@@ -68,7 +68,7 @@ export function MyBookingsPage() {
           title={`No ${tab.toLowerCase()} bookings`}
           body="Grab a slot while the evening ones are still free."
           cta={
-            <Link to="/venues" className="text-sm font-semibold text-pitch underline">
+            <Link to="/venues" className="text-sm font-semibold text-turf underline">
               Find a court
             </Link>
           }
@@ -78,10 +78,10 @@ export function MyBookingsPage() {
           {visible.map((b) => (
             <li
               key={b.id}
-              className="flex flex-wrap items-center justify-between gap-3 rounded-card bg-white p-5"
+              className="cb-glass flex flex-wrap items-center justify-between gap-3 rounded-card p-5"
             >
               <div>
-                <p className="font-display uppercase tracking-wide text-pitch">
+                <p className="font-display uppercase tracking-wide text-ink">
                   {b.venueName ?? 'Venue'} · {b.courtName ?? 'Court'}
                 </p>
                 <p className="text-sm text-sage">

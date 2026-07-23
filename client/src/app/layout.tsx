@@ -3,6 +3,7 @@ import { useAuth } from '../lib/auth';
 import { post } from '../lib/api';
 import { Toasts } from '../components/ui';
 import { AssistantWidget } from '../components/assistant';
+import { Bg3d } from '../components/fx';
 
 export function Layout() {
   const { user, clear } = useAuth();
@@ -20,22 +21,24 @@ export function Layout() {
   }
 
   const navLink = ({ isActive }: { isActive: boolean }) =>
-    `rounded-full px-3 py-1.5 text-sm font-semibold transition-colors ${
-      isActive ? 'bg-mint/20 text-mint' : 'text-mint/70 hover:text-mint'
+    `rounded-lg px-3.5 py-1.5 text-sm font-semibold transition-colors ${
+      isActive ? 'bg-turf/15 text-turf' : 'text-mint/70 hover:bg-white/5 hover:text-mint'
     }`;
 
   return (
     <div className="flex min-h-screen flex-col">
+      <Bg3d />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-white focus:p-2"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:bg-card focus:p-2 focus:text-ink"
       >
         Skip to content
       </a>
-      <header className="bg-pitch">
+      <header className="cb-glass sticky top-0 z-40 border-x-0 border-t-0">
         <nav aria-label="Main" className="mx-auto flex max-w-6xl items-center gap-4 px-4 py-3">
-          <Link to="/" className="font-display text-2xl uppercase tracking-wide text-paper">
-            Court<span className="text-accent">Book</span>
+          <Link to="/" className="group font-display text-2xl font-bold tracking-tight text-ink">
+            Court
+            <span className="text-turf transition-colors group-hover:text-accent">Book</span>
           </Link>
           <div className="ml-auto flex items-center gap-1">
             {/* Operators (owner/admin) run the platform — they don't get the player booking panel. */}
@@ -61,10 +64,10 @@ export function Layout() {
                     Admin
                   </NavLink>
                 )}
-                <span className="hidden px-2 text-sm text-mint/60 sm:inline">{user.name}</span>
+                <span className="hidden px-2 text-sm text-sage sm:inline">{user.name}</span>
                 <button
                   onClick={logout}
-                  className="rounded-full px-3 py-1.5 text-sm font-semibold text-mint/70 hover:text-mint"
+                  className="rounded-lg px-3.5 py-1.5 text-sm font-semibold text-mint/70 transition-colors hover:bg-white/5 hover:text-mint"
                 >
                   Log out
                 </button>
@@ -76,7 +79,7 @@ export function Layout() {
                 </NavLink>
                 <NavLink
                   to="/auth/register"
-                  className="rounded-full bg-accent px-4 py-1.5 text-sm font-semibold text-white hover:bg-accent-deep"
+                  className="cb-sheen ml-1 rounded-lg bg-accent px-4 py-1.5 text-sm font-bold text-paper shadow-lg shadow-accent/25 transition-all hover:bg-accent-deep hover:shadow-accent/40"
                 >
                   Sign up
                 </NavLink>
@@ -90,8 +93,15 @@ export function Layout() {
         <Outlet />
       </main>
 
-      <footer className="bg-pitch-deep py-6 text-center text-xs text-mint/50">
-        CourtBook — futsal courts in Kathmandu · times in Nepal Time (UTC+5:45)
+      <footer className="mt-16 border-t border-white/5">
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 py-8 text-center">
+          <span className="font-display text-lg font-bold text-ink/80">
+            Court<span className="text-turf">Book</span>
+          </span>
+          <p className="text-xs text-sage">
+            Futsal courts in Kathmandu · times in Nepal Time (UTC+5:45)
+          </p>
+        </div>
       </footer>
       <Toasts />
       <AssistantWidget />

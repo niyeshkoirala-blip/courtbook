@@ -35,7 +35,7 @@ export function AdminPage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="font-display text-3xl uppercase tracking-wide text-pitch">Admin</h1>
+      <h1 className="font-display text-3xl uppercase tracking-wide text-ink">Admin</h1>
 
       <PlatformOverview />
       <ManageFutsals />
@@ -57,7 +57,7 @@ export function AdminPage() {
             {requests.map((u) => (
               <li
                 key={u.id}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-card bg-white p-4 shadow-sm"
+                className="flex flex-wrap items-center justify-between gap-3 cb-glass rounded-card p-4"
               >
                 <div>
                   <p className="font-medium text-ink">{u.name}</p>
@@ -123,9 +123,9 @@ function PlatformOverview() {
   return (
     <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
       {cards.map(([label, value]) => (
-        <div key={label} className="rounded-card bg-white p-4 shadow-sm">
+        <div key={label} className="cb-glass rounded-card p-4">
           <p className="text-xs uppercase tracking-wide text-sage">{label}</p>
-          <p className="mt-1 font-display text-2xl text-pitch">{value}</p>
+          <p className="mt-1 font-display text-2xl text-ink">{value}</p>
         </div>
       ))}
     </section>
@@ -161,7 +161,7 @@ function ManageFutsals() {
           {venues.map((v) => (
             <li
               key={v.id}
-              className="flex flex-wrap items-center justify-between gap-3 rounded-card bg-white p-4 shadow-sm"
+              className="flex flex-wrap items-center justify-between gap-3 cb-glass rounded-card p-4"
             >
               <button
                 type="button"
@@ -323,7 +323,7 @@ function CreateAdminForm() {
       <h2 className="font-display text-xl uppercase tracking-wide text-ink">Create admin</h2>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="max-w-md space-y-4 rounded-card bg-white p-6 shadow-sm"
+        className="max-w-md space-y-4 cb-glass rounded-card p-6"
         noValidate
       >
         <Field label="Name" autoComplete="off" error={errors.name?.message} {...register('name')} />

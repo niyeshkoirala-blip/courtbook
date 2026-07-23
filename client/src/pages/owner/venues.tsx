@@ -48,7 +48,7 @@ export function OwnerVenuesPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-display text-3xl uppercase tracking-wide text-pitch">My venues</h1>
+        <h1 className="font-display text-3xl uppercase tracking-wide text-ink">My venues</h1>
         <Button onClick={() => setCreating(true)}>Add venue</Button>
       </div>
       <OwnerNav />
@@ -60,10 +60,10 @@ export function OwnerVenuesPage() {
           {(venues ?? []).map((v) => (
             <li
               key={v.id}
-              className="flex flex-wrap items-center justify-between gap-3 rounded-card bg-white p-5"
+              className="flex flex-wrap items-center justify-between gap-3 cb-glass rounded-card p-5"
             >
               <div>
-                <p className="font-display uppercase tracking-wide text-pitch">{v.name}</p>
+                <p className="font-display uppercase tracking-wide text-ink">{v.name}</p>
                 <p className="text-sm text-sage">{v.area}</p>
                 <p className="mt-1">
                   <span
@@ -95,7 +95,7 @@ export function OwnerVenuesPage() {
                 {v.status === 'approved' && (
                   <Link
                     to={`/venues/${v.slug}`}
-                    className="self-center text-sm text-pitch underline"
+                    className="self-center text-sm text-turf underline"
                   >
                     View public page
                   </Link>
@@ -293,7 +293,7 @@ function AddCourtModal({ venue, onClose }: { venue: VenueDto | null; onClose: ()
     <label className="block text-sm font-semibold">
       {label}
       <select
-        className="mt-1 w-full rounded-lg border border-sage/40 px-3 py-2 text-sm"
+        className="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink"
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
       >
@@ -314,7 +314,7 @@ function AddCourtModal({ venue, onClose }: { venue: VenueDto | null; onClose: ()
           <label className="block text-sm font-semibold">
             Surface
             <select
-              className="mt-1 w-full rounded-lg border border-sage/40 px-3 py-2 text-sm"
+              className="mt-1 w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-ink"
               value={surface}
               onChange={(e) => setSurface(e.target.value)}
             >

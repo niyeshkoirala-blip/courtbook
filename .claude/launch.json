@@ -11,7 +11,8 @@
       "name": "client",
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev:client", "--prefix", "/home/niyesh/code/courtbook/courtbook"],
-      "port": 5173
+      "port": 5173,
+      "autoPort": true
     }
   ]
 }

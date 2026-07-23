@@ -68,8 +68,8 @@ export function CheckoutPage() {
 
   return (
     <div className="mx-auto max-w-lg space-y-4">
-      <div className="rounded-card bg-white p-6">
-        <h1 className="font-display text-2xl uppercase tracking-wide text-pitch">Checkout</h1>
+      <div className="cb-glass rounded-card p-6">
+        <h1 className="font-display text-2xl uppercase tracking-wide text-ink">Checkout</h1>
         <p className="mt-2 text-sm text-sage">
           {booking.venueName} · {booking.courtName}
         </p>
@@ -80,7 +80,7 @@ export function CheckoutPage() {
         {booking.expiresAt && <Countdown expiresAt={booking.expiresAt} />}
       </div>
 
-      <div className="rounded-card bg-white p-6">
+      <div className="cb-glass rounded-card p-6">
         <h2 className="mb-3 text-sm font-bold uppercase text-sage">Pay with</h2>
         <div className="space-y-2">
           <Button className="w-full" loading={paying === 'esewa'} onClick={() => pay('esewa')}>
@@ -131,9 +131,9 @@ function Countdown({ expiresAt }: { expiresAt: string }) {
 
 function ConfirmedCard({ booking }: { booking: BookingDto }) {
   return (
-    <div className="mx-auto max-w-lg rounded-card bg-pitch p-8 text-center">
+    <div className="cb-glass mx-auto max-w-lg rounded-card p-8 text-center ring-1 ring-turf/30">
       <p className="text-4xl">🎉</p>
-      <h1 className="mt-2 font-display text-3xl uppercase tracking-wide text-paper">
+      <h1 className="mt-2 font-display text-3xl uppercase tracking-wide text-turf">
         You're booked!
       </h1>
       <p className="mt-2 text-mint">
@@ -142,7 +142,7 @@ function ConfirmedCard({ booking }: { booking: BookingDto }) {
       <div className="mt-6 flex justify-center gap-3">
         <Link
           to="/me/bookings"
-          className="rounded-full bg-accent px-6 py-2.5 text-sm font-semibold text-white hover:bg-accent-deep"
+          className="cb-sheen rounded-lg bg-accent px-6 py-2.5 text-sm font-semibold text-paper shadow-lg shadow-accent/25 hover:bg-accent-deep"
         >
           My bookings
         </Link>
@@ -153,8 +153,8 @@ function ConfirmedCard({ booking }: { booking: BookingDto }) {
 
 function ExpiredCard({ booking }: { booking: BookingDto }) {
   return (
-    <div className="mx-auto max-w-lg rounded-card bg-white p-8 text-center">
-      <h1 className="font-display text-2xl uppercase tracking-wide text-pitch">
+    <div className="cb-glass mx-auto max-w-lg rounded-card p-8 text-center">
+      <h1 className="font-display text-2xl uppercase tracking-wide text-ink">
         {booking.status === 'expired' ? 'Hold expired' : `Booking ${booking.status}`}
       </h1>
       <p className="mt-2 text-sm text-sage">
@@ -162,7 +162,7 @@ function ExpiredCard({ booking }: { booking: BookingDto }) {
           ? 'The 10-minute hold ran out and the slot was released.'
           : 'This booking is no longer payable.'}
       </p>
-      <Link to="/venues" className="mt-6 inline-block text-sm font-semibold text-pitch underline">
+      <Link to="/venues" className="mt-6 inline-block text-sm font-semibold text-turf underline">
         Find another slot
       </Link>
     </div>
@@ -171,7 +171,7 @@ function ExpiredCard({ booking }: { booking: BookingDto }) {
 
 function PollingCard({ text }: { text: string }) {
   return (
-    <div className="mx-auto flex max-w-lg flex-col items-center gap-4 rounded-card bg-white p-10">
+    <div className="cb-glass mx-auto flex max-w-lg flex-col items-center gap-4 rounded-card p-10">
       <Spinner />
       <p className="text-sm text-sage">{text}</p>
     </div>

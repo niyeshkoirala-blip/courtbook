@@ -29,10 +29,10 @@ export function Modal({
       ref={ref}
       onClose={onClose}
       onClick={(e) => e.target === ref.current && onClose()} // backdrop click
-      className="m-auto w-full max-w-md rounded-card bg-white p-0 shadow-xl backdrop:bg-ink/50"
+      className="m-auto w-full max-w-md rounded-card border border-white/10 bg-card p-0 text-ink shadow-2xl backdrop:bg-paper/70 backdrop:backdrop-blur-sm"
     >
       <div className="p-6" onClick={(e) => e.stopPropagation()}>
-        <h2 className="mb-4 font-display text-xl uppercase tracking-wide text-pitch">{title}</h2>
+        <h2 className="mb-4 font-display text-xl uppercase tracking-wide text-ink">{title}</h2>
         {children}
       </div>
     </dialog>

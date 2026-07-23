@@ -5,3 +5,5 @@ design/
 package-lock.json
 *.md
 .claude/
+graphify-out/
+docs/screenshots/

@@ -15,7 +15,7 @@ export function useOwnerVenues() {
 export function OwnerNav() {
   const link = ({ isActive }: { isActive: boolean }) =>
     `rounded-full px-4 py-1.5 text-sm font-semibold ${
-      isActive ? 'bg-pitch text-mint' : 'bg-white text-pitch hover:bg-pitch/10'
+      isActive ? 'bg-turf text-paper' : 'bg-white/5 text-mint hover:bg-white/10'
     }`;
   return (
     <nav aria-label="Owner" className="flex flex-wrap gap-2">
@@ -50,7 +50,7 @@ export function VenuePicker({
       aria-label="Venue"
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="rounded-full border border-sage/40 bg-white px-4 py-2 text-sm font-semibold text-pitch outline-none"
+      className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-ink outline-none"
     >
       {venues.map((v) => (
         <option key={v.id} value={v.id}>

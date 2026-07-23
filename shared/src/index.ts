@@ -8,6 +8,8 @@ export * from './bookings.js';
 export * from './npt.js';
 export * from './payments.js';
 export * from './assistant.js';
+export * from './home.js';
+export * from './reviews.js';
 
 /** Standard API response envelope (blueprint §2.8). */
 export interface ApiSuccess<T> {
