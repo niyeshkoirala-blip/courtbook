@@ -40,3 +40,6 @@ Thumbs.db
 .eslintcache
 # k6 seed output
 scripts/race-test/race-input.json
+
+# ── Personal notes (not for the repo) ──
+PROJECT_OVERVIEW.md
